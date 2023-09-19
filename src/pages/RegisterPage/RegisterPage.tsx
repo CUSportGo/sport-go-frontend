@@ -4,7 +4,7 @@ import { Button, Form, Input, message } from "antd";
 
 const RegisterPage = () => {
   return (
-    <div>
+    <div className="registerPage-mainPage">
       <div className="form-container">
         <Form
           style={{
