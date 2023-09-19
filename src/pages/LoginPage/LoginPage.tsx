@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import "./LoginPage.css";
 import classnames from "classnames";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Button from "../../components/Buttons/Button";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
+import { apiClient } from "../../utils/clients";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setError] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log("email:", email);
-    console.log("password:", password);
+  const handleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await apiClient
+      .postLogin({ email, password })
+      .then((res) => {
+        alert("Login successful");
+        navigate("/");
+      })
+      .catch((err) => {
+        setError(true);
+      });
   };
 
   const handleGoogleClick = () => {
@@ -30,7 +40,7 @@ const LoginPage = () => {
         SPORT <span className="go-text"> GO</span>
       </div>
 
-      <form className="LoginPage-loginPanel" onSubmit={handleLogin}>
+      <form className="LoginPage-loginPanel">
         <div className="LoginPage-loginText">LOGIN</div>
 
         <div className="Login-box">
@@ -68,6 +78,9 @@ const LoginPage = () => {
               bheight="40px"
               bgColor="#5729CE"
               fontSize="16px"
+              onClick={(e) => {
+                handleLogin(e);
+              }}
             ></Button>
           </div>
 

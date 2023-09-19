@@ -154,3 +154,8 @@
 .LoginPage-registertext{
     font-size: 10px;
 }
+
+.error-text{
+    color:red;
+    font-size: 14px;
+}
