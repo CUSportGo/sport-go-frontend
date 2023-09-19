@@ -9,6 +9,7 @@ import Upload, {
 } from "antd/es/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
+import { Store } from "antd/es/form/interface";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -36,7 +37,7 @@ const RegisterPage = () => {
     info: UploadChangeParam<UploadFile>
   ) => {
     console.log(info.file);
-    
+
     if (info.file.status === "uploading") {
       setLoading(true);
       return;
@@ -65,10 +66,14 @@ const RegisterPage = () => {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Regular expression for xxx-xxx-xxxx format
 
     if (!phoneRegex.test(value) && value !== "" && value !== undefined) {
-      callback("Phone number should be in the format xxx-xxx-xxxx");
+      callback("Number should be in the format xxx-xxx-xxxx");
     } else {
       callback(); // Validation passed
     }
+  };
+
+  const onFinish = (values: Store) => {
+    console.log(values);
   };
 
   return (
@@ -84,35 +89,38 @@ const RegisterPage = () => {
             fontFamily: "Poppins",
           }}
           layout="vertical"
+          onFinish={onFinish}
         >
           <div className="register-n-image">
             <p className="register-label">Register</p>
-            <div className="upload-image">
-              <Upload
-                name="avatar"
-                listType="picture-circle"
-                className="avatar-uploader"
-                showUploadList={false}
-                action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                beforeUpload={beforeUpload}
-                onChange={handleChange}
-              >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50%",
-                      objectFit: "cover",
-                    }}
-                  />
-                ) : (
-                  uploadButton
-                )}
-              </Upload>
-            </div>
+            <Form.Item name="image" style={{ marginBottom: "8px" }}>
+              <div className="upload-image">
+                <Upload
+                  name="avatar"
+                  listType="picture-circle"
+                  className="avatar-uploader"
+                  showUploadList={false}
+                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+                  beforeUpload={beforeUpload}
+                  onChange={handleChange}
+                >
+                  {imageUrl ? (
+                    <img
+                      src={imageUrl}
+                      alt="avatar"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    uploadButton
+                  )}
+                </Upload>
+              </div>
+            </Form.Item>
           </div>
 
           <Form.Item
@@ -160,7 +168,7 @@ const RegisterPage = () => {
           </Form.Item>
           <Form.Item
             label="Phone number"
-            name="Phonenumber"
+            name="phonenumber"
             style={{ marginBottom: "8px" }}
             rules={[
               {
@@ -172,7 +180,7 @@ const RegisterPage = () => {
               },
             ]}
           >
-            <Input placeholder="Phone number" />
+            <Input placeholder="xxx-xxx-xxxx" />
           </Form.Item>
           <Form.Item
             label="Password"
