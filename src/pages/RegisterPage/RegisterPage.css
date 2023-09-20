@@ -58,11 +58,12 @@
   font-weight: 600;
 }
 
-:where(.css-dev-only-do-not-override-18iikkb).ant-form-vertical .ant-form-item-label >label{
+.form-container :where(.css-dev-only-do-not-override-18iikkb).ant-form-vertical .ant-form-item-label >label{
     font-family: "Poppins", sans-serif;
+    font-size: 16px;
 }
 
-:where(.css-dev-only-do-not-override-18iikkb).ant-input{
+.form-container  :where(.css-dev-only-do-not-override-18iikkb).ant-input{
     font-family: "Poppins", sans-serif;
 }
 
@@ -108,7 +109,7 @@
   color: #00a1ff;
 }
 
-:where(.css-dev-only-do-not-override-18iikkb).ant-form-item
+.form-container  :where(.css-dev-only-do-not-override-18iikkb).ant-form-item
   .ant-form-item-explain-error {
   font-size: 10px;
   font-family: "Poppins", sans-serif;
