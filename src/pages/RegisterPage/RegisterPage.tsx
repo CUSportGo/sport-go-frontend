@@ -10,6 +10,7 @@ import Upload, {
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { NavLink } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
+import { UserType } from "../../utils/enums/usertype.enums";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -73,12 +74,20 @@ const RegisterPage = () => {
   };
 
   const onFinish = (values: Store) => {
-    console.log(values);
+    const data = {
+      firstName: values.firstname,
+      lastName: values.lastname,
+      email: values.email,
+      phoneNumber: values.phonenumber,
+      password: values.password,
+      role: UserType.USER,
+    };
+    console.log(data);
   };
 
   return (
     <div className="registerPage-mainPage">
-      <div className="LoginPage-logoName">
+      <div className="RegisterPage-logoName">
         SPORT <span className="go-text"> GO</span>
       </div>
       <div className="form-container">
