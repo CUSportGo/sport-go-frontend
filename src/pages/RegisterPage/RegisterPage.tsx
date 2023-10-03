@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./RegisterPage.css";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import Upload, {
   RcFile,
   UploadChangeParam,
@@ -33,6 +33,8 @@ const beforeUpload = (file: RcFile) => {
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
+
+  const { Option } = Select;
 
   const handleChange: UploadProps["onChange"] = (
     info: UploadChangeParam<UploadFile>
@@ -80,7 +82,7 @@ const RegisterPage = () => {
       email: values.email,
       phoneNumber: values.phonenumber,
       password: values.password,
-      role: UserType.USER,
+      role: values.role,
     };
     console.log(data);
   };
@@ -207,7 +209,7 @@ const RegisterPage = () => {
           <Form.Item
             label="Confirm password"
             name="confirmpassword"
-            style={{ marginBottom: "28px" }}
+            style={{ marginBottom: "8px" }}
             rules={[
               {
                 required: true,
@@ -226,6 +228,19 @@ const RegisterPage = () => {
             ]}
           >
             <Input.Password placeholder="Confirm password" />
+          </Form.Item>
+          <Form.Item
+            name="role"
+            label="Role"
+            style={{ marginBottom: "28px" }}
+            rules={[
+              { required: true, message: "Please confirm your password" },
+            ]}
+          >
+            <Select defaultValue={UserType.USER}>
+              <Option value={UserType.USER}>User</Option>
+              <Option value={UserType.SPORTAREA}>Sport Area</Option>
+            </Select>
           </Form.Item>
           <Form.Item
             name="registerbutton"
