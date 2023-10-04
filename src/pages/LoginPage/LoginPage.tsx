@@ -27,7 +27,7 @@ const LoginPage = () => {
   };
 
   const handleGoogleClick = () => {
-    window.location.href = "https://www.google.com";
+    window.location.href = "http://localhost:8080/auth/google";
   };
 
   const handleFacebookClick = () => {
@@ -64,11 +64,7 @@ const LoginPage = () => {
               Forgot Password?
             </NavLink>
           </p>
-          {isError ? (
-            <label className="error-text">username or password incorrect</label>
-          ) : (
-            ""
-          )}
+          {isError ? <label className="error-text">username or password incorrect</label> : ""}
 
           <div className="login-button">
             <Button
