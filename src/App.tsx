@@ -5,10 +5,11 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
+import "./App.css";
 
 function App() {
   return (
-    <div>
+    <div className="app">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
