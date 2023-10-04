@@ -1,3 +1,4 @@
+import { Form, Input } from "antd";
 import { FC } from "react";
 import "./ResetPassword.css";
 
@@ -21,18 +22,16 @@ const ResetPassword: FC<ResetPasswordProp> = ({
       <h2>Reset Password</h2>
       <div className="reset-password-input-section">
         <p>Password</p>
-        <input
+        <Input.Password
           className="reset-password-input"
-          type="password"
           value={password}
           onChange={(e) => handlePasswordChange(e.target.value)}
         />
       </div>
       <div className="reset-password-input-section">
         <p>Confirm Password</p>
-        <input
+        <Input.Password
           className="reset-password-input"
-          type="password"
           value={confirmPassword}
           onChange={(e) => handleConfirmPasswordChange(e.target.value)}
         />
