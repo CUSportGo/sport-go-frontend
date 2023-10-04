@@ -8,9 +8,10 @@ import Upload, {
   UploadProps,
 } from "antd/es/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
 import { UserType } from "../../utils/enums/usertype.enums";
+import { apiClient } from "../../utils/clients";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -33,6 +34,7 @@ const beforeUpload = (file: RcFile) => {
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState<string>();
+  const navigate = useNavigate();
 
   const { Option } = Select;
 
@@ -75,7 +77,31 @@ const RegisterPage = () => {
     }
   };
 
-  const onFinish = (values: Store) => {
+  const validatePassword = (_:any, value: string) => {
+    // Check for at least 1 uppercase letter
+    if (!/[A-Z]/.test(value) && value !== "" && value !== undefined) {
+      return Promise.reject('Password must contain at least 1 uppercase letter');
+    }
+  
+    // Check for at least 1 lowercase letter
+    if (!/[a-z]/.test(value) && value !== "" && value !== undefined) {
+      return Promise.reject('Password must contain at least 1 lowercase letter');
+    }
+  
+    // Check for at least 1 number
+    if (!/\d/.test(value) && value !== "" && value !== undefined) {
+      return Promise.reject('Password must contain at least 1 number');
+    }
+  
+    // Check the length of the password
+    if (value.length < 8 && value !== "" && value !== undefined) {
+      return Promise.reject('Password must be at least 8 characters long');
+    }
+  
+    return Promise.resolve();
+  };
+
+  const onFinish = async (values: Store) => {
     const data = {
       firstName: values.firstname,
       lastName: values.lastname,
@@ -84,7 +110,9 @@ const RegisterPage = () => {
       password: values.password,
       role: values.role,
     };
-    console.log(data);
+    await apiClient.postRegister(data).then((res) => {
+      navigate("/login");
+    });
   };
 
   return (
@@ -202,6 +230,9 @@ const RegisterPage = () => {
                 required: true,
                 message: "Please input your Password",
               },
+              {
+                validator: validatePassword,
+              }
             ]}
           >
             <Input.Password placeholder="Password" />
@@ -234,10 +265,10 @@ const RegisterPage = () => {
             label="Role"
             style={{ marginBottom: "28px" }}
             rules={[
-              { required: true, message: "Please confirm your password" },
+              { required: true, message: "Please select your role" },
             ]}
           >
-            <Select defaultValue={UserType.USER}>
+            <Select placeholder="Select a role" >
               <Option value={UserType.USER}>User</Option>
               <Option value={UserType.SPORTAREA}>Sport Area</Option>
             </Select>
