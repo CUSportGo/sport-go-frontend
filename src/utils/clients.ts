@@ -6,9 +6,14 @@ const client = axios.create({
 });
 
 const postLogin = async (data: object) => {
-    const response = await client.post("/auth/login", data);
-    storage.setAccessToken(response.data.credential.accessToken);
-    return response;
+  const response = await client.post("/auth/login", data);
+  storage.setAccessToken(response.data.credential.accessToken);
+  return response;
+};
+
+const googleOAuth = async () => {
+  const response = await client.get("/auth/google");
+  return response;
 };
 
 const postRegister = async (data: object) => {
@@ -20,4 +25,5 @@ export const apiClient = {
     client,
     postLogin,
     postRegister,
+    googleOAuth,
 }
