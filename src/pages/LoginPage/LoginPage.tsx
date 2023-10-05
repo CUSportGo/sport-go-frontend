@@ -31,7 +31,7 @@ const LoginPage = () => {
   };
 
   const handleFacebookClick = () => {
-    window.location.href = "https://www.facebook.com";
+    window.location.href = "http://localhost:8080/auth/facebook";
   };
 
   return (
