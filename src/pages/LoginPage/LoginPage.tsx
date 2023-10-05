@@ -31,7 +31,7 @@ const LoginPage = () => {
   };
 
   const handleFacebookClick = () => {
-    window.location.href = "https://www.facebook.com";
+    window.location.href = "http://localhost:8080/auth/facebook";
   };
 
   return (
@@ -64,11 +64,7 @@ const LoginPage = () => {
               Forgot Password?
             </NavLink>
           </p>
-          {isError ? (
-            <label className="error-text">username or password incorrect</label>
-          ) : (
-            ""
-          )}
+          {isError ? <label className="error-text">username or password incorrect</label> : ""}
 
           <div className="login-button">
             <Button
