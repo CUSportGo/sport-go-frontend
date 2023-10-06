@@ -3,17 +3,30 @@ import "./ForgotPasswordPage.css";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Buttons/Button";
+import { apiClient } from "../../utils/clients";
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
+  const [isError, setError] = useState(false);
   const handleBackButton = () => {
     navigate("/login");
   };
 
-  const handleSendEmail = () => {
-    alert("Email was sent!");
+  const handleSendEmail = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+    await apiClient
+      .postForgotPassword({ email })
+      .then((res) => {
+        alert("Email was sent!");
+        navigate("/login");
+      })
+      .catch((err) => {
+        setError(true);
+      });
   };
 
   return (
@@ -43,7 +56,7 @@ const ForgotPasswordPage = () => {
           <div className="ForgotPassword-Button">
             <Button
               message={"Send Email"}
-              onClick={handleSendEmail}
+              onClick={(e) => handleSendEmail(e)}
               bheight="40px"
               bwidth="200px"
               fontSize="16px"
