@@ -20,7 +20,14 @@ const ForgotPasswordPage = () => {
     <div className="ForgotPassword-mainPage">
       <div className="ForgotPassword-container">
         <div className="ForgotPassword-backButton" onClick={handleBackButton}>
-          <MdArrowBackIosNew style={{ color: "white" }} />
+          <MdArrowBackIosNew
+            style={{
+              color: "white",
+              alignSelf: "center",
+              display: "flex",
+              marginRight: "2px",
+            }}
+          />
         </div>
 
         <form className="ForgotPassword-box">
