@@ -11,7 +11,7 @@ function ResetPasswordSuccessfully() {
       <div className="resetSuccessPage-block">
         <h1>Your Password is reset!</h1>
         <p> you can now login with your new password</p>
-        <NavLink to="/" className="registerButton">
+        <NavLink to="/login" className="backToLogin">
           Back to Login
         </NavLink>
       </div>
