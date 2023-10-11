@@ -12,6 +12,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
 import { UserType } from "../../utils/enums/usertype.enums";
 import { apiClient } from "../../utils/clients";
+// import "../../pictures/sport_go_logo.svg"
+import Logo from "../../pictures/sport_go_logo.svg";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -123,7 +125,7 @@ const RegisterPage = () => {
   return (
     <div className="registerPage-mainPage">
       <div className="RegisterPage-logoName">
-        SPORT <span className="go-text"> GO</span>
+        <img src={Logo} alt="SportGoLogo" />
       </div>
       <div className="form-container">
         <Form

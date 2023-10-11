@@ -6,6 +6,7 @@ import Button from "../../components/Buttons/Button";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { apiClient } from "../../utils/clients";
+import Logo from "../../pictures/sport_go_logo.svg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -37,7 +38,7 @@ const LoginPage = () => {
   return (
     <div className="LoginPage-mainPage">
       <div className="LoginPage-logoName">
-        SPORT <span className="go-text"> GO</span>
+        <img src={Logo} alt="SportGoLogo" />
       </div>
 
       <form className="LoginPage-loginPanel">
