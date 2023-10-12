@@ -19,12 +19,11 @@
 
 .LoginPage-loginPanel{
     width: 600px;
-    height: 720px;
     border-radius: 10px;
     background: #DBD7FD;
     margin-right: 10%;
-    margin-top: 70px;
-    margin-bottom: 70px;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
     align-self: flex-end;
     box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.25);
 }
@@ -37,12 +36,12 @@
     font-weight: 600;
     line-height: normal;
     margin-top: 100px;
-
+    margin-bottom: 20px;
 }
 
 .LoginPage-emailText{
     color: #000;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     display: flex;
     align-self: flex-start;
@@ -52,7 +51,7 @@
 
 .LoginPage-passwordText {
     color: #000;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     display: flex;
     align-self: flex-start;

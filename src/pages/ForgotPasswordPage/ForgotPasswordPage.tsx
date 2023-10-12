@@ -4,6 +4,7 @@ import { MdArrowBackIosNew } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/Buttons/Button";
 import { apiClient } from "../../utils/clients";
+import Logo from "../../pictures/sport_go_logo.svg";
 
 const ForgotPasswordPage = () => {
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="ForgotPassword-mainPage">
+      <div className="ForgotPasswordPage-logoName">
+        <img src={Logo} alt="SportGoLogo" />
+      </div>
       <div className="ForgotPassword-container">
         <div className="ForgotPassword-backButton" onClick={handleBackButton}>
           <MdArrowBackIosNew

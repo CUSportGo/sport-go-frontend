@@ -21,9 +21,15 @@ const postRegister = async (data: object) => {
     return response;
 }
 
+const postForgotPassword = async (data: object) => {
+  const response = await client.post("/auth/forgotPassword", data);
+  return response;
+}
+
 export const apiClient = {
     client,
     postLogin,
     postRegister,
     googleOAuth,
+    postForgotPassword,
 }
