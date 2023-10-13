@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { FC } from "react";
 import "./ResetPassword.css";
 
@@ -20,25 +20,50 @@ const ResetPassword: FC<ResetPasswordProp> = ({
   return (
     <div className="reset-password-container">
       <h2>Reset Password</h2>
-      <div className="reset-password-input-section">
-        <p>Password</p>
-        <Input.Password
-          className="reset-password-input"
-          value={password}
-          onChange={(e) => handlePasswordChange(e.target.value)}
-        />
-      </div>
-      <div className="reset-password-input-section">
-        <p>Confirm Password</p>
-        <Input.Password
-          className="reset-password-input"
-          value={confirmPassword}
-          onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-        />
-      </div>
-      <button className="reset-password-button" onClick={handleResetPasswordOnClick}>
-        Reset password
-      </button>
+      <Form
+        name="reset-password-form"
+        className="reset-password-form"
+        onFinish={handleResetPasswordOnClick}
+        layout="vertical"
+      >
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: "Please input your password",
+            },
+          ]}
+        >
+          <Input.Password
+            className="reset-password-input"
+            value={password}
+            onChange={(e) => handlePasswordChange(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item
+          name="confirm-password"
+          label="Confirm Password"
+          rules={[
+            {
+              required: true,
+              message: "Please confirm your password",
+            },
+          ]}
+        >
+          <Input.Password
+            className="reset-password-input"
+            value={confirmPassword}
+            onChange={(e) => handleConfirmPasswordChange(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit" className="reset-password-button">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import ResetPassword from "../../components/ResetPassword/ResetPassword";
 import "./ResetPasswordPage.css";
 
 const ResetPasswordPage = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const { token } = useParams();
 
   const handlePasswordChange = (newPassword: string) => {
     setPassword(newPassword);
