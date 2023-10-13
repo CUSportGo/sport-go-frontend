@@ -1,17 +1,13 @@
 import { useState } from "react";
 import "./RegisterPage.css";
 import { Button, Form, Input, Select, message } from "antd";
-import Upload, {
-  RcFile,
-  UploadChangeParam,
-  UploadFile,
-  UploadProps,
-} from "antd/es/upload";
+import Upload, { RcFile, UploadChangeParam, UploadFile, UploadProps } from "antd/es/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
 import { UserType } from "../../utils/enums/usertype.enums";
 import { apiClient } from "../../utils/clients";
+import { commonUtils } from "../../utils/common";
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
   const reader = new FileReader();
@@ -38,9 +34,7 @@ const RegisterPage = () => {
 
   const { Option } = Select;
 
-  const handleChange: UploadProps["onChange"] = (
-    info: UploadChangeParam<UploadFile>
-  ) => {
+  const handleChange: UploadProps["onChange"] = (info: UploadChangeParam<UploadFile>) => {
     console.log(info.file);
 
     if (info.file.status === "uploading") {
@@ -63,11 +57,7 @@ const RegisterPage = () => {
     </div>
   );
 
-  const validatePhoneFormat = (
-    _: any,
-    value: string,
-    callback: (message?: string) => void
-  ) => {
+  const validatePhoneFormat = (_: any, value: string, callback: (message?: string) => void) => {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Regular expression for xxx-xxx-xxxx format
 
     if (!phoneRegex.test(value) && value !== "" && value !== undefined) {
@@ -75,33 +65,6 @@ const RegisterPage = () => {
     } else {
       callback(); // Validation passed
     }
-  };
-
-  const validatePassword = (_:any, value: string) => {
-    if (!value) {
-      return Promise.resolve();
-    }
-    // Check for at least 1 uppercase letter
-    if (!/[A-Z]/.test(value)) {
-      return Promise.reject('Password must contain at least 1 uppercase letter');
-    }
-  
-    // Check for at least 1 lowercase letter
-    if (!/[a-z]/.test(value)) {
-      return Promise.reject('Password must contain at least 1 lowercase letter');
-    }
-  
-    // Check for at least 1 number
-    if (!/\d/.test(value)) {
-      return Promise.reject('Password must contain at least 1 number');
-    }
-  
-    // Check the length of the password
-    if (value.length < 8) {
-      return Promise.reject('Password must be at least 8 characters long');
-    }
-  
-    return Promise.resolve();
   };
 
   const onFinish = async (values: Store) => {
@@ -113,11 +76,14 @@ const RegisterPage = () => {
       password: values.password,
       role: values.role,
     };
-    await apiClient.postRegister(data).then((res) => {
-      navigate("/login");
-    }).catch((err) => {
-      console.log(err);
-    });
+    await apiClient
+      .postRegister(data)
+      .then((res) => {
+        navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -236,8 +202,8 @@ const RegisterPage = () => {
                 message: "Please input your Password",
               },
               {
-                validator: validatePassword,
-              }
+                validator: commonUtils.validatePassword,
+              },
             ]}
           >
             <Input.Password placeholder="Password" />
@@ -256,9 +222,7 @@ const RegisterPage = () => {
                   if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(
-                    new Error("The password that you entered do not match")
-                  );
+                  return Promise.reject(new Error("The password that you entered do not match"));
                 },
               }),
             ]}
@@ -269,11 +233,9 @@ const RegisterPage = () => {
             name="role"
             label="Role"
             style={{ marginBottom: "28px" }}
-            rules={[
-              { required: true, message: "Please select your role" },
-            ]}
+            rules={[{ required: true, message: "Please select your role" }]}
           >
-            <Select placeholder="Select a role" >
+            <Select placeholder="Select a role">
               <Option value={UserType.USER}>User</Option>
               <Option value={UserType.SPORTAREA}>Sport Area</Option>
             </Select>
