@@ -1,29 +1,23 @@
 import { Button, Form, Input } from "antd";
-import { FC } from "react";
 import "./ResetPassword.css";
 
 interface ResetPasswordProp {
   password: string;
   confirmPassword: string;
-  handlePasswordChange: (newPassword: string) => void;
-  handleConfirmPasswordChange: (newConfirmPassword: string) => void;
-  handleResetPasswordOnClick: () => void;
 }
 
-const ResetPassword: FC<ResetPasswordProp> = ({
-  password,
-  confirmPassword,
-  handlePasswordChange,
-  handleConfirmPasswordChange,
-  handleResetPasswordOnClick,
-}) => {
+const ResetPassword = () => {
+  const handleResetPasswordOnFinish = (values: ResetPasswordProp) => {
+    console.log(values);
+  };
+
   return (
     <div className="reset-password-container">
       <h2>Reset Password</h2>
       <Form
         name="reset-password-form"
         className="reset-password-form"
-        onFinish={handleResetPasswordOnClick}
+        onFinish={handleResetPasswordOnFinish}
         layout="vertical"
       >
         <Form.Item
@@ -36,14 +30,10 @@ const ResetPassword: FC<ResetPasswordProp> = ({
             },
           ]}
         >
-          <Input.Password
-            className="reset-password-input"
-            value={password}
-            onChange={(e) => handlePasswordChange(e.target.value)}
-          />
+          <Input.Password className="reset-password-input" />
         </Form.Item>
         <Form.Item
-          name="confirm-password"
+          name="confirmPassword"
           label="Confirm Password"
           rules={[
             {
@@ -52,11 +42,7 @@ const ResetPassword: FC<ResetPasswordProp> = ({
             },
           ]}
         >
-          <Input.Password
-            className="reset-password-input"
-            value={confirmPassword}
-            onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-          />
+          <Input.Password className="reset-password-input" />
         </Form.Item>
         <Form.Item>
           <Button htmlType="submit" className="reset-password-button">
