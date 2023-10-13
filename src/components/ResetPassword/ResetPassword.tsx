@@ -1,4 +1,8 @@
 import { Button, Form, Input } from "antd";
+import { FC } from "react";
+import { useNavigate } from "react-router-dom";
+import { ResetPasswordRequestDto } from "../../types/auth.dto";
+import { apiClient } from "../../utils/clients";
 import { commonUtils } from "../../utils/common";
 import "./ResetPassword.css";
 
@@ -7,9 +11,22 @@ interface ResetPasswordProp {
   confirmPassword: string;
 }
 
-const ResetPassword = () => {
-  const handleResetPasswordOnFinish = (values: ResetPasswordProp) => {
-    console.log(values);
+const ResetPassword: FC<{ token: string }> = ({ token }) => {
+  const navigate = useNavigate();
+
+  const handleResetPasswordOnFinish = async (values: ResetPasswordProp) => {
+    const request: ResetPasswordRequestDto = {
+      password: values.password,
+      accessToken: token,
+    };
+    await apiClient
+      .resetPassword(request)
+      .then((res) => {
+        navigate("/resetsuc");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (

@@ -11,7 +11,7 @@ const ResetPasswordPage = () => {
         SPORT <span className="sport-go-text"> GO</span>
       </div>
       <div className="reset-password-page-content">
-        <ResetPassword />
+        <ResetPassword token={token || ""} />
       </div>
     </div>
   );
