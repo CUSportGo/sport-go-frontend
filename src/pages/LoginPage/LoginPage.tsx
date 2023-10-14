@@ -13,6 +13,14 @@ const LoginPage = () => {
   const [isError, setError] = useState(false);
   const navigate = useNavigate();
 
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    setIsValidEmail(emailPattern.test(inputEmail));
+  };
+
   const handleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     await apiClient
@@ -49,8 +57,11 @@ const LoginPage = () => {
             className={classnames("input-login", { invalid: isError })}
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
           />
+          {!isValidEmail && (
+            <p className="error-text">Please enter a valid email address</p>
+          )}
 
           <div className="LoginPage-passwordText">Password</div>
           <input
@@ -97,7 +108,7 @@ const LoginPage = () => {
 
           <p className="LoginPage-registertext">
             Don’t you have an account?
-            <NavLink to="/" className="registerButton">
+            <NavLink to="/register" className="registerButton">
               register
             </NavLink>
           </p>
