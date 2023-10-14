@@ -27,10 +27,15 @@ const resetPassword = async (request: ResetPasswordRequestDto) => {
   return response.data;
 };
 
+const postForgotPassword = async (data: object) => {
+  const response = await client.post("/auth/forgotPassword", data);
+  return response;
+}
 export const apiClient = {
   client,
   postLogin,
   postRegister,
   googleOAuth,
   resetPassword,
+  postForgotPassword,
 };

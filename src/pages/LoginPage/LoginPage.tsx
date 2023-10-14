@@ -60,7 +60,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <p className="LoginPage-forgotPasswordtext">
-            <NavLink to="/" className="forgotpasswordButton">
+            <NavLink to="/forgotpassword" className="forgotpasswordButton">
               Forgot Password?
             </NavLink>
           </p>
