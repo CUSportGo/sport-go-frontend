@@ -6,6 +6,10 @@ import Button from "../../components/Buttons/Button";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { apiClient } from "../../utils/clients";
+import SportAreaItem from "../../components/SportAreaItem/SportAreaItem";
+import imgWorldsOfAdventure from "../../pictures/img-worlds-of-adventure.jpg";
+import Search from "antd/es/input/Search";
+import Searchbar from "../../components/Searchbar/Searchbar";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -75,7 +79,11 @@ const LoginPage = () => {
               Forgot Password?
             </NavLink>
           </p>
-          {isError ? <label className="error-text">username or password incorrect</label> : ""}
+          {isError ? (
+            <label className="error-text">username or password incorrect</label>
+          ) : (
+            ""
+          )}
 
           <div className="login-button">
             <Button
