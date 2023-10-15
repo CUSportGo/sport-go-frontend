@@ -19,7 +19,6 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
-        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
       </Routes>
     </div>
   );
