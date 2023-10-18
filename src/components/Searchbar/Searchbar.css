@@ -1,0 +1,40 @@
+.search-container{
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-panel{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-field{
+    width: 164px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    border: 1px solid #9797AA;
+    background: var(--text-color, #FFF);
+    font-family: 'Poppins', sans-serif;
+    padding-left: 10px;
+}
+
+.search-field ::placeholder {
+   font-family: 'Poppins', sans-serif;
+}
+
+.searchbar-button{
+    cursor: pointer;
+    border-radius: 5px;
+    background: #7CE0AE;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    border: none;
+}
+    

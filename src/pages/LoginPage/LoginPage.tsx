@@ -6,12 +6,24 @@ import Button from "../../components/Buttons/Button";
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { apiClient } from "../../utils/clients";
+import SportAreaItem from "../../components/SportAreaItem/SportAreaItem";
+import imgWorldsOfAdventure from "../../pictures/img-worlds-of-adventure.jpg";
+import Search from "antd/es/input/Search";
+import Searchbar from "../../components/Searchbar/Searchbar";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setError] = useState(false);
   const navigate = useNavigate();
+
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputEmail = e.target.value;
+    setEmail(inputEmail);
+    const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    setIsValidEmail(emailPattern.test(inputEmail));
+  };
 
   const handleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -49,8 +61,11 @@ const LoginPage = () => {
             className={classnames("input-login", { invalid: isError })}
             type="text"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
           />
+          {!isValidEmail && (
+            <p className="error-text">Please enter a valid email address</p>
+          )}
 
           <div className="LoginPage-passwordText">Password</div>
           <input
@@ -64,7 +79,11 @@ const LoginPage = () => {
               Forgot Password?
             </NavLink>
           </p>
-          {isError ? <label className="error-text">username or password incorrect</label> : ""}
+          {isError ? (
+            <label className="error-text">username or password incorrect</label>
+          ) : (
+            ""
+          )}
 
           <div className="login-button">
             <Button
@@ -97,7 +116,7 @@ const LoginPage = () => {
 
           <p className="LoginPage-registertext">
             Don’t you have an account?
-            <NavLink to="/" className="registerButton">
+            <NavLink to="/register" className="registerButton">
               register
             </NavLink>
           </p>

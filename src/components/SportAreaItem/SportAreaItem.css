@@ -1,0 +1,69 @@
+.sportAreaItem-container{
+    border-radius: 5px;
+    background-color: #F8F8F8;
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+    width: 200px;
+    height: 274px;
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    padding: 10px;
+    padding-top: 10px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.sportAreaItem-container.clicked {
+    background-color: #DBD7FD;
+}
+
+.sportAreaItem-img {
+    width: 200px;
+    height: 105px;
+    align-self: center;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.distance-text{
+    color: #000;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 6px;
+    margin-left: 15px;
+}
+
+.sportAreaItem-name{
+    color: #000;
+    font-family: Poppins;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-bottom: 15px;
+}
+
+.sportAreaItem-tags{
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.eachSportType-tag{
+    border-radius: 20px;
+    background: #DFDBF5;
+    width: fit-content;
+    padding: 2px 8px;
+    color: #000;
+    font-family: Poppins;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
