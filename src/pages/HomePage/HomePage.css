@@ -1,0 +1,68 @@
+.homepage-container{
+    padding: 50px 220px;
+    display: flex;
+    gap: 70px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.left-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.right-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.result-section{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.select-sporttype-text{
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.sporttype-checkbox{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.select-distance-text{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.select-distance-section{
+    display: flex;
+    gap: 15px;
+}
+
+.distance-input{
+    width: 60px;
+    text-align: center;
+}
+
+/* .select-distance-section :where(.css-dev-only-do-not-override-18iikkb).ant-input-number .ant-input-number-input:placeholder-shown, :where(.css-dev-only-do-not-override-18iikkb).ant-input-number .ant-input-number-input{
+    text-align: center;
+} */
+
+/* .select-distance-section :where(.css-dev-only-do-not-override-18iikkb).ant-input-number .ant-input-number-handler-wrap{
+    display: none;
+} */
+
+.text-distance{
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
