@@ -15,6 +15,10 @@
     flex-direction: column;
 }
 
+.result-text{
+    font-size: 14px;
+}
+
 .result-section{
     display: flex;
     flex-wrap: wrap;
