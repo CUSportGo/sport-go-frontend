@@ -1,10 +1,15 @@
-import { MouseEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import Searchbar from "../../components/Searchbar/Searchbar";
 import SportAreaItem from "../../components/SportAreaItem/SportAreaItem";
 import "./HomePage.css";
 import { Checkbox, Divider, Input, InputNumber } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../../utils/clients";
+import {
+  SearchSportAreaRequestDto,
+  SportArea,
+} from "../../types/sportarea.dto";
 
 const HomePage = () => {
   const sportTypeOptions = [
@@ -14,60 +19,65 @@ const HomePage = () => {
     { label: "Basketball", value: "basketball" },
   ];
 
-  const data = [
-    {
-      distance: 10,
-      name: "Area 01",
-      tags: ["Badminton", "Tennis"],
-    },
-    {
-      distance: 5,
-      name: "Area 02",
-      tags: ["Badminton", "Football"],
-    },
-    {
-      distance: 1,
-      name: "Area 03",
-      tags: ["Badminton", "Basketball"],
-    },
-    {
-      distance: 20,
-      name: "Area 04",
-      tags: ["Badminton", "Tennis"],
-    },
-    {
-      distance: 15,
-      name: "Area 05",
-      tags: ["Badminton", "Football"],
-    },
-    {
-      distance: 3,
-      name: "Area 06",
-      tags: ["Badminton", "Basketball"],
-    },
-    {
-      distance: 7,
-      name: "Area 07",
-      tags: ["Badminton", "Tennis"],
-    },
-  ];
-
-  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
+  const [searchResult, setSearchResult] = useState<SportArea[]>([]);
+  const [sportTypeList, setSportTypeList] = useState<CheckboxValueType[]>([""]);
   const [minDistance, setMinDistance] = useState(0);
   const [maxDistance, setMaxDistance] = useState(99);
   const navigate = useNavigate();
 
   const onChangeCheckList = (list: CheckboxValueType[]) => {
-    setCheckedList(list);
-    console.log(list);
+    setSportTypeList(list);
   };
 
-  const onSearch = (value: string) => {
-    console.log(value);
-    console.log(checkedList);
-    console.log(minDistance);
-    console.log(maxDistance);
+  const onSearch = async (value: string) => {
+    const data: SearchSportAreaRequestDto = {
+      type: sportTypeList.map((type) => String(type)),
+      location: "Hello",
+      latitude: 1.1,
+      longitude: 1.1,
+      maxDistance: maxDistance,
+      date: "Hello",
+      startTime: "Hello",
+      endTime: "Hello",
+    };
+    await apiClient
+      .searchSportArea(data)
+      .then((res) => {
+        console.log(res.data.data);
+        if(res.data.data){
+          setSearchResult([]);
+        }
+        setSearchResult(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
+
+  useEffect(() => {
+    const fetchSportArea = async () => {
+      const data: SearchSportAreaRequestDto = {
+        type: [""],
+        location: "Hello",
+        latitude: 1.1,
+        longitude: 1.1,
+        maxDistance: 10,
+        date: "Hello",
+        startTime: "Hello",
+        endTime: "Hello",
+      };
+      await apiClient
+        .searchSportArea(data)
+        .then((res) => {
+          console.log(res.data.data);
+          setSearchResult(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchSportArea();
+  }, []);
 
   return (
     <div className="homepage-container">
@@ -107,17 +117,23 @@ const HomePage = () => {
         </div>
       </div>
       <div className="right-column">
-        <div className="result-text">Total results : {data.length}</div>
+        <div className="result-text">Total results : {searchResult?searchResult.length:0}</div>
         <div className="result-section">
-          {data.map((item, index) => (
-            <SportAreaItem
-              key={index}
-              SportAreaName={item.name}
-              SportAreaTag={item.tags}
-              distance={item.distance}
-              onClick={() => {navigate(`/sportarea/${index}`)}}  //change to id
-            />
-          ))}
+          {searchResult && searchResult.length > 0 ? (
+            searchResult.map((item, index) => (
+              <SportAreaItem
+                key={index}
+                SportAreaName={item.name}
+                SportAreaTag={item.sportType}
+                distance={item.distance}
+                onClick={() => {
+                  navigate(`/sportarea/${item.id}`);
+                }}
+              />
+            ))
+          ) : (
+            <p>No search results found</p>
+          )}
         </div>
       </div>
     </div>
@@ -125,3 +141,6 @@ const HomePage = () => {
 };
 
 export default HomePage;
+function useeffect(arg0: () => void, arg1: never[]) {
+  throw new Error("Function not implemented.");
+}
