@@ -3,7 +3,11 @@ import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth
 import { storage } from "./storage";
 
 const client = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: process.env.BASEURL,
+});
+
+const AccountClient = axios.create({
+  baseURL: process.env.ACCOUNTURL,
 });
 
 const postLogin = async (data: object) => {
@@ -31,6 +35,20 @@ const postForgotPassword = async (data: object) => {
   const response = await client.post("/auth/forgotPassword", data);
   return response;
 }
+
+const getAllUser = async () => {
+  const response = await client.get("/user");
+  return response;
+};
+
+const banUser = async (userId: string) => {
+  const response = await AccountClient.get("/ban/" + userId);
+  return response;
+}
+const unbanUser = async (userId: string) => {
+  const response = await AccountClient.get("/unban/" + userId);
+  return response;
+}
 export const apiClient = {
   client,
   postLogin,
@@ -38,4 +56,7 @@ export const apiClient = {
   googleOAuth,
   resetPassword,
   postForgotPassword,
+  getAllUser,
+  banUser,
+  unbanUser
 };
