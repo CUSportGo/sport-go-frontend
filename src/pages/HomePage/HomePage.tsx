@@ -21,25 +21,29 @@ const HomePage = () => {
     { label: "Football", value: "football" },
     { label: "Tennis", value: "tennis" },
     { label: "Basketball", value: "basketball" },
+    { label: "Volleyball", value: "volleyball"},
+    { label: "Table Tennis", value: "tabletennis"},
+    { label: "Swimming", value: "swimming"},
+    { label: "Archery", value: "archery"},
   ];
 
   const distanceOptions = [
-    { value: "2-", label: "Below 2 km" },
-    { value: "5", label: "2 - 5 km" },
-    { value: "10", label: "5 - 10 km" },
-    { value: "10+", label: "Over 10 km" },
+    { value: 2, label: "Below 2 km" },
+    { value: 5, label: "Below 5 km" },
+    { value: 10, label: "Below 10 km" },
+    { value: -1, label: "Any" },
   ]
 
   const [searchResult, setSearchResult] = useState<SportArea[]>([]);
   const [sportTypeList, setSportTypeList] = useState<CheckboxValueType[]>([""]);
-  const [distance, setDistance] = useState("Any");
+  const [distance, setDistance] = useState(0);
   const navigate = useNavigate();
 
   const onChangeCheckList = (list: CheckboxValueType[]) => {
     setSportTypeList(list);
   };
 
-  const onChangeDistance = (value: string) => {
+  const onChangeDistance = (value: number) => {
     console.log(value);
     setDistance(value);
   };
@@ -107,7 +111,7 @@ const HomePage = () => {
         <div className="select-distance-text">Distance</div>
         <div className="select-distance-section">
           <Select
-            defaultValue="Any"
+            defaultValue={-1}
             style={{ width: '100%' }}
             onChange={onChangeDistance}
             options={distanceOptions}
