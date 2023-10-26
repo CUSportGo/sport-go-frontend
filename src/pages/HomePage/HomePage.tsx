@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import Searchbar from "../../components/Searchbar/Searchbar";
 import SportAreaItem from "../../components/SportAreaItem/SportAreaItem";
 import "./HomePage.css";
-import { Checkbox, Divider, Input, InputNumber } from "antd";
+import {
+  Checkbox,
+  Divider,
+  Select,
+} from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../utils/clients";
@@ -19,14 +23,25 @@ const HomePage = () => {
     { label: "Basketball", value: "basketball" },
   ];
 
+  const distanceOptions = [
+    { value: "2-", label: "Below 2 km" },
+    { value: "5", label: "2 - 5 km" },
+    { value: "10", label: "5 - 10 km" },
+    { value: "10+", label: "Over 10 km" },
+  ]
+
   const [searchResult, setSearchResult] = useState<SportArea[]>([]);
   const [sportTypeList, setSportTypeList] = useState<CheckboxValueType[]>([""]);
-  const [minDistance, setMinDistance] = useState(0);
-  const [maxDistance, setMaxDistance] = useState(99);
+  const [distance, setDistance] = useState("Any");
   const navigate = useNavigate();
 
   const onChangeCheckList = (list: CheckboxValueType[]) => {
     setSportTypeList(list);
+  };
+
+  const onChangeDistance = (value: string) => {
+    console.log(value);
+    setDistance(value);
   };
 
   const onSearch = async (value: string) => {
@@ -35,7 +50,7 @@ const HomePage = () => {
       location: "Hello",
       latitude: 1.1,
       longitude: 1.1,
-      maxDistance: maxDistance,
+      maxDistance: 0,
       date: "Hello",
       startTime: "Hello",
       endTime: "Hello",
@@ -43,8 +58,7 @@ const HomePage = () => {
     await apiClient
       .searchSportArea(data)
       .then((res) => {
-        console.log(res.data.data);
-        if(res.data.data){
+        if (res.data.data) {
           setSearchResult([]);
         }
         setSearchResult(res.data.data);
@@ -92,32 +106,18 @@ const HomePage = () => {
         <Divider style={{ backgroundColor: "lightgray" }} />
         <div className="select-distance-text">Distance</div>
         <div className="select-distance-section">
-          <InputNumber
-            className="distance-input"
-            defaultValue={0}
-            min={0}
-            max={99}
-            value={minDistance}
-            onChange={(value: number | null) =>
-              value !== null && setMinDistance(value)
-            }
+          <Select
+            defaultValue="Any"
+            style={{ width: '100%' }}
+            onChange={onChangeDistance}
+            options={distanceOptions}
           />
-          <div className="text-distance">to</div>
-          <InputNumber
-            className="distance-input"
-            defaultValue={99}
-            min={0}
-            max={99}
-            value={maxDistance}
-            onChange={(value: number | null) =>
-              value !== null && setMaxDistance(value)
-            }
-          />
-          <div className="text-distance">km</div>
         </div>
       </div>
       <div className="right-column">
-        <div className="result-text">Total results : {searchResult?searchResult.length:0}</div>
+        <div className="result-text">
+          Total results : {searchResult ? searchResult.length : 0}
+        </div>
         <div className="result-section">
           {searchResult && searchResult.length > 0 ? (
             searchResult.map((item, index) => (
