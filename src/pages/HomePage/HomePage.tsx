@@ -31,7 +31,7 @@ const HomePage = () => {
     { value: 2, label: "Below 2 km" },
     { value: 5, label: "Below 5 km" },
     { value: 10, label: "Below 10 km" },
-    { value: -1, label: "Any" },
+    { value: undefined, label: "Any" },
   ]
 
   const [searchResult, setSearchResult] = useState<SportArea[]>([]);
@@ -54,7 +54,7 @@ const HomePage = () => {
       location: "Hello",
       latitude: 1.1,
       longitude: 1.1,
-      maxDistance: 0,
+      maxDistance: distance,
       date: "Hello",
       startTime: "Hello",
       endTime: "Hello",
