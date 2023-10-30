@@ -3,13 +3,14 @@ import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth
 import { storage } from "./storage";
 import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
+
 const client = axios.create({
   baseURL: "http://localhost:8080",
+  withCredentials: true
 });
 
 const postLogin = async (data: object) => {
-  const response = await client.post("/auth/login", data);
-  storage.setAccessToken(response.data.credential.accessToken);
+  const response = await client.post("/auth/login", data)
   return response;
 };
 

@@ -1,12 +1,9 @@
 export interface SearchSportAreaRequestDto {
-    type: string[];
-    location: string;
-    latitude: number;
-    longitude: number;
-    maxDistance: number;
-    date: string;
-    startTime: string;
-    endTime: string;
+  keyword?: string;
+  maxDistance?: number;
+  latitude: number;
+  longitude: number;
+  type?: string[];
 }
 
 export interface SportArea {

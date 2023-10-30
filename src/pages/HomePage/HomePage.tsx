@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import Searchbar from "../../components/Searchbar/Searchbar";
 import SportAreaItem from "../../components/SportAreaItem/SportAreaItem";
 import "./HomePage.css";
-import {
-  Checkbox,
-  Divider,
-  Select,
-} from "antd";
+import { Checkbox, Divider, Select } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../utils/clients";
@@ -14,29 +10,25 @@ import {
   SearchSportAreaRequestDto,
   SportArea,
 } from "../../types/sportarea.dto";
+import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 
 const HomePage = () => {
-  const sportTypeOptions = [
-    { label: "Badminton", value: "badminton" },
-    { label: "Football", value: "football" },
-    { label: "Tennis", value: "tennis" },
-    { label: "Basketball", value: "basketball" },
-    { label: "Volleyball", value: "volleyball"},
-    { label: "Table Tennis", value: "tabletennis"},
-    { label: "Swimming", value: "swimming"},
-    { label: "Archery", value: "archery"},
-  ];
+  const sportTypeOptions = Object.values(SportTypeEnum).map((item) => {
+    return { label: item, value: item };
+  });
 
   const distanceOptions = [
     { value: 2, label: "Below 2 km" },
     { value: 5, label: "Below 5 km" },
     { value: 10, label: "Below 10 km" },
-    { value: undefined, label: "Any" },
-  ]
+    { value: -1, label: "Any" },
+  ];
 
   const [searchResult, setSearchResult] = useState<SportArea[]>([]);
   const [sportTypeList, setSportTypeList] = useState<CheckboxValueType[]>([""]);
-  const [distance, setDistance] = useState(0);
+  const [distance, setDistance] = useState(-1);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   const navigate = useNavigate();
 
   const onChangeCheckList = (list: CheckboxValueType[]) => {
@@ -48,17 +40,20 @@ const HomePage = () => {
     setDistance(value);
   };
 
-  const onSearch = async (value: string) => {
+  const onSearch = async (value: string) => {    
     const data: SearchSportAreaRequestDto = {
-      type: sportTypeList.map((type) => String(type)),
-      location: "Hello",
+      keyword: value,
       latitude: 1.1,
       longitude: 1.1,
-      maxDistance: distance,
-      date: "Hello",
-      startTime: "Hello",
-      endTime: "Hello",
     };
+    if (sportTypeList.length > 0) {
+      data.type = sportTypeList.map((type) => String(type));
+    }
+    if (distance > -1) {
+      data.maxDistance = distance;
+    }    
+    console.log(data);
+    
     await apiClient
       .searchSportArea(data)
       .then((res) => {
@@ -73,16 +68,23 @@ const HomePage = () => {
   };
 
   useEffect(() => {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        function (error) {
+          console.error("Error getting geolocation:", error);
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser");
+    }
     const fetchSportArea = async () => {
       const data: SearchSportAreaRequestDto = {
-        type: [""],
-        location: "Hello",
         latitude: 1.1,
         longitude: 1.1,
-        maxDistance: 10,
-        date: "Hello",
-        startTime: "Hello",
-        endTime: "Hello",
       };
       await apiClient
         .searchSportArea(data)
@@ -112,7 +114,7 @@ const HomePage = () => {
         <div className="select-distance-section">
           <Select
             defaultValue={-1}
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             onChange={onChangeDistance}
             options={distanceOptions}
           />
@@ -145,6 +147,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-function useeffect(arg0: () => void, arg1: never[]) {
-  throw new Error("Function not implemented.");
-}
