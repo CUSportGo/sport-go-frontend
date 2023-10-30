@@ -1,6 +1,8 @@
 import { useParams } from "react-router-dom";
 import "./SportAreaPage.css";
 import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
+import { useEffect } from "react";
+import { apiClient } from "../../utils/clients";
 
 const SportAreaPage = () => {
   const { id } = useParams();
@@ -17,6 +19,20 @@ const SportAreaPage = () => {
       "https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg",
     ],
   };
+
+  useEffect(() => {
+    const fetchSportArea = async () => {
+      await apiClient
+        .getSportAreaByID(id)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchSportArea();
+  }, []);
 
   return (
     <div className="sportareaPage-container">

@@ -50,12 +50,6 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
             : { gap: "13px" }
         }
       >
-        {/* <Image
-          width={240}
-          height={240}
-          style={{ objectFit: "cover" }}
-          src="https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg"
-        /> */}
         {image.map((item, index) => {
           return (
             <Image
