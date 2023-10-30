@@ -43,8 +43,8 @@ const HomePage = () => {
   const onSearch = async (value: string) => {    
     const data: SearchSportAreaRequestDto = {
       keyword: value,
-      latitude: 1.1,
-      longitude: 1.1,
+      latitude: latitude,
+      longitude: longitude,
     };
     if (sportTypeList.length > 0) {
       data.type = sportTypeList.map((type) => String(type));
@@ -83,8 +83,8 @@ const HomePage = () => {
     }
     const fetchSportArea = async () => {
       const data: SearchSportAreaRequestDto = {
-        latitude: 1.1,
-        longitude: 1.1,
+        latitude: latitude,
+        longitude: longitude,
       };
       await apiClient
         .searchSportArea(data)
