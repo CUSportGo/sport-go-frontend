@@ -1,44 +1,55 @@
-.sportarea-name{
-    font-size: 32px;
+.sportarea-name {
+  font-size: 32px;
 }
 
-.sportarea-location{
-    margin-top: 10px;
-    font-size: 14px;
+.sportarea-location {
+  margin-top: 10px;
+  font-size: 14px;
 }
 
-.sportarea-description{
-    font-size: 14px;
+.sportarea-description {
+  font-size: 14px;
 }
 
-.facilities{
-    border: 1px solid #A6A6A6;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
+.facilities {
+  border: 1px solid #a6a6a6;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
 }
 
-.facilities-text{
-    font-size: 18px;
+.facilities-text {
+  font-size: 18px;
 }
 
-.facilities-item{
-    font-size: 14px;
-    display: flex;
-    align-items: center;
+.facilities-item {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
 }
 
-.sportarea-image-container{
-    display: flex;
-    /* justify-content: space-between; */
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 13px;
+.sportarea-image-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+  padding: 5px;
 }
 
-:where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-operations, :where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-close{
-    display: none;
+:where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-operations,
+:where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-close {
+  display: none;
+}
+
+.viewmore-overlay {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  color: white;
+  text-align: center;
+  z-index: 1;
+  cursor: pointer;
 }

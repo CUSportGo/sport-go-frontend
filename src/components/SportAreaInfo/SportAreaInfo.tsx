@@ -33,7 +33,7 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
   const displayedImages = showMoreImages ? image : image.slice(0, 4);
 
   const handleImageClick = () => {
-    setShowMoreImages(true);
+    setShowMoreImages(!showMoreImages);
   };
 
   return (
@@ -54,39 +54,50 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
       <div className="sportarea-image-container">
         {displayedImages.map((item, index) => {
           return (
-            <>
-              {" "}
+            <div key={index} style={{ position: "relative" }}>
+              {index === 3 && image.length > 4 && !showMoreImages && (
+                <div
+                  className="viewmore-overlay"
+                  onClick={
+                    index === 3 && !showMoreImages
+                      ? () => handleImageClick()
+                      : () => {}
+                  }
+                >
+                  View More
+                </div>
+              )}
               <Image
-                width={240}
-                height={240}
                 style={
-                  index === 3 && !showMoreImages
+                  index === 3 && !showMoreImages && image.length > 4
                     ? {
                         objectFit: "cover",
                         cursor: "pointer",
                         position: "relative",
+                        aspectRatio: "1/1",
                         filter: "blur(3px)",
                       }
                     : {
                         objectFit: "cover",
                         cursor: "pointer",
                         position: "relative",
+                        aspectRatio: "1/1",
                       }
                 }
                 src={item}
                 key={index}
                 preview={
-                  index === 3 && !showMoreImages
-                    ? { mask: "View More", visible: false }
-                    : {}
+                  index === 3 && !showMoreImages && image.length > 4
+                    ? false
+                    : true
                 }
                 onClick={
-                  index === 3 && !showMoreImages
+                  index === 3 && !showMoreImages && image.length > 4
                     ? () => handleImageClick()
                     : () => {}
                 }
               />
-            </>
+            </div>
           );
         })}
       </div>
