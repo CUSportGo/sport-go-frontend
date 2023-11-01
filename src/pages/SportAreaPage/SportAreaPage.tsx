@@ -17,6 +17,7 @@ const SportAreaPage = () => {
     location: "",
     description: "",
     price: "",
+    image: []
   };
 
   const [sportAreaInfo, setSportAreaInfo] =
@@ -45,7 +46,7 @@ const SportAreaPage = () => {
         description={sportAreaInfo.description}
         carpark={sportAreaInfo.carPark}
         shower={sportAreaInfo.shower}
-        image={sportAreaInfo.image ? sportAreaInfo.image : []}
+        image={sportAreaInfo.image}
       />
     </div>
   );
