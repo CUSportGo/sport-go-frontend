@@ -6,7 +6,7 @@ export interface GetAvailableBookingRequest {
 }
 
 export interface GetAvailableBookingResponse {
-  timeslots: BookingTimeSlot[];
+  listAvailableTime: BookingTimeSlot[];
 }
 
 export interface BookingTimeSlot {

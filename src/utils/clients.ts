@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth.dto";
+import { GetAvailableBookingRequest, GetAvailableBookingResponse } from "../types/booking.dto";
 import { storage } from "./storage";
 
 const client = axios.create({
@@ -30,11 +31,18 @@ const resetPassword = async (request: ResetPasswordRequestDto) => {
 const postForgotPassword = async (data: object) => {
   const response = await client.post("/auth/forgotPassword", data);
   return response;
-}
+};
 
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
   return response;
+};
+
+const getAvailableBooking = async (
+  request: GetAvailableBookingRequest
+): Promise<GetAvailableBookingResponse> => {
+  const response = await client.post("/booking/available", request);
+  return response.data;
 };
 
 export const apiClient = {
@@ -45,4 +53,5 @@ export const apiClient = {
   resetPassword,
   postForgotPassword,
   getSportAreaByID,
+  getAvailableBooking,
 };

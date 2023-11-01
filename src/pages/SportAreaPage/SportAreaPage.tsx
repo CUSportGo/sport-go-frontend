@@ -29,33 +29,21 @@ const SportAreaPage = () => {
     price: 500,
     sportList: [
       {
-        sportType: "Badminton",
-        area: [
-          {
-            id: "0",
-            name: "Badminton Court 1",
-            openTime: "08:00",
-            closeTime: "18:00",
-            price: 200,
-          },
-          {
-            id: "1",
-            name: "Badminton Court 2",
-            openTime: "08:00",
-            closeTime: "20:00",
-            price: 250,
-          },
-        ],
-      },
-      {
         sportType: "Football",
         area: [
           {
-            id: "0",
+            id: "6542373b3da813a14a3a750d",
             name: "Football area 1",
-            openTime: "08:00",
-            closeTime: "20:00",
-            price: 250,
+            openTime: "12:00",
+            closeTime: "21:00",
+            price: 200,
+          },
+          {
+            id: "65423b0a7051101080e9d8b3",
+            name: "Football area 2",
+            openTime: "12:00",
+            closeTime: "21:00",
+            price: 200,
           },
         ],
       },
@@ -86,7 +74,7 @@ const SportAreaPage = () => {
         shower={false}
         image={data.imageURL}
       />
-      <BookingContainer sportList={data.sportList} />
+      <BookingContainer sportAreaId={id || ""} sportList={data.sportList} />
     </div>
   );
 };

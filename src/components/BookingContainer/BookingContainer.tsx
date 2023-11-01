@@ -4,38 +4,30 @@ import { Button, Collapse, DatePicker, Form, Select, Space, Typography } from "a
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { Option } from "antd/es/mentions";
-import { BookingTimeSlot, GetAvailableBookingResponse } from "../../types/booking.dto";
+import {
+  BookingTimeSlot,
+  GetAvailableBookingRequest,
+  GetAvailableBookingResponse,
+} from "../../types/booking.dto";
+import { apiClient } from "../../utils/clients";
 
 interface BookingContainerProp {
+  sportAreaId: string;
   sportList: SportList[];
 }
 
 interface BookingSportItemProp {
+  sportAreaId: string;
   sportItem: SportList;
 }
 
 interface BookingSportFormProp {
+  sportAreaId: string;
+  sportType: string;
   areas: AreaDetail[];
 }
 
-const mockTimeslot: GetAvailableBookingResponse = {
-  timeslots: [
-    {
-      startTime: "10/31/2023, 08:00",
-      endTime: "10/31/2023, 09:00",
-    },
-    {
-      startTime: "10/31/2023, 09:00",
-      endTime: "10/31/2023, 10:00",
-    },
-    {
-      startTime: "10/31/2023, 10:00",
-      endTime: "10/31/2023, 11:00",
-    },
-  ],
-};
-
-const BookingSportForm: React.FC<BookingSportFormProp> = ({ areas }) => {
+const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportType, areas }) => {
   const [form] = Form.useForm<{ date: Dayjs | null; area: string }>();
   const date = Form.useWatch("date", form)?.format("YYYY-MM-DD");
   const areaId = Form.useWatch("area", form);
@@ -56,13 +48,31 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ areas }) => {
   useEffect(() => {
     if (date && areaId) {
       // call request to get available booking
-      setTimeSlot(mockTimeslot.timeslots);
-      const timeSlotStr: string[] = mockTimeslot.timeslots.map((timeslot: BookingTimeSlot) => {
-        return `${dayjs(timeslot.startTime).format("HH:mm")} - ${dayjs(timeslot.endTime).format(
-          "HH:mm"
-        )}`;
-      });
-      setTimeSlotString(timeSlotStr);
+      const getAvailableBooking = async () => {
+        const request: GetAvailableBookingRequest = {
+          sportAreaId: sportAreaId,
+          sportType: sportType,
+          areaId: areaId,
+          bookingDate: date,
+        };
+        apiClient
+          .getAvailableBooking(request)
+          .then((data: GetAvailableBookingResponse) => {
+            setTimeSlot(data.listAvailableTime);
+            const timeSlotStr: string[] = data.listAvailableTime.map(
+              (timeslot: BookingTimeSlot) => {
+                return `${dayjs(timeslot.startTime).format("HH:mm")} - ${dayjs(
+                  timeslot.endTime
+                ).format("HH:mm")}`;
+              }
+            );
+            setTimeSlotString(timeSlotStr);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      getAvailableBooking();
     }
   }, [date, areaId]);
 
@@ -119,7 +129,7 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ areas }) => {
   );
 };
 
-const BookingSportItem: React.FC<BookingSportItemProp> = ({ sportItem }) => {
+const BookingSportItem: React.FC<BookingSportItemProp> = ({ sportAreaId, sportItem }) => {
   return (
     <Collapse
       collapsible="header"
@@ -128,7 +138,13 @@ const BookingSportItem: React.FC<BookingSportItemProp> = ({ sportItem }) => {
         {
           key: "1",
           label: sportItem.sportType,
-          children: <BookingSportForm areas={sportItem.area} />,
+          children: (
+            <BookingSportForm
+              sportAreaId={sportAreaId}
+              sportType={sportItem.sportType}
+              areas={sportItem.area}
+            />
+          ),
           showArrow: false,
         },
       ]}
@@ -136,14 +152,16 @@ const BookingSportItem: React.FC<BookingSportItemProp> = ({ sportItem }) => {
   );
 };
 
-const BookingContainer: React.FC<BookingContainerProp> = ({ sportList }) => {
+const BookingContainer: React.FC<BookingContainerProp> = ({ sportAreaId, sportList }) => {
   return (
     <div className="booking-container">
       <p>Sport Area Type</p>
       <Space direction="vertical" className="booking-sportarea-section">
         {sportList &&
           sportList.length > 0 &&
-          sportList.map((sport: SportList) => <BookingSportItem sportItem={sport} />)}
+          sportList.map((sport: SportList) => (
+            <BookingSportItem sportAreaId={sportAreaId} sportItem={sport} />
+          ))}
       </Space>
     </div>
   );
