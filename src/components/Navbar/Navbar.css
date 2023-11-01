@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter&family=Sarabun:wght@300;600;700;800&display=swap");
+
+.nav {
+  position: sticky;
+  top: 0;
+  background-color: #000000;
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  padding-left: 2rem;
+  font-size: 18px;
+  font-weight: regular;
+  height: 75px;
+  font-family: Poppins;
+  z-index: 10;
+  padding-right: 20px;
+}
+
+.title-li {
+  font-size: 24px;
+  padding-right: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+
+  align-items: center;
+  gap: 60px;
+}
+
+.menu-list-left,
+.menu-list-right {
+  gap: 2.5rem;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.nav li {
+  height: 72px;
+  display: flex;
+  align-items: center;
+}
+
+.signin-li,
+.account-li {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.cart {
+  font-size: 30px;
+}
+
+.cart-div {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.cart-li {
+  cursor: pointer;
+  position: relative;
+  padding: 0 10px;
+}
+
+.cart-amount {
+  /* position: absolute; */
+  right: -6px;
+  bottom: 11px;
+}
+
+.noti-li {
+  position: relative;
+  font-size: 18px;
+  padding: 0 5px;
+}
+
+.noti-amount {
+  font-size: 18px;
+  text-align: center;
+  position: absolute;
+  right: -2px;
+  top: 12px;
+  background-color: red;
+  border-radius: 10px;
+  width: 21px;
+  height: 21px;
+}
+
+.accountOptionList {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 38px;
+  background-color: #ffffff;
+  width: 108px;
+  height: 91px;
+  justify-content: center;
+  box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+  top: 66px;
+  z-index: 99;
+  font-family: Inter;
+  font-weight: regular;
+  font-size: 14px;
+  overflow: hidden;
+}
+.profileOption {
+  width: 108px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding-left: 16px;
+}
+
+.logoutOption {
+  width: 108px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #d7d7d7;
+  padding-left: 16px;
+}

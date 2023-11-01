@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
@@ -8,10 +8,13 @@ import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
+  const [navbar, setNavbar] = useState(false);
   return (
     <div className="app">
+      <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
