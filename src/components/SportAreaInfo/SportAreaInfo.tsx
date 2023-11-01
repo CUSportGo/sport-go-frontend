@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { Divider } from "antd";
 import "./SportAreaInfo.css";
 import { BsCheck, BsX } from "react-icons/bs";
@@ -20,6 +21,8 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
   shower,
   image,
 }) => {
+  const [showMoreImages, setShowMoreImages] = useState(false);
+
   const checkFacilities = (isAvailable: boolean) => {
     if (isAvailable) {
       return <BsCheck style={{ height: "20px", width: "20px" }} />;
@@ -27,6 +30,12 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
       return <BsX style={{ height: "20px", width: "20px" }} />;
     }
   };
+  const displayedImages = showMoreImages ? image : image.slice(0, 4);
+
+  const handleImageClick = () => {
+    setShowMoreImages(true);
+  };
+
   return (
     <div className="sportareainfo-container">
       <div className="sportarea-name">{name}</div>
@@ -42,23 +51,42 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
         <div className="facilities-item">{checkFacilities(carpark)}Carpark</div>
         <div className="facilities-item">{checkFacilities(shower)}Shower</div>
       </div>
-      <div
-        className="sportarea-image-container"
-        style={
-          image.length == 4
-            ? { justifyContent: "space-between" }
-            : { gap: "13px" }
-        }
-      >
-        {image.map((item, index) => {
+      <div className="sportarea-image-container">
+        {displayedImages.map((item, index) => {
           return (
-            <Image
-              width={240}
-              height={240}
-              style={{ objectFit: "cover" }}
-              src={item}
-              key={index}
-            />
+            <>
+              {" "}
+              <Image
+                width={240}
+                height={240}
+                style={
+                  index === 3 && !showMoreImages
+                    ? {
+                        objectFit: "cover",
+                        cursor: "pointer",
+                        position: "relative",
+                        filter: "blur(3px)",
+                      }
+                    : {
+                        objectFit: "cover",
+                        cursor: "pointer",
+                        position: "relative",
+                      }
+                }
+                src={item}
+                key={index}
+                preview={
+                  index === 3 && !showMoreImages
+                    ? { mask: "View More", visible: false }
+                    : {}
+                }
+                onClick={
+                  index === 3 && !showMoreImages
+                    ? () => handleImageClick()
+                    : () => {}
+                }
+              />
+            </>
           );
         })}
       </div>

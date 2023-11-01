@@ -35,4 +35,10 @@
     display: flex;
     /* justify-content: space-between; */
     margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 13px;
+}
+
+:where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-operations, :where(.css-dev-only-do-not-override-18iikkb) .ant-image-preview-close{
+    display: none;
 }
