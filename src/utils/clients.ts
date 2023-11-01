@@ -1,6 +1,8 @@
 import axios from "axios";
 import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth.dto";
 import { storage } from "./storage";
+import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
+
 
 const client = axios.create({
   baseURL: "http://localhost:8080",
@@ -37,6 +39,11 @@ const getSportAreaByID = async (id: any) => {
   return response;
 };
 
+const searchSportArea = async (params: SearchSportAreaRequestDto) => {
+  const response = await client.get("/sportArea", {params: params});
+  return response;
+}
+
 export const apiClient = {
   client,
   postLogin,
@@ -45,4 +52,5 @@ export const apiClient = {
   resetPassword,
   postForgotPassword,
   getSportAreaByID,
+  searchSportArea
 };
