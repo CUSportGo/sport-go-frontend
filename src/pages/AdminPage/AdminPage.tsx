@@ -273,19 +273,21 @@ const AdminPage = () => {
 
   return (
     <div className="AdminPage-mainPage">
-      <div className="searchUserSection">
-        Search
-        <input
-          className="searchUserInput"
-          type="text"
-          placeholder="Search for email"
-          value={email}
-          onChange={handleSearchInputChange}
-        />
-      </div>
-
-      <div className="AdminPage-topPanel">
+      {" "}
+      <div className="searchUserSection-container">
         <div className="AdminPage-listOfUser">List of users</div>
+        <div className="searchUserSection">
+          Search
+          <input
+            className="searchUserInput"
+            type="text"
+            placeholder="Search for email"
+            value={email}
+            onChange={handleSearchInputChange}
+          />
+        </div>
+      </div>
+      <div className="AdminPage-topPanel">
         <div className="button-panel-banPage">
           <div
             onClick={() => {
@@ -309,7 +311,6 @@ const AdminPage = () => {
           </div>
         </div>
       </div>
-
       <div className="AdminPage-userContainer">
         <div className="title-panel">
           <div className="title-username-banPage">Username</div>

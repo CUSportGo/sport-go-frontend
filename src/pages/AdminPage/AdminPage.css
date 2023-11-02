@@ -8,30 +8,28 @@
 .button-BannedUser {
     cursor: pointer;
     display: flex;
-    border: 1px solid black;
-    border-radius: 20px;
+    border: none;
     height: 41px;
-    width: 203px;
+    width: fit-content;
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
+    padding: 10px;
 }
 
 .button-panel-banPage {
     display: flex;
+    gap:30px;
 }
 
 .button-UnBannedUser {
-    margin-right: 30px;
-    margin-left: 70px;
-    margin-bottom: 37px;
+    margin-left: 90px;
+    margin-bottom: 20px;
 }
 
 .button-UnBannedUser.clicked,
 .button-BannedUser.clicked {
-    background-color: #736ac4;;
-    color: white;
-    border: 1px solid white;
+    border-bottom: #000000 solid;
 }
 
 .userType-panel {
@@ -126,19 +124,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.058);
     z-index: 9999;
 }
 
 .searchUserSection {
-    margin-left: 500px;
     display: flex;
     justify-content: flex-end;
     font-size: 16px;
     gap: 15px;
     align-items: center;
-    margin-top: 15px;
-    margin-right: 15px;
+    width: 100%;
+    margin-right: 30px;
 }
 
 .searchUserInput {
@@ -160,24 +157,24 @@
     margin: auto;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 }
 
 .AdminPage-listOfUser{
-    font-size: 20px;
+    font-size: 32px;
     font-weight: bold;
-    color: white;
-    background-color: #5729CE;
-    width: fit-content;
-    padding: 13px;
-    border-radius: 15px;
+    color: black;
+    width: 300px;
     margin-left: 70px;
-    margin-bottom: 20px;
+    display: flex;
+    align-self: start;
+    justify-self: start;
+    justify-content: flex-start !important;
 }
 
 .AdminPage-topPanel{
     display: flex;
     flex-direction: row;
-    margin-top: 5px;
 }
 
 .AdminPage-displayContainer {
@@ -202,4 +199,11 @@
 
 .user-info-container{
     margin-right: 10px;
+}
+
+.searchUserSection-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+    width: 100%;
 }
