@@ -4,6 +4,7 @@ import { Store } from "antd/es/form/interface";
 import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
+import TextArea from "antd/es/input/TextArea";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -94,7 +95,7 @@ const CreateSportAreaPage = () => {
             },
           ]}
         >
-          <Input placeholder="Description" />
+          <TextArea rows={4} placeholder="Description" />
         </Form.Item>
         <Form.Item
           label="Facilities"

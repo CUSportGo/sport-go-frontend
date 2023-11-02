@@ -1,11 +1,11 @@
 .create-sportarea-container {
-  padding: 50px 220px;
+  padding: 50px 320px;
   display: flex;
-  justify-content: center;
   flex-direction: column;
 }
 
 .create-sportarea-header {
+  text-align: center;
   font-size: 24px;
 }
 
