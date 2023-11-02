@@ -1,3 +1,30 @@
 .create-sportarea-container {
   padding: 50px 220px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.create-sportarea-header {
+  font-size: 24px;
+}
+
+.create-sportarea-container
+  :where(.css-dev-only-do-not-override-18iikkb).ant-form-vertical
+  .ant-form-item-label
+  > label {
+  font-size: 16px;
+}
+
+.create-sportarea-item-button {
+  display: flex;
+  justify-content: center;
+}
+
+.create-sportarea-button {
+  background-color: #5729ce;
+  width: 200px;
+  height: 40px;
+  color: white;
+  font-family: "Poppins", sans-serif;
 }

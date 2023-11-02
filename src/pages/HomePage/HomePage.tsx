@@ -68,33 +68,36 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    if ("geolocation" in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        function (position) {
-          setLatitude(position.coords.latitude);
-          setLongitude(position.coords.longitude);
-        },
-        function (error) {
-          console.error("Error getting geolocation:", error);
-        }
-      );
-    } else {
-      alert("Geolocation is not supported by this browser");
-    }
     const fetchSportArea = async () => {
-      const data: SearchSportAreaRequestDto = {
-        latitude: latitude,
-        longitude: longitude,
-      };
-      await apiClient
-        .searchSportArea(data)
-        .then((res) => {
-          console.log(res.data.data);
-          setSearchResult(res.data.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async function (position) {
+            setLatitude(position.coords.latitude);
+            setLongitude(position.coords.longitude);
+            
+            const data: SearchSportAreaRequestDto = {
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            };
+            console.log(data);
+            
+            await apiClient
+              .searchSportArea(data)
+              .then((res) => {
+                console.log(res.data.data);
+                setSearchResult(res.data.data);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          },
+          function (error) {
+            console.error("Error getting geolocation:", error);
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser");
+      }
     };
     fetchSportArea();
   }, []);
