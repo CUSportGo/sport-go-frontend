@@ -1,6 +1,8 @@
 import axios from "axios";
 import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth.dto";
 import { storage } from "./storage";
+import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
+
 
 const client = axios.create({
   baseURL: process.env.BASEURL,
@@ -11,8 +13,7 @@ const AccountClient = axios.create({
 });
 
 const postLogin = async (data: object) => {
-  const response = await client.post("/auth/login", data);
-  storage.setAccessToken(response.data.credential.accessToken);
+  const response = await client.post("/auth/login", data)
   return response;
 };
 
@@ -49,6 +50,12 @@ const unbanUser = async (userId: string) => {
   const response = await AccountClient.get("/unban/" + userId);
   return response;
 }
+
+const searchSportArea = async (params: SearchSportAreaRequestDto) => {
+  const response = await client.get("/sportArea", { params: params });
+  return response;
+}
+
 export const apiClient = {
   client,
   postLogin,
@@ -58,5 +65,6 @@ export const apiClient = {
   postForgotPassword,
   getAllUser,
   banUser,
-  unbanUser
+  unbanUser,
+  searchSportArea
 };

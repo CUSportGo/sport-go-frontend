@@ -1,12 +1,13 @@
 import React from "react";
 import "./ResetPassword.css";
 import { NavLink } from "react-router-dom";
+import Logo from "../../pictures/sport_go_logo.svg";
 
 function ResetPasswordSuccessfully() {
   return (
     <div className="resetSuccessPage">
-      <div className="resetSuccessPage-logoName">
-        SPORT <span className="go-text"> GO</span>
+      <div className="resetPasswordPage-logoName">
+        <img src={Logo} alt="SportGoLogo" />
       </div>
       <div className="resetSuccessPage-block">
         <div className="resetSuccessPage-pic"></div>

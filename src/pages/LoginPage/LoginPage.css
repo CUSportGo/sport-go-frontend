@@ -1,45 +1,31 @@
 .LoginPage-mainPage{
-    background-image: url("/src/pictures/background_sportgo.jpg");
+    background-image: url("/src/pictures/background_sportgo_cut.jpg");
     background-size: auto 100%;
-    background-position: center;
+    background-position: 10%;
     background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    overflow: auto;
 }
 
 .LoginPage-logoName{
-    background-color: black;
-    width: 258px;
-    height: 67px;
-    color:white;
-    font-weight: 800;
-    font-size: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
+    position: absolute;
     top: 50px;
     left: 50px;
-    position: absolute;
-}
-
-.go-text{
-    color: #988CFF;
-    margin-left: 10px;
 }
 
 .LoginPage-loginPanel{
     width: 600px;
-    height: 720px;
     border-radius: 10px;
     background: #DBD7FD;
     margin-right: 10%;
-    margin-top: 120px;
-    display: flex;
-    flex-direction: column;
+    margin-top: 15vh;
+    margin-bottom: 15vh;
     align-self: flex-end;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.25);
 }
 
 .LoginPage-loginText{
@@ -50,12 +36,12 @@
     font-weight: 600;
     line-height: normal;
     margin-top: 100px;
-
+    margin-bottom: 20px;
 }
 
 .LoginPage-emailText{
     color: #000;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     display: flex;
     align-self: flex-start;
@@ -65,7 +51,7 @@
 
 .LoginPage-passwordText {
     color: #000;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 400;
     display: flex;
     align-self: flex-start;
