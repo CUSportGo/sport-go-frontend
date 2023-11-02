@@ -18,6 +18,168 @@ const AdminPage = () => {
       phoneNumber: "0987",
       role: "User",
     },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "abc@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
+    {
+      email: "blebike@hotmail.com",
+      firstName: "begleza",
+      lastName: "byet",
+      status: "ACTIVE",
+      id: 1,
+      phoneNumber: "0987",
+      role: "User",
+    },
   ]);
   const [bannedUser, setBannedUser] = useState<User[]>([
     {
@@ -50,9 +212,20 @@ const AdminPage = () => {
 
   const handleBanUser = async (userId: string) => {
     setLoading(true);
-    // ban by api
-    setSomeoneGotBan(!someoneGotBan);
-    setUserIdToBan("");
+    await apiClient.banUser(userId).then(() => {
+      setSomeoneGotBan(!someoneGotBan);
+      setUserIdToBan("");
+    });
+
+    setLoading(false);
+  };
+
+  const handleUnBanUser = async (userId: string) => {
+    setLoading(true);
+    await apiClient.unbanUser(userId).then(() => {
+      setSomeoneGotBan(!someoneGotBan);
+      setUserIdToBan("");
+    });
 
     setLoading(false);
   };
@@ -82,7 +255,16 @@ const AdminPage = () => {
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setEmail(event.target.value);
+    const searchValue = event.target.value.toLowerCase(); // Convert the input to lowercase for case-insensitive search
+
+    // Filter the activeUser array based on the input
+    const filteredUsers = activeUser.filter((user) => {
+      const userEmail = user.email.toLowerCase(); // Convert email to lowercase for case-insensitive comparison
+      return userEmail.includes(searchValue);
+    });
+
+    // Set the filtered users to the displayUser state
+    setDisplayUser(filteredUsers);
   };
 
   useEffect(() => {
@@ -135,38 +317,44 @@ const AdminPage = () => {
           <div className="title-tel-banPage">Phone Number</div>
           <div className="title-ban-banPage">Ban</div>
         </div>
-        {displayUser.length !== 0 ? (
-          displayUser.map((userInfo: User) => (
-            <div key={userInfo.id} className="user-info-container">
-              <BanUserItem
-                firstname={userInfo.firstName}
-                lastname={userInfo.lastName}
-                tel={userInfo.phoneNumber}
-                email={userInfo.email}
-                onClick={() => {
-                  setUserIdToBan(userInfo.id);
-                }}
-                isBanned={checkStatusUser(userInfo.status)}
-              />
-              {userIdToBan === userInfo.id && (
-                <div className="popupConfirmBan">
-                  <PopupConfirm
-                    description={
-                      checkStatusUser(userInfo.status)
-                        ? `Are you sure you want to ban ${userInfo.firstName}?`
-                        : `Are you sure you want to unban ${userInfo.firstName}?`
-                    }
-                    confirmMessage="Confirm"
-                    onConfirm={() => handleBanUser(userIdToBan)}
-                    onCancel={() => setUserIdToBan("")}
-                  />
-                </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <div className="nothing-here">No User</div>
-        )}
+        <div className="AdminPage-displayContainer">
+          {displayUser.length !== 0 ? (
+            displayUser.map((userInfo: User) => (
+              <div key={userInfo.id} className="user-info-container">
+                <BanUserItem
+                  firstname={userInfo.firstName}
+                  lastname={userInfo.lastName}
+                  tel={userInfo.phoneNumber}
+                  email={userInfo.email}
+                  onClick={() => {
+                    setUserIdToBan(userInfo.id);
+                  }}
+                  isBanned={checkStatusUser(userInfo.status)}
+                />
+                {userIdToBan === userInfo.id && (
+                  <div className="popupConfirmBan">
+                    <PopupConfirm
+                      description={
+                        checkStatusUser(userInfo.status)
+                          ? `Are you sure you want to ban ${userInfo.firstName}?`
+                          : `Are you sure you want to unban ${userInfo.firstName}?`
+                      }
+                      confirmMessage="Confirm"
+                      onConfirm={() =>
+                        checkStatusUser(userInfo.status)
+                          ? handleBanUser(userIdToBan)
+                          : handleUnBanUser(userIdToBan)
+                      }
+                      onCancel={() => setUserIdToBan("")}
+                    />
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <div className="nothing-here">No User</div>
+          )}
+        </div>
       </div>
     </div>
   );

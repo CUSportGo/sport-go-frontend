@@ -67,10 +67,6 @@
 .title-tel-banPage {
     margin-left: 25px;
 }
-/* 
-.title-email-banPage {
-    margin-right: 300px;
-} */
 
 .title-ban-banPage {
     flex: 0;
@@ -156,7 +152,7 @@
 }
 
 .AdminPage-userContainer{
-    width: 1200px;
+    width: 1400px;
     margin-left: 40px;
     border: 1px solid black;
     border-radius: 5px;
@@ -174,7 +170,7 @@
     width: fit-content;
     padding: 13px;
     border-radius: 15px;
-    margin-left: 40px;
+    margin-left: 70px;
     margin-bottom: 20px;
 }
 
@@ -182,4 +178,28 @@
     display: flex;
     flex-direction: row;
     margin-top: 5px;
+}
+
+.AdminPage-displayContainer {
+    height: 600px;
+    overflow: auto;
+}
+
+.AdminPage-displayContainer::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Styling the scrollbar thumb (the draggable part) */
+.AdminPage-displayContainer::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+}
+
+.AdminPage-displayContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+
+.user-info-container{
+    margin-right: 10px;
 }
