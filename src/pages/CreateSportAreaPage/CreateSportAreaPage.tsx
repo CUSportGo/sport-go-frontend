@@ -5,6 +5,7 @@ import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
+import MapComponent from "../../components/Map/MapComponent";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -116,7 +117,7 @@ const CreateSportAreaPage = () => {
           name="location"
           style={{ marginBottom: "16px" }}
         >
-          <Input placeholder="Location" />
+          <MapComponent/>
         </Form.Item>
 
         <Form.Item
