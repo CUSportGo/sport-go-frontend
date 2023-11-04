@@ -6,6 +6,8 @@ import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
 import MapComponent from "../../components/Map/MapComponent";
+import { SportTypeEnum } from "../../utils/enums/sportType.enums";
+import axios from "axios";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -20,6 +22,12 @@ const CreateSportAreaPage = () => {
     { value: "carpark", label: "Car park" },
     { value: "shower", label: "Shower" },
   ];
+
+  const sportTypeOptions: SelectProps["options"] = Object.values(
+    SportTypeEnum
+  ).map((item) => {
+    return { label: item, value: item };
+  });
 
   const [form] = Form.useForm();
 
@@ -37,6 +45,25 @@ const CreateSportAreaPage = () => {
   ) => {
     setSelectedLocation(newLocation);
     form.setFieldsValue({ location: newLocation });
+  };
+
+  const getLocation = async (latitude: number, longitude: number): Promise<string> => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
+      );
+
+      if (response.status === 200) {
+        const results = response.data.results;
+        if (results.length > 0) {
+          const formattedAddress = results[0].formatted_address;
+          return formattedAddress;
+        }
+      }
+    } catch (error) {
+      console.error("Error getting location data:", error);
+    }
+    return "";
   };
 
   const handleCancel = () => setPreviewOpen(false);
@@ -65,16 +92,18 @@ const CreateSportAreaPage = () => {
     </div>
   );
 
-  const onFinish = async (values: Store) => {   
+  const onFinish = async (values: Store) => {
+    const location = await getLocation(values.location.lat, values.location.lng)
     const data = {
       name: values.name,
       description: values.description,
+      sportType: values.sporttype,
       carPark: values.facilities?.includes("carpark") ? true : false,
       shower: values.facilities?.includes("shower") ? true : false,
       latitude: values.location.lat,
       longitude: values.location.lng,
-      location: values.location,
-      image: fileList.map(file => file.uid),
+      location: location,
+      image: fileList.map((file) => file.uid),
     };
     console.log(data);
   };
@@ -82,7 +111,12 @@ const CreateSportAreaPage = () => {
   return (
     <div className="create-sportarea-container">
       <div className="create-sportarea-header">Create Sport Area Form</div>
-      <Form form={form} style={{ marginTop: "30px" }} layout="vertical" onFinish={onFinish}>
+      <Form
+        form={form}
+        style={{ marginTop: "30px" }}
+        layout="vertical"
+        onFinish={onFinish}
+      >
         <Form.Item
           label="Name"
           name="name"
@@ -110,6 +144,21 @@ const CreateSportAreaPage = () => {
           <TextArea rows={4} placeholder="Description" />
         </Form.Item>
         <Form.Item
+          label="Sport Type"
+          name="sporttype"
+          style={{ marginBottom: "16px" }}
+          rules={[{ required: true, message: "Please select a sport type" }]}
+        >
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            onChange={() => {}}
+            options={sportTypeOptions}
+          />
+        </Form.Item>
+        <Form.Item
           label="Facilities"
           name="facilities"
           style={{ marginBottom: "16px" }}
@@ -127,10 +176,8 @@ const CreateSportAreaPage = () => {
           label="Location"
           name="location"
           style={{ marginBottom: "16px" }}
-          initialValue={selectedLocation ? selectedLocation : ''}
-          rules={[
-            { required: true, message: 'Please select a location!' },
-          ]}
+          initialValue={selectedLocation ? selectedLocation : ""}
+          rules={[{ required: true, message: "Please select a location!" }]}
         >
           <MapComponent
             selectedLocation={selectedLocation}
