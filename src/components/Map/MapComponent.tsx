@@ -1,5 +1,5 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 const containerStyle = {
@@ -7,45 +7,69 @@ const containerStyle = {
   height: "400px",
 };
 
-const center = {
-  lat: -3.745,
-  lng: -38.523,
-};
+interface MapComponentProps {
+  selectedLocation: google.maps.LatLngLiteral | null;
+  handleLocationChange: (newLocation: google.maps.LatLngLiteral | null) => void;
+}
 
-const MapComponent = () => {
+const MapComponent : React.FC<MapComponentProps> = ({ selectedLocation, handleLocationChange }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
 
-  const [map, setMap] = React.useState(null);
-  const [selectedLocation, setSelectedLocation] =
-    useState<google.maps.LatLngLiteral | null>(null);
+  const [map, setMap] = React.useState<google.maps.Map | null>(null);
+  const [center, setCenter] = useState({ lat: 13.736717, lng: 100.523186 });
 
   const handleMapClick = (e: google.maps.MapMouseEvent) => {
     if (e.latLng) {
-      setSelectedLocation({
+      handleLocationChange({
         lat: e.latLng.lat(),
         lng: e.latLng.lng(),
       });
     }
     console.log(e.latLng?.lat());
     console.log(e.latLng?.lng());
-    console.log(selectedLocation);
-    
   };
+
+  const handleMapLoad = (map: google.maps.Map) => {
+    // This function is called when the map has loaded.
+    setMap(map);
+  };
+
+  useEffect(() => {
+    const fetchSportArea = async () => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          async function (position) {
+            setCenter({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            });
+          },
+          function (error) {
+            console.error("Error getting geolocation:", error);
+          }
+        );
+      } else {
+        alert("Geolocation is not supported by this browser");
+      }
+    };
+    fetchSportArea();
+  }, []);
 
   return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
       zoom={15}
+      onLoad={handleMapLoad}
       onClick={handleMapClick}
     >
       {selectedLocation && (
         <Marker
           position={selectedLocation}
-          onClick={() => setSelectedLocation(null)}
+          onClick={() => handleLocationChange(null)}
         />
       )}
     </GoogleMap>

@@ -21,11 +21,23 @@ const CreateSportAreaPage = () => {
     { value: "shower", label: "Shower" },
   ];
 
+  const [form] = Form.useForm();
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isImageError, setIsImageError] = useState(false);
+
+  const [selectedLocation, setSelectedLocation] =
+    useState<google.maps.LatLngLiteral | null>(null);
+
+  const handleLocationChange = (
+    newLocation: google.maps.LatLngLiteral | null
+  ) => {
+    setSelectedLocation(newLocation);
+    form.setFieldsValue({ location: newLocation });
+  };
 
   const handleCancel = () => setPreviewOpen(false);
 
@@ -53,25 +65,24 @@ const CreateSportAreaPage = () => {
     </div>
   );
 
-  const validateImages = (files: UploadFile<any>[]) => {
-    return files.filter((file) => file.status !== "error");
-  };
-
-  const onFinish = async (values: Store) => {
+  const onFinish = async (values: Store) => {   
     const data = {
       name: values.name,
       description: values.description,
-      facilities: values.facilities ? values.facilities : [],
+      carPark: values.facilities?.includes("carpark") ? true : false,
+      shower: values.facilities?.includes("shower") ? true : false,
+      latitude: values.location.lat,
+      longitude: values.location.lng,
       location: values.location,
-      image: validateImages(fileList),
+      image: fileList.map(file => file.uid),
     };
     console.log(data);
   };
 
   return (
     <div className="create-sportarea-container">
-      <div className="create-sportarea-header">CreateSportAreaForm</div>
-      <Form style={{ marginTop: "30px" }} layout="vertical" onFinish={onFinish}>
+      <div className="create-sportarea-header">Create Sport Area Form</div>
+      <Form form={form} style={{ marginTop: "30px" }} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Name"
           name="name"
@@ -116,8 +127,15 @@ const CreateSportAreaPage = () => {
           label="Location"
           name="location"
           style={{ marginBottom: "16px" }}
+          initialValue={selectedLocation ? selectedLocation : ''}
+          rules={[
+            { required: true, message: 'Please select a location!' },
+          ]}
         >
-          <MapComponent/>
+          <MapComponent
+            selectedLocation={selectedLocation}
+            handleLocationChange={handleLocationChange}
+          />
         </Form.Item>
 
         <Form.Item
