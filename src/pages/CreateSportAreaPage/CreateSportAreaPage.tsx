@@ -1,4 +1,12 @@
-import { Button, Form, Input, Modal, Select, SelectProps } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Select,
+  SelectProps,
+} from "antd";
 import "./CreateSportAreaPage.css";
 import { Store } from "antd/es/form/interface";
 import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
@@ -47,7 +55,10 @@ const CreateSportAreaPage = () => {
     form.setFieldsValue({ location: newLocation });
   };
 
-  const getLocation = async (latitude: number, longitude: number): Promise<string> => {
+  const getLocation = async (
+    latitude: number,
+    longitude: number
+  ): Promise<string> => {
     try {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
@@ -93,11 +104,15 @@ const CreateSportAreaPage = () => {
   );
 
   const onFinish = async (values: Store) => {
-    const location = await getLocation(values.location.lat, values.location.lng)
+    const location = await getLocation(
+      values.location.lat,
+      values.location.lng
+    );
     const data = {
       name: values.name,
       description: values.description,
       sportType: values.sporttype,
+      price: values.price,
       carPark: values.facilities?.includes("carpark") ? true : false,
       shower: values.facilities?.includes("shower") ? true : false,
       latitude: values.location.lat,
@@ -156,6 +171,24 @@ const CreateSportAreaPage = () => {
             placeholder="Please select"
             onChange={() => {}}
             options={sportTypeOptions}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Estimated Price (Baht)"
+          name="price"
+          style={{ marginBottom: "16px" }}
+          rules={[
+            {
+              required: true,
+              message: "Please input your price",
+            },
+          ]}
+        >
+          <InputNumber
+            min={0}
+            max={9999}
+            style={{ width: "100%" }}
+            placeholder="Price"
           />
         </Form.Item>
         <Form.Item
