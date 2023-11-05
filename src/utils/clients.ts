@@ -7,6 +7,8 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
+import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
+
 
 const client = axios.create({
   baseURL: "http://localhost:8080",
@@ -55,6 +57,10 @@ const createBooking = async (request: CreateBookingRequest): Promise<CreateBooki
   return response.data;
 };
 
+const searchSportArea = async (params: SearchSportAreaRequestDto) => {
+  const response = await client.get("/sportArea", {params: params});
+  return response;
+}
 export const apiClient = {
   client,
   postLogin,
@@ -65,4 +71,5 @@ export const apiClient = {
   getSportAreaByID,
   getAvailableBooking,
   createBooking,
+  searchSportArea
 };

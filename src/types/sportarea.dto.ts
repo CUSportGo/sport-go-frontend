@@ -1,27 +1,44 @@
-export interface SportArea {
+export interface SportAreaResponseDto {
   id: string;
   name: string;
-  imageURL: string[];
+  image: string[];
   shower: boolean;
   carPark: boolean;
   sportType: string[];
   location: string;
+  description: string;
+  price: string;
+  sportList?: SportList[];
+}
+
+export interface SearchSportAreaRequestDto {
+  keyword?: string;
+  maxDistance?: number;
   latitude: number;
   longitude: number;
+  type?: string[];
+}
+
+export interface SportArea {
+  id: string;
+  name: string;
+  imageURL: string;
+  sportType: string[];
+  location: string;
   description: string;
-  price: number;
+  distance: number;
+  price: string;
   sportList: SportList[];
 }
 
 export interface SportList {
   sportType: string;
-  area: AreaDetail[];
+  area: SportDetail[];
 }
 
-export interface AreaDetail {
-  id: string;
+export interface SportDetail {
   name: string;
   openTime: string;
   closeTime: string;
-  price: number;
+  price: string;
 }
