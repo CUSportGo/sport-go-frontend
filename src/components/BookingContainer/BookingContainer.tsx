@@ -6,10 +6,12 @@ import dayjs, { Dayjs } from "dayjs";
 import { Option } from "antd/es/mentions";
 import {
   BookingTimeSlot,
+  CreateBookingRequest,
   GetAvailableBookingRequest,
   GetAvailableBookingResponse,
 } from "../../types/booking.dto";
 import { apiClient } from "../../utils/clients";
+import { useNavigate } from "react-router-dom";
 
 interface BookingContainerProp {
   sportAreaId: string;
@@ -27,10 +29,19 @@ interface BookingSportFormProp {
   areas: AreaDetail[];
 }
 
+interface BookingSportFormValue {
+  date: Dayjs | null;
+  area: string;
+  timeslot: string;
+}
+
 const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportType, areas }) => {
-  const [form] = Form.useForm<{ date: Dayjs | null; area: string }>();
+  const navigate = useNavigate();
+
+  const [form] = Form.useForm<BookingSportFormValue>();
   const date = Form.useWatch("date", form)?.format("YYYY-MM-DD");
   const areaId = Form.useWatch("area", form);
+  const timeSlotIndex = Form.useWatch("timeslot", form);
 
   const [selectArea, setSelectArea] = useState<AreaDetail | null>(null);
   const [timeSlot, setTimeSlot] = useState<BookingTimeSlot[]>([]);
@@ -76,7 +87,32 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportTy
     }
   }, [date, areaId]);
 
-  const onFinishBooking = () => {};
+  const onFinishBooking = async (value: BookingSportFormValue) => {
+    const timeslot = timeSlot[parseInt(timeSlotIndex)];
+    const startAt = timeslot.startTime;
+    const endAt = timeslot.endTime;
+
+    const startDateTime = new Date(startAt);
+    const endDateTime = new Date(endAt);
+
+    const request: CreateBookingRequest = {
+      sportAreaID: sportAreaId,
+      sportType: sportType,
+      areaID: areaId,
+      startAt: startDateTime.toISOString(),
+      endAt: endDateTime.toISOString(),
+    };
+
+    await apiClient
+      .createBooking(request)
+      .then((res) => {
+        console.log(res);
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -109,13 +145,13 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportTy
             <hr />
             <p style={{ marginLeft: "10px" }}>Price: {selectArea?.price} Baht/hour</p>
             <Form.Item
-              name="time"
+              name="timeslot"
               label="Time slot"
               rules={[{ required: true, message: "Please select booking time slot" }]}
             >
               <Select placeholder="Select booking time slot">
-                {timeSlotString.map((timeslot: string) => (
-                  <Option value={timeslot}>{timeslot}</Option>
+                {timeSlotString.map((timeslot: string, idx: number) => (
+                  <Option value={idx.toString()}>{timeslot}</Option>
                 ))}
               </Select>
             </Form.Item>
