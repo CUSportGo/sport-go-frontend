@@ -1,5 +1,5 @@
 import "./BookingContainer.css";
-import { AreaDetail, SportList } from "../../types/sportarea.dto";
+import { SportDetail, SportList } from "../../types/sportarea.dto";
 import { Button, Collapse, DatePicker, Form, Select, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
@@ -26,7 +26,7 @@ interface BookingSportItemProp {
 interface BookingSportFormProp {
   sportAreaId: string;
   sportType: string;
-  areas: AreaDetail[];
+  areas: SportDetail[];
 }
 
 interface BookingSportFormValue {
@@ -43,7 +43,7 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportTy
   const areaId = Form.useWatch("area", form);
   const timeSlotIndex = Form.useWatch("timeslot", form);
 
-  const [selectArea, setSelectArea] = useState<AreaDetail | null>(null);
+  const [selectArea, setSelectArea] = useState<SportDetail | null>(null);
   const [timeSlot, setTimeSlot] = useState<BookingTimeSlot[]>([]);
   const [timeSlotString, setTimeSlotString] = useState<string[]>([]);
 
@@ -135,7 +135,7 @@ const BookingSportForm: React.FC<BookingSportFormProp> = ({ sportAreaId, sportTy
           ]}
         >
           <Select placeholder="Select Area">
-            {areas.map((area: AreaDetail) => (
+            {areas.map((area: SportDetail) => (
               <Option value={area.id}>{area.name}</Option>
             ))}
           </Select>
