@@ -9,6 +9,7 @@ import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import Navbar from "./components/Navbar/Navbar";
+import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 
 function App() {
   const [navbar, setNavbar] = useState(false);
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
+        <Route path="/sportarea/:id" element={<SportAreaPage />} />
       </Routes>
     </div>
   );
