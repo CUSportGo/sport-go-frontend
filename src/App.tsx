@@ -10,19 +10,35 @@ import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSu
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import Navbar from "./components/Navbar/Navbar";
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function App() {
-  const [navbar, setNavbar] = useState(false);
+  const [showNavbar, setShowNavbar] = useState(true);
+  const location = useLocation();
+  useEffect(() => {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/forgotpassword"
+    ) {
+      setShowNavbar(false);
+    } else {
+      setShowNavbar(true);
+    }
+  }, [location]);
+
   return (
     <div className="app">
-      <Navbar></Navbar>
+      {showNavbar && <Navbar></Navbar>}
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
+        <Route path="/resetsuccess" element={<ResetPasswordSuccessfully />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
       </Routes>
     </div>
