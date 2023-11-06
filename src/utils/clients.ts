@@ -6,11 +6,11 @@ import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 const client = axios.create({
   baseURL: "http://localhost:8080",
-  withCredentials: true
+  withCredentials: true,
 });
 
 const postLogin = async (data: object) => {
-  const response = await client.post("/auth/login", data)
+  const response = await client.post("/auth/login", data);
   return response;
 };
 
@@ -34,6 +34,11 @@ const postForgotPassword = async (data: object) => {
   return response;
 }
 
+const getSportAreaByID = async (id: any) => {
+  const response = await client.get("/sportArea/" + id);
+  return response;
+};
+
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   const response = await client.get("/sportArea", {params: params});
   return response;
@@ -53,4 +58,5 @@ export const apiClient = {
   postForgotPassword,
   searchSportArea,
   createSportArea,
+  getSportAreaByID,
 };

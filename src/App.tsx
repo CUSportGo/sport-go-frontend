@@ -9,6 +9,7 @@ import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage";
+import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
         <Route path="/create-sportarea" element={<CreateSportAreaPage/>} />
+        <Route path="/sportarea/:id" element={<SportAreaPage />} />
       </Routes>
     </div>
   );
