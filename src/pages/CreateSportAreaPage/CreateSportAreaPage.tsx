@@ -284,7 +284,7 @@ const CreateSportAreaPage = () => {
           style={{ marginBottom: "11px" }}
         >
           <Button className="create-sportarea-button" htmlType="submit">
-            Register
+            Confirm
           </Button>
         </Form.Item>
       </Form>
