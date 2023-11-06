@@ -28,8 +28,6 @@ const MapComponent : React.FC<MapComponentProps> = ({ selectedLocation, handleLo
         lng: e.latLng.lng(),
       });
     }
-    console.log(e.latLng?.lat());
-    console.log(e.latLng?.lng());
   };
 
   const handleMapLoad = (map: google.maps.Map) => {

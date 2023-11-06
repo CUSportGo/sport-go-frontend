@@ -126,12 +126,10 @@ const CreateSportAreaPage = () => {
       location: location,
       image: fileList,
     };
-    // console.log(data);
     await apiClient
       .createSportArea(data)
       .then((res) => {
-        console.log(res);
-        // navigate("/owner");
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);
