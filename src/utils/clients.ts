@@ -1,5 +1,11 @@
 import axios from "axios";
 import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth.dto";
+import {
+  CreateBookingRequest,
+  CreateBookingResponse,
+  GetAvailableBookingRequest,
+  GetAvailableBookingResponse,
+} from "../types/booking.dto";
 import { storage } from "./storage";
 import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
@@ -32,18 +38,29 @@ const resetPassword = async (request: ResetPasswordRequestDto) => {
 const postForgotPassword = async (data: object) => {
   const response = await client.post("/auth/forgotPassword", data);
   return response;
-}
+};
 
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
   return response;
 };
 
+const getAvailableBooking = async (
+  request: GetAvailableBookingRequest
+): Promise<GetAvailableBookingResponse> => {
+  const response = await client.post("/booking/available", request);
+  return response.data;
+};
+
+const createBooking = async (request: CreateBookingRequest): Promise<CreateBookingResponse> => {
+  const response = await client.post("/booking", request);
+  return response.data;
+};
+
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   const response = await client.get("/sportArea", {params: params});
   return response;
 }
-
 export const apiClient = {
   client,
   postLogin,
@@ -52,5 +69,7 @@ export const apiClient = {
   resetPassword,
   postForgotPassword,
   getSportAreaByID,
+  getAvailableBooking,
+  createBooking,
   searchSportArea
 };
