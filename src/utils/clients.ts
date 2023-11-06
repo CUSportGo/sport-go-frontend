@@ -6,14 +6,16 @@ import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 const client = axios.create({
   baseURL: process.env.BASEURL,
+  withCredentials: true
 });
 
 const AccountClient = axios.create({
   baseURL: process.env.ACCOUNTURL,
+  withCredentials: true
 });
 
 const postLogin = async (data: object) => {
-  const response = await client.post("/auth/login", data)
+  const response = await client.post("/auth/login", data);
   return response;
 };
 
@@ -51,6 +53,11 @@ const unbanUser = async (userId: string) => {
   return response;
 }
 
+const getSportAreaByID = async (id: any) => {
+  const response = await client.get("/sportArea/" + id);
+  return response;
+};
+
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   const response = await client.get("/sportArea", { params: params });
   return response;
@@ -66,5 +73,6 @@ export const apiClient = {
   getAllUser,
   banUser,
   unbanUser,
+  getSportAreaByID,
   searchSportArea
 };
