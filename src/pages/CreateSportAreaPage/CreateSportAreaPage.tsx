@@ -16,6 +16,8 @@ import TextArea from "antd/es/input/TextArea";
 import MapComponent from "../../components/Map/MapComponent";
 import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 import axios from "axios";
+import { apiClient } from "../../utils/clients";
+import { useNavigate } from "react-router-dom";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -38,6 +40,8 @@ const CreateSportAreaPage = () => {
   });
 
   const [form] = Form.useForm();
+
+  const navigate = useNavigate();
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -91,7 +95,9 @@ const CreateSportAreaPage = () => {
     );
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
+  const handleUploadChange: UploadProps["onChange"] = ({
+    fileList: newFileList,
+  }) => {
     setFileList(newFileList);
     setIsImageError(newFileList.some((file) => file.status === "error"));
   };
@@ -118,9 +124,18 @@ const CreateSportAreaPage = () => {
       latitude: values.location.lat,
       longitude: values.location.lng,
       location: location,
-      image: fileList.map((file) => file.uid),
+      image: fileList,
     };
-    console.log(data);
+    // console.log(data);
+    await apiClient
+      .createSportArea(data)
+      .then((res) => {
+        console.log(res);
+        // navigate("/owner");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -236,13 +251,14 @@ const CreateSportAreaPage = () => {
         >
           <div>
             <Upload
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188" //mock
               listType="picture-card"
               fileList={fileList}
               onPreview={handlePreview}
-              onChange={handleChange}
+              onChange={handleUploadChange}
             >
-              {fileList.length >= 8 || isImageError ? null : uploadButton}
+              {/* max 20 images */}
+              {fileList.length >= 20 || isImageError ? null : uploadButton}
             </Upload>
             <Modal
               open={previewOpen}

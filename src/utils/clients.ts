@@ -39,6 +39,11 @@ const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   return response;
 }
 
+const createSportArea = async (data: object) => {
+  const response = await client.post("/sportarea", data);
+  return response;
+}
+
 export const apiClient = {
   client,
   postLogin,
@@ -46,5 +51,6 @@ export const apiClient = {
   googleOAuth,
   resetPassword,
   postForgotPassword,
-  searchSportArea
+  searchSportArea,
+  createSportArea,
 };
