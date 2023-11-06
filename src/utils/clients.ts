@@ -5,12 +5,7 @@ import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 
 const client = axios.create({
-  baseURL: process.env.BASEURL,
-  withCredentials: true
-});
-
-const AccountClient = axios.create({
-  baseURL: process.env.ACCOUNTURL,
+  baseURL: process.env.REACT_APP_BASEURL,
   withCredentials: true
 });
 
@@ -45,11 +40,11 @@ const getAllUser = async () => {
 };
 
 const banUser = async (userId: string) => {
-  const response = await AccountClient.get("/ban/" + userId);
+  const response = await client.patch("admin/ban/" + userId);
   return response;
 }
 const unbanUser = async (userId: string) => {
-  const response = await AccountClient.get("/unban/" + userId);
+  const response = await client.patch("admin/unban/" + userId);
   return response;
 }
 

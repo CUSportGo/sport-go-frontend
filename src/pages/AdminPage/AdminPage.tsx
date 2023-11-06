@@ -8,201 +8,19 @@ import { User } from "../../types/user.dto";
 import classnames from "classnames";
 
 const AdminPage = () => {
-  const [activeUser, setActiveUser] = useState<User[]>([
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "abc@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-    {
-      email: "blebike@hotmail.com",
-      firstName: "begleza",
-      lastName: "byet",
-      status: "ACTIVE",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-  ]);
-  const [bannedUser, setBannedUser] = useState<User[]>([
-    {
-      email: "zuka@hotmail.com",
-      firstName: "zuka",
-      lastName: "byet",
-      status: "BANNED",
-      id: 1,
-      phoneNumber: "0987",
-      role: "User",
-    },
-  ]);
+  const [activeUser, setActiveUser] = useState<User[]>([]);
+  const [bannedUser, setBannedUser] = useState<User[]>([]);
   const [displayUser, setDisplayUser] = useState<User[]>(activeUser);
 
-  const getAllUser = async () => {
+  const getAllUser = () => {
     setLoading(true);
-    await apiClient.getAllUser().then((res) => {
+    apiClient.getAllUser().then((res) => {
       const users: User[] = res.data;
       const activeUsers = users.filter((user) => user.status === "ACTIVE");
       const bannedUsers = users.filter((user) => user.status === "BANNED");
       setActiveUser(activeUsers);
       setBannedUser(bannedUsers);
-      console.log(res);
+      setDisplayUser(activeUsers);
     });
     setLoading(false);
   };
@@ -210,9 +28,9 @@ const AdminPage = () => {
   const [someoneGotBan, setSomeoneGotBan] = useState(false);
   const [userIdToBan, setUserIdToBan] = useState<any>();
 
-  const handleBanUser = async (userId: string) => {
+  const handleBanUser = (userId: string) => {
     setLoading(true);
-    await apiClient.banUser(userId).then(() => {
+    apiClient.banUser(userId).then(() => {
       setSomeoneGotBan(!someoneGotBan);
       setUserIdToBan("");
     });
@@ -220,9 +38,9 @@ const AdminPage = () => {
     setLoading(false);
   };
 
-  const handleUnBanUser = async (userId: string) => {
+  const handleUnBanUser = (userId: string) => {
     setLoading(true);
-    await apiClient.unbanUser(userId).then(() => {
+    apiClient.unbanUser(userId).then(() => {
       setSomeoneGotBan(!someoneGotBan);
       setUserIdToBan("");
     });
@@ -233,8 +51,7 @@ const AdminPage = () => {
   const [loading, setLoading] = useState<boolean>();
 
   const [isUnBannedUser, setIsUnBannedUser] = useState(true);
-  function handleUnbannedOrBannedClick(userPermission: boolean) {
-    console.log(userPermission);
+  const handleUnbannedOrBannedClick = (userPermission: boolean) => {
     if (isUnBannedUser == false) {
       setDisplayUser(activeUser);
     }
@@ -245,7 +62,7 @@ const AdminPage = () => {
     if (isUnBannedUser !== userPermission) {
       setIsUnBannedUser(userPermission);
     }
-  }
+  };
 
   const checkStatusUser = (status: string) => {
     if (status === "ACTIVE") return true;
@@ -255,20 +72,16 @@ const AdminPage = () => {
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const searchValue = event.target.value.toLowerCase(); // Convert the input to lowercase for case-insensitive search
-
-    // Filter the activeUser array based on the input
+    const searchValue = event.target.value.toLowerCase();
     const filteredUsers = activeUser.filter((user) => {
-      const userEmail = user.email.toLowerCase(); // Convert email to lowercase for case-insensitive comparison
+      const userEmail = user.email.toLowerCase();
       return userEmail.includes(searchValue);
     });
-
-    // Set the filtered users to the displayUser state
     setDisplayUser(filteredUsers);
   };
 
   useEffect(() => {
-    // getAllUser();
+    getAllUser();
   }, [someoneGotBan, email]);
 
   return (
@@ -291,7 +104,7 @@ const AdminPage = () => {
         <div className="button-panel-banPage">
           <div
             onClick={() => {
-              handleUnbannedOrBannedClick(!isUnBannedUser);
+              handleUnbannedOrBannedClick(true);
             }}
             className={classnames("button-UnBannedUser", {
               clicked: isUnBannedUser,
@@ -301,7 +114,7 @@ const AdminPage = () => {
           </div>
           <div
             onClick={() => {
-              handleUnbannedOrBannedClick(!isUnBannedUser);
+              handleUnbannedOrBannedClick(false);
             }}
             className={classnames("button-BannedUser", {
               clicked: !isUnBannedUser,
