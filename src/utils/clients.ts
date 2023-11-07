@@ -3,7 +3,6 @@ import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth
 import { storage } from "./storage";
 import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
-
 const client = axios.create({
   baseURL: "http://localhost:8080",
   withCredentials: true,
@@ -32,7 +31,7 @@ const resetPassword = async (request: ResetPasswordRequestDto) => {
 const postForgotPassword = async (data: object) => {
   const response = await client.post("/auth/forgotPassword", data);
   return response;
-}
+};
 
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
@@ -40,14 +39,14 @@ const getSportAreaByID = async (id: any) => {
 };
 
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
-  const response = await client.get("/sportArea", {params: params});
+  const response = await client.get("/sportArea", { params: params });
   return response;
-}
+};
 
-const createSportArea = async (data: object) => {
+const createSportArea = async (data: FormData) => {
   const response = await client.post("/sportarea", data);
   return response;
-}
+};
 
 export const apiClient = {
   client,
