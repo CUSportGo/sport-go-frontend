@@ -7,57 +7,41 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
 import { UserType } from "../../utils/enums/usertype.enums";
 import { apiClient } from "../../utils/clients";
-// import "../../pictures/sport_go_logo.svg"
 import Logo from "../../pictures/sport_go_logo.svg";
 import { commonUtils } from "../../utils/common";
 
-const getBase64 = (img: RcFile, callback: (url: string) => void) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result as string));
-  reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file: RcFile) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-  return isJpgOrPng && isLt2M;
-};
-
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState<string>();
-  const navigate = useNavigate();
+  const [image, setImage] = useState<File | null>(null);
+  const [imageUrl, setImageUrl] = useState<string>("");
 
+  const navigate = useNavigate();
   const { Option } = Select;
 
-  const handleChange: UploadProps["onChange"] = (info: UploadChangeParam<UploadFile>) => {
-    console.log(info.file);
-
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-    if (info.file.status === "done") {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj as RcFile, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-      });
-    }
+  const handleUploadFileChange: UploadProps["onChange"] = (info: UploadChangeParam<UploadFile>) => {
+    const blobObj = new Blob([info.file as RcFile], { type: info.file.type });
+    const fileObj = new File([blobObj], info.file.name, { type: info.file.type });
+    setImage(fileObj);
+    setImageUrl(URL.createObjectURL(fileObj));
   };
 
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
+  const getBase64 = (img: RcFile, callback: (url: string) => void) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result as string));
+    reader.readAsDataURL(img);
+  };
+
+  const validateImage = (file: File) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
 
   const validatePhoneFormat = (_: any, value: string, callback: (message?: string) => void) => {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Regular expression for xxx-xxx-xxxx format
@@ -70,22 +54,33 @@ const RegisterPage = () => {
   };
 
   const onFinish = async (values: Store) => {
-    const data = {
-      firstName: values.firstname,
-      lastName: values.lastname,
-      email: values.email,
-      phoneNumber: values.phonenumber,
-      password: values.password,
-      role: values.role,
-    };
+    const formData = new FormData();
+    formData.append("firstName", values.firstname);
+    formData.append("lastName", values.lastname);
+    formData.append("email", values.email);
+    formData.append("phoneNumber", values.phonenumber);
+    formData.append("password", values.password);
+    formData.append("role", values.role);
+    if (image && validateImage(image)) {
+      formData.append("file", image);
+    }
     await apiClient
-      .postRegister(data)
+      .postRegister(formData)
       .then((res) => {
         navigate("/login");
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const UploadButton = () => {
+    return (
+      <div>
+        {loading ? <LoadingOutlined /> : <PlusOutlined />}
+        <div style={{ marginTop: 8 }}>Upload</div>
+      </div>
+    );
   };
 
   return (
@@ -112,9 +107,10 @@ const RegisterPage = () => {
                   listType="picture-circle"
                   className="avatar-uploader"
                   showUploadList={false}
-                  action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
-                  beforeUpload={beforeUpload}
-                  onChange={handleChange}
+                  beforeUpload={() => {
+                    return false;
+                  }}
+                  onChange={handleUploadFileChange}
                 >
                   {imageUrl ? (
                     <img
@@ -128,7 +124,7 @@ const RegisterPage = () => {
                       }}
                     />
                   ) : (
-                    uploadButton
+                    <UploadButton />
                   )}
                 </Upload>
               </div>
