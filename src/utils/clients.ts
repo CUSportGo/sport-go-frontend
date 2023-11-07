@@ -3,6 +3,8 @@ import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth
 import {
   CreateBookingRequest,
   CreateBookingResponse,
+  CreateSportareaRequest,
+  CreateSportareaResponse,
   GetAvailableBookingRequest,
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
@@ -76,9 +78,9 @@ const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   return response;
 }
 
-const createSportArea = async (data: object) => {
+const createSportArea = async (data: CreateSportareaRequest): Promise<CreateSportareaResponse> => {
   const response = await client.post("/sportarea", data);
-  return response;
+  return response.data;
 }
 
 export const apiClient = {

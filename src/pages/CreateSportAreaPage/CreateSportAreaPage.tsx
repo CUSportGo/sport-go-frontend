@@ -18,6 +18,7 @@ import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 import axios from "axios";
 import { apiClient } from "../../utils/clients";
 import { useNavigate } from "react-router-dom";
+import { CreateSportareaRequest } from "../../types/booking.dto";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -114,7 +115,7 @@ const CreateSportAreaPage = () => {
       values.location.lat,
       values.location.lng
     );
-    const data = {
+    const data : CreateSportareaRequest = {
       name: values.name,
       description: values.description,
       sportType: values.sporttype,
@@ -124,7 +125,7 @@ const CreateSportAreaPage = () => {
       latitude: values.location.lat,
       longitude: values.location.lng,
       location: location,
-      image: fileList,
+      image: [],
     };
     await apiClient
       .createSportArea(data)
