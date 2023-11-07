@@ -1,0 +1,13 @@
+.booking-container {
+  padding: 20px;
+}
+
+.booking-sportarea-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.booking-sportarea-item-container {
+  background-color: #dbd7fd;
+}

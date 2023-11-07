@@ -4,6 +4,7 @@ import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/clients";
 import { SportAreaResponseDto } from "../../types/sportarea.dto";
+import BookingContainer from "../../components/BookingContainer/BookingContainer";
 
 const SportAreaPage = () => {
   const { id } = useParams();
@@ -17,11 +18,11 @@ const SportAreaPage = () => {
     location: "",
     description: "",
     price: "",
-    image: []
+    image: [],
+    sportList: [],
   };
 
-  const [sportAreaInfo, setSportAreaInfo] =
-    useState<SportAreaResponseDto>(mock);
+  const [sportAreaInfo, setSportAreaInfo] = useState<SportAreaResponseDto>(mock);
 
   useEffect(() => {
     const fetchSportArea = async () => {
@@ -48,6 +49,7 @@ const SportAreaPage = () => {
         shower={sportAreaInfo.shower}
         image={sportAreaInfo.image}
       />
+      <BookingContainer sportAreaId={id || ""} sportList={sportAreaInfo.sportList} />
     </div>
   );
 };
