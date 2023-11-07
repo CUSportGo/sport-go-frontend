@@ -3,6 +3,7 @@ import { Divider } from "antd";
 import "./SportAreaInfo.css";
 import { BsCheck, BsX } from "react-icons/bs";
 import { Image } from "antd";
+import BookingContainer from "../BookingContainer/BookingContainer";
 
 interface SportAreaInfoProps {
   name: string;
@@ -30,7 +31,11 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
       return <BsX style={{ height: "20px", width: "20px" }} />;
     }
   };
-  const displayedImages = showMoreImages ? image : image.slice(0, 4);
+  const displayedImages = showMoreImages
+    ? image
+    : image && image.length > 4
+    ? image.slice(0, 4)
+    : image;
 
   const handleImageClick = () => {
     setShowMoreImages(!showMoreImages);
@@ -52,54 +57,47 @@ const SportAreaInfo: React.FC<SportAreaInfoProps> = ({
         <div className="facilities-item">{checkFacilities(shower)}Shower</div>
       </div>
       <div className="sportarea-image-container">
-        {displayedImages.map((item, index) => {
-          return (
-            <div key={index} style={{ position: "relative" }}>
-              {index === 3 && image.length > 4 && !showMoreImages && (
-                <div
-                  className="viewmore-overlay"
+        {displayedImages &&
+          displayedImages.map((item, index) => {
+            return (
+              <div key={index} style={{ position: "relative" }}>
+                {index === 3 && image.length > 4 && !showMoreImages && (
+                  <div
+                    className="viewmore-overlay"
+                    onClick={index === 3 && !showMoreImages ? () => handleImageClick() : () => {}}
+                  >
+                    View More
+                  </div>
+                )}
+                <Image
+                  style={
+                    index === 3 && !showMoreImages && image.length > 4
+                      ? {
+                          objectFit: "cover",
+                          cursor: "pointer",
+                          position: "relative",
+                          aspectRatio: "1/1",
+                          filter: "blur(3px)",
+                        }
+                      : {
+                          objectFit: "cover",
+                          cursor: "pointer",
+                          position: "relative",
+                          aspectRatio: "1/1",
+                        }
+                  }
+                  src={item}
+                  key={index}
+                  preview={index === 3 && !showMoreImages && image.length > 4 ? false : true}
                   onClick={
-                    index === 3 && !showMoreImages
+                    index === 3 && !showMoreImages && image.length > 4
                       ? () => handleImageClick()
                       : () => {}
                   }
-                >
-                  View More
-                </div>
-              )}
-              <Image
-                style={
-                  index === 3 && !showMoreImages && image.length > 4
-                    ? {
-                        objectFit: "cover",
-                        cursor: "pointer",
-                        position: "relative",
-                        aspectRatio: "1/1",
-                        filter: "blur(3px)",
-                      }
-                    : {
-                        objectFit: "cover",
-                        cursor: "pointer",
-                        position: "relative",
-                        aspectRatio: "1/1",
-                      }
-                }
-                src={item}
-                key={index}
-                preview={
-                  index === 3 && !showMoreImages && image.length > 4
-                    ? false
-                    : true
-                }
-                onClick={
-                  index === 3 && !showMoreImages && image.length > 4
-                    ? () => handleImageClick()
-                    : () => {}
-                }
-              />
-            </div>
-          );
-        })}
+                />
+              </div>
+            );
+          })}
       </div>
     </div>
   );
