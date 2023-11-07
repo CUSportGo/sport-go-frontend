@@ -10,8 +10,8 @@ import { storage } from "./storage";
 import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 const client = axios.create({
-  baseURL: "http://localhost:8080",
-  withCredentials: true,
+  baseURL: process.env.REACT_APP_BASEURL,
+  withCredentials: true
 });
 
 const postLogin = async (data: object) => {
@@ -44,6 +44,20 @@ const postForgotPassword = async (data: object) => {
   return response;
 };
 
+const getAllUser = async () => {
+  const response = await client.get("/user");
+  return response;
+};
+
+const banUser = async (userId: string) => {
+  const response = await client.patch("admin/ban/" + userId);
+  return response;
+}
+const unbanUser = async (userId: string) => {
+  const response = await client.patch("admin/unban/" + userId);
+  return response;
+}
+
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
   return response;
@@ -74,6 +88,9 @@ export const apiClient = {
   googleOAuth,
   resetPassword,
   postForgotPassword,
+  getAllUser,
+  banUser,
+  unbanUser,
   getSportAreaByID,
   searchSportArea,
   postLogout,

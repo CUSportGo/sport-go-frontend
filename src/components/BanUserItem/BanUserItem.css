@@ -1,0 +1,28 @@
+.userInfo-container {
+    height: 64px;
+    border: 1px solid black;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.username-text-banPage {
+    margin-left: 25px;
+}
+
+.username-text-banPage,
+.email-text-banPage,
+.tel-text-banPage {
+    width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.button-ban {
+    flex: 0;
+    margin-right: 20px;
+}

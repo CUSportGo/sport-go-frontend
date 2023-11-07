@@ -9,6 +9,8 @@ import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import Navbar from "./components/Navbar/Navbar";
+import AdminPage from "./pages/AdminPage/AdminPage";
+
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
@@ -38,7 +40,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
+
         <Route path="/resetsuccess" element={<ResetPasswordSuccessfully />} />
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
       </Routes>
     </div>
