@@ -2,6 +2,7 @@ import { Button } from "antd";
 import "./SportAreaHomePage.css";
 import { useNavigate } from "react-router-dom";
 import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
+import AddAreaForm from "../../components/AddAreaForm/AddAreaForm";
 
 const SportAreaHomePage = () => {
   const isSportAreaCreated = true;
@@ -11,7 +12,9 @@ const SportAreaHomePage = () => {
       <SportAreaInfo
         name={"Test01"}
         locaiton={"locationlocationlocationlocation"}
-        description={"descriptiondescriptiondescriptiondescription\ndescriptiondescriptiondescriptiondescription"}
+        description={
+          "descriptiondescriptiondescriptiondescription\ndescriptiondescriptiondescriptiondescription"
+        }
         carpark={true}
         shower={false}
         image={[
@@ -22,6 +25,7 @@ const SportAreaHomePage = () => {
           "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
         ]}
       />
+      <AddAreaForm />
     </div>
   ) : (
     <div className="no-sport-home-container">
