@@ -45,7 +45,7 @@ const MapComponent: React.FC<MapComponentProps> = ({
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           async function (position) {
-            setCenter({
+            setCenter(centerPoint? centerPoint :{
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             });

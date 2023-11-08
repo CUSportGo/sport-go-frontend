@@ -86,6 +86,11 @@ const createSportArea = async (data: FormData) => {
   return response;
 };
 
+const updateSportArea = async (id: string, data: FormData) => {
+  const response = await client.patch("/sportarea/"+id, data);
+  return response;
+}
+
 export const apiClient = {
   client,
   postLogin,
@@ -102,4 +107,5 @@ export const apiClient = {
   createBooking,
   addSportArea,
   getSportAreaByID,
+  updateSportArea,
 };

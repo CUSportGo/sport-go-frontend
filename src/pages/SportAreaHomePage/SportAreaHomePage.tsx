@@ -22,6 +22,8 @@ const SportAreaHomePage = () => {
     price: "",
     image: [],
     sportList: [],
+    latitude: 0,
+    longitude: 0
   };
 
   const [sportAreaInfo, setSportAreaInfo] = useState<SportAreaResponseDto>(mock);

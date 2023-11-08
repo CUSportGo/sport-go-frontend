@@ -20,6 +20,8 @@ import { apiClient } from "../../utils/clients";
 import { useNavigate } from "react-router-dom";
 import { SportAreaResponseDto } from "../../types/sportarea.dto";
 
+const id = "654a5d108616e9e53d6a6be4"
+
 interface UpdateSportAreaForm {
   name: string;
   description: string;
@@ -63,7 +65,7 @@ const UpdateSportAreaPage = () => {
 
   const [selectedLocation, setSelectedLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
-
+  
   const handleLocationChange = (
     newLocation: google.maps.LatLngLiteral | null
   ) => {
@@ -152,23 +154,30 @@ const UpdateSportAreaPage = () => {
         formData.append("files", fileObj);
       });
     }
-    // await apiClient
-    //   .createSportArea(formData)
-    //   .then((res) => {
-    //     navigate("/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    console.log(formData);
+    
+    await apiClient
+      .updateSportArea(id,formData)
+      .then((res) => {
+        console.log(res);
+        
+        // navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
     const fetchSportArea = async () => {
       await apiClient
-        .getSportAreaByID("654a5d108616e9e53d6a6be4")
+        .getSportAreaByID(id)
         .then((res) => {
-          console.log(res);
           setSportAreaInfo(res.data.data);
+          setSelectedLocation({
+            lat: res.data.data.latitude,
+            lng: res.data.data.longitude,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -279,6 +288,10 @@ const UpdateSportAreaPage = () => {
           rules={[{ required: true, message: "Please select a location!" }]}
         >
           <MapComponent
+            centerPoint={{
+              lat: sportAreaInfo?.latitude ?? 0,
+              lng: sportAreaInfo?.longitude ?? 0,
+            }}
             selectedLocation={selectedLocation}
             handleLocationChange={handleLocationChange}
           />
