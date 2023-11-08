@@ -7,7 +7,7 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
+import { CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
@@ -92,7 +92,6 @@ export const apiClient = {
   getAllUser,
   banUser,
   unbanUser,
-  getSportAreaByID,
   getAvailableBooking,
   createBooking,
 };
