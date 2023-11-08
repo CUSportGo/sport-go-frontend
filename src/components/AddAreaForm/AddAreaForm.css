@@ -1,0 +1,13 @@
+.add-area-item-button {
+  display: flex;
+  justify-content: center;
+}
+
+.add-area-button {
+  background-color: #5729ce;
+  width: 150px;
+  height: 40px;
+  color: white;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}

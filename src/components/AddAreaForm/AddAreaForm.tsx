@@ -1,7 +1,25 @@
+import { useState } from "react";
 import "./AddAreaForm.css";
 import { Button, Form, Input, Select, InputNumber } from "antd";
 
 const AddAreaForm = () => {
+  const timeOptions = Array.from({ length: 24 }, (_, hour) => ({
+    value: hour,
+    label: `${hour}:00`,
+  }));
+
+  const [openTime, setOpenTime] = useState(0);
+
+  const onFinish = (values: any) => {
+    const data = {
+      name: values.areaname,
+      openTime: `${values.open}:00`,
+      closeTime: `${values.close}:00`,
+      price: values.price.toString(),
+    }
+    console.log(data);
+  }
+
   return (
     <div>
       <Form
@@ -12,11 +30,11 @@ const AddAreaForm = () => {
           fontFamily: "Poppins",
           padding: "30px",
         }}
-        onFinish={() => {}}
+        onFinish={onFinish}
       >
         <Form.Item
           label="Name"
-          name="name"
+          name="areaname"
           style={{ marginBottom: "12px" }}
           rules={[
             {
@@ -30,38 +48,39 @@ const AddAreaForm = () => {
         <Form.Item
           name="time"
           style={{ marginBottom: "12px" }}
-          rules={[
-            {
-              required: true,
-              message: "Please input open / close time",
-            },
-          ]}
         >
           <Form.Item
             label="Open Time"
             name="open"
             style={{ display: "inline-block", marginRight: "30px",marginBottom: 0 }}
+            rules={[
+              {
+                required: true,
+                message: "Please input opene time",
+              },
+            ]}
           >
             <Select
-              defaultValue="0:00"
-              options={[
-                { value: "0:00", label: "0:00" },
-                { value: "1:00", label: "1:00" },
-              ]}
+              defaultValue="8:00"
+              options={timeOptions}
+              onChange={(value) => setOpenTime(parseInt(value))}
             />
           </Form.Item>
           <Form.Item
             label="Close Time"
             name="close"
             style={{ display: "inline-block",marginBottom: 0 }}
+            rules={[
+              {
+                required: true,
+                message: "Please input close time",
+              },
+            ]}
           >
             <Select
-              defaultValue="0:00"
-              options={[
-                { value: "0:00", label: "0:00" },
-                { value: "1:00", label: "1:00" },
-              ]}
-            />
+              defaultValue="16:00"
+              options={timeOptions.filter((time) => time.value > openTime)}
+              />
           </Form.Item>
         </Form.Item>
         <Form.Item
@@ -77,6 +96,15 @@ const AddAreaForm = () => {
         >
           <InputNumber placeholder="price" />
         </Form.Item>
+        <Form.Item
+            name="addareabutton"
+            className="add-area-item-button"
+            style={{ marginBottom: 0 }}
+          >
+            <Button className="add-area-button" htmlType="submit">
+              Add area
+            </Button>
+          </Form.Item>
       </Form>
     </div>
   );
