@@ -9,7 +9,6 @@ import {
 import { storage } from "./storage";
 import { CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
-
 const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
   withCredentials: true
@@ -74,12 +73,12 @@ const createBooking = async (request: CreateBookingRequest): Promise<CreateBooki
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   const response = await client.get("/sportArea", { params: params });
   return response;
-}
+};
 
-const createSportArea = async (data: CreateSportareaRequest): Promise<CreateSportareaResponse> => {
+const createSportArea = async (data: FormData) => {
   const response = await client.post("/sportarea", data);
-  return response.data;
-}
+  return response;
+};
 
 export const apiClient = {
   client,
@@ -90,7 +89,6 @@ export const apiClient = {
   postForgotPassword,
   searchSportArea,
   createSportArea,
-  getSportAreaByID,
   getAllUser,
   banUser,
   unbanUser,

@@ -1,12 +1,4 @@
-import {
-  Button,
-  Form,
-  Input,
-  InputNumber,
-  Modal,
-  Select,
-  SelectProps,
-} from "antd";
+import { Button, Form, Input, InputNumber, Modal, Select, SelectProps } from "antd";
 import "./CreateSportAreaPage.css";
 import { Store } from "antd/es/form/interface";
 import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
@@ -18,7 +10,15 @@ import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 import axios from "axios";
 import { apiClient } from "../../utils/clients";
 import { useNavigate } from "react-router-dom";
-import { CreateSportareaRequest } from "../../types/booking.dto";
+
+interface CreateSportAreaForm {
+  name: string;
+  description: string;
+  sporttype: string[];
+  price: number;
+  facilities: string[];
+  location: google.maps.LatLngLiteral;
+}
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -34,9 +34,7 @@ const CreateSportAreaPage = () => {
     { value: "shower", label: "Shower" },
   ];
 
-  const sportTypeOptions: SelectProps["options"] = Object.values(
-    SportTypeEnum
-  ).map((item) => {
+  const sportTypeOptions: SelectProps["options"] = Object.values(SportTypeEnum).map((item) => {
     return { label: item, value: item };
   });
 
@@ -50,20 +48,14 @@ const CreateSportAreaPage = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [isImageError, setIsImageError] = useState(false);
 
-  const [selectedLocation, setSelectedLocation] =
-    useState<google.maps.LatLngLiteral | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral | null>(null);
 
-  const handleLocationChange = (
-    newLocation: google.maps.LatLngLiteral | null
-  ) => {
+  const handleLocationChange = (newLocation: google.maps.LatLngLiteral | null) => {
     setSelectedLocation(newLocation);
     form.setFieldsValue({ location: newLocation });
   };
 
-  const getLocation = async (
-    latitude: number,
-    longitude: number
-  ): Promise<string> => {
+  const getLocation = async (latitude: number, longitude: number): Promise<string> => {
     try {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}`
@@ -91,16 +83,11 @@ const CreateSportAreaPage = () => {
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
-    setPreviewTitle(
-      file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1)
-    );
+    setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1));
   };
 
-  const handleUploadChange: UploadProps["onChange"] = ({
-    fileList: newFileList,
-  }) => {
+  const handleUploadChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    setIsImageError(newFileList.some((file) => file.status === "error"));
   };
 
   const uploadButton = (
@@ -110,25 +97,31 @@ const CreateSportAreaPage = () => {
     </div>
   );
 
-  const onFinish = async (values: Store) => {
-    const location = await getLocation(
-      values.location.lat,
-      values.location.lng
-    );
-    const data : CreateSportareaRequest = {
-      name: values.name,
-      description: values.description,
-      sportType: values.sporttype,
-      price: values.price,
-      carPark: values.facilities?.includes("carpark") ? true : false,
-      shower: values.facilities?.includes("shower") ? true : false,
-      latitude: values.location.lat,
-      longitude: values.location.lng,
-      location: location,
-      image: [],
-    };
+  const onFinish = async (values: CreateSportAreaForm) => {
+    console.log(values);
+    const location = await getLocation(values.location.lat, values.location.lng);
+
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("price", values.price.toString());
+    formData.append("carPark", values.facilities?.includes("carpark") ? "true" : "false");
+    formData.append("shower", values.facilities?.includes("shower") ? "true" : "false");
+    formData.append("latitude", values.location.lat.toString());
+    formData.append("longitude", values.location.lng.toString());
+    formData.append("location", location);
+    values.sporttype.forEach((sporttype: string) => {
+      formData.append("sportType", sporttype);
+    });
+    if (fileList.length > 0) {
+      fileList.forEach((file: UploadFile) => {
+        const blobObj = new Blob([file as RcFile], { type: file.type });
+        const fileObj = new File([blobObj], file.name, { type: file.type });
+        formData.append("files", fileObj);
+      });
+    }
     await apiClient
-      .createSportArea(data)
+      .createSportArea(formData)
       .then((res) => {
         navigate("/");
       })
@@ -140,12 +133,7 @@ const CreateSportAreaPage = () => {
   return (
     <div className="create-sportarea-container">
       <div className="create-sportarea-header">Create Sport Area Form</div>
-      <Form
-        form={form}
-        style={{ marginTop: "30px" }}
-        layout="vertical"
-        onFinish={onFinish}
-      >
+      <Form form={form} style={{ marginTop: "30px" }} layout="vertical" onFinish={onFinish}>
         <Form.Item
           label="Name"
           name="name"
@@ -198,18 +186,9 @@ const CreateSportAreaPage = () => {
             },
           ]}
         >
-          <InputNumber
-            min={0}
-            max={9999}
-            style={{ width: "100%" }}
-            placeholder="Price"
-          />
+          <InputNumber min={0} max={9999} style={{ width: "100%" }} placeholder="Price" />
         </Form.Item>
-        <Form.Item
-          label="Facilities"
-          name="facilities"
-          style={{ marginBottom: "16px" }}
-        >
+        <Form.Item label="Facilities" name="facilities" style={{ marginBottom: "16px" }}>
           <Select
             mode="multiple"
             allowClear
@@ -250,31 +229,22 @@ const CreateSportAreaPage = () => {
         >
           <div>
             <Upload
-              action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188" //mock
+              beforeUpload={() => {
+                return false;
+              }}
               listType="picture-card"
               fileList={fileList}
               onPreview={handlePreview}
               onChange={handleUploadChange}
             >
               {/* max 20 images */}
-              {fileList.length >= 20 || isImageError ? null : uploadButton}
+              {fileList.length >= 20 ? null : uploadButton}
             </Upload>
-            <Modal
-              open={previewOpen}
-              title={previewTitle}
-              footer={null}
-              onCancel={handleCancel}
-            >
-              <img
-                alt="example"
-                style={{ width: "100%", objectFit: "cover" }}
-                src={previewImage}
-              />
+            <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+              <img alt="example" style={{ width: "100%", objectFit: "cover" }} src={previewImage} />
             </Modal>
             {isImageError && (
-              <div style={{ color: "red" }}>
-                Please check the images for errors.
-              </div>
+              <div style={{ color: "red" }}>Please check the images for errors.</div>
             )}
           </div>
         </Form.Item>
