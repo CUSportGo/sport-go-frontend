@@ -55,3 +55,30 @@ export interface SportDetail {
   closeTime: string;
   price: string;
 }
+
+
+export interface CreateSportareaRequest {
+  name: string;
+  image: string[];
+  shower: boolean;
+  carPark: boolean;
+  sportType: string[];
+  location: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  price: number;
+}
+
+export interface CreateSportareaResponse {
+  name: string;
+  image: string[];
+  shower: boolean;
+  carPark: boolean;
+  sportType: string[];
+  location: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  price: number;
+}
