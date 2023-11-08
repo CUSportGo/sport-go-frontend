@@ -1,9 +1,33 @@
 import { useState } from "react";
 import "./AddAreaForm.css";
-import { Button, Form, Input, Select, InputNumber, SelectProps } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Select,
+  InputNumber,
+  SelectProps,
+  Space,
+  Collapse,
+} from "antd";
 import { SportTypeEnum } from "../../utils/enums/sportType.enums";
+import { SportList } from "../../types/sportarea.dto";
 
-const AddAreaForm = () => {
+interface AreaContainerProp {
+  sportAreaId: string;
+  sportList: SportList[];
+}
+
+interface AreaItemProp {
+  sportAreaId: string;
+  sportItem: SportList;
+}
+
+interface AddAreaFormProp {
+  setIsAdding: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const AddAreaForm: React.FC<AddAreaFormProp> = ({setIsAdding}) => {
   const timeOptions = Array.from({ length: 24 }, (_, hour) => ({
     value: hour,
     label: `${hour}:00`,
@@ -126,10 +150,69 @@ const AddAreaForm = () => {
           <Button className="add-area-button" htmlType="submit">
             Add area
           </Button>
+          <Button className="cancel-area-button" onClick={()=>{setIsAdding(false)}}>
+            Cancel
+          </Button>
         </Form.Item>
       </Form>
     </div>
   );
 };
 
-export default AddAreaForm;
+const AreaItem: React.FC<AreaItemProp> = ({ sportAreaId, sportItem }) => {
+  return (
+    <Collapse
+      collapsible="header"
+      className="area-item-container"
+      items={[
+        {
+          key: "1",
+          label: sportItem.sportType,
+          children: (
+            <div>
+              {sportItem.area.map((area) => (
+                <div>- {area.name}</div>
+              ))}
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+};
+
+const AreaContainer: React.FC<AreaContainerProp> = ({
+  sportAreaId,
+  sportList,
+}) => {
+  const [isAdding, setIsAdding] = useState(false);
+
+  return (
+    <div className="area-container">
+      <p>Sport Area Type</p>
+      {!isAdding ? (
+        <Button
+          className="add-area-button"
+          style={{ marginBottom: "12px" }}
+          onClick={() => {
+            setIsAdding(!isAdding);
+          }}
+        >
+          Add sport area
+        </Button>
+      ) : (
+        <AddAreaForm setIsAdding={setIsAdding}/>
+      )}
+      <br/>
+      <Space direction="vertical" className="area-sportarea-section">
+        {sportList &&
+          sportList.length > 0 &&
+          sportList.map((sport: SportList) => (
+            <AreaItem sportAreaId={sportAreaId} sportItem={sport} />
+          ))}
+      </Space>
+    </div>
+  );
+};
+
+export default AreaContainer;

@@ -2,30 +2,58 @@ import { Button } from "antd";
 import "./SportAreaHomePage.css";
 import { useNavigate } from "react-router-dom";
 import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
-import AddAreaForm from "../../components/AddAreaForm/AddAreaForm";
+import { SportAreaResponseDto } from "../../types/sportarea.dto";
+import { useEffect, useState } from "react";
+import { apiClient } from "../../utils/clients";
+import AreaContainer from "../../components/AddAreaForm/AddAreaForm";
 
 const SportAreaHomePage = () => {
+  const id = "654a5d108616e9e53d6a6be4";
   const isSportAreaCreated = true;
   const navigate = useNavigate();
+  const mock: SportAreaResponseDto = {
+    id: "",
+    name: "",
+    shower: false,
+    carPark: false,
+    sportType: [],
+    location: "",
+    description: "",
+    price: "",
+    image: [],
+    sportList: [],
+  };
+
+  const [sportAreaInfo, setSportAreaInfo] = useState<SportAreaResponseDto>(mock);
+
+  useEffect(() => {
+    const fetchSportArea = async () => {
+      await apiClient
+        .getSportAreaByID(id)
+        .then((res) => {
+          console.log(res);
+          setSportAreaInfo(res.data.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchSportArea();
+  }, []);
+
   return isSportAreaCreated ? (
     <div className="sport-home-container">
       <SportAreaInfo
-        name={"Test01"}
-        locaiton={"locationlocationlocationlocation"}
+        name={sportAreaInfo.name}
+        locaiton={sportAreaInfo.location}
         description={
-          "descriptiondescriptiondescriptiondescription\ndescriptiondescriptiondescriptiondescription"
+          sportAreaInfo.description
         }
-        carpark={true}
-        shower={false}
-        image={[
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/RedCat_8727.jpg/1200px-RedCat_8727.jpg",
-        ]}
+        carpark={sportAreaInfo.carPark}
+        shower={sportAreaInfo.shower}
+        image={sportAreaInfo.image}
       />
-      <AddAreaForm />
+      <AreaContainer sportAreaId={id} sportList={sportAreaInfo.sportList} />
     </div>
   ) : (
     <div className="no-sport-home-container">
