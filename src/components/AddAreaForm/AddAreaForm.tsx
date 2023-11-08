@@ -1,12 +1,19 @@
 import { useState } from "react";
 import "./AddAreaForm.css";
-import { Button, Form, Input, Select, InputNumber } from "antd";
+import { Button, Form, Input, Select, InputNumber, SelectProps } from "antd";
+import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 
 const AddAreaForm = () => {
   const timeOptions = Array.from({ length: 24 }, (_, hour) => ({
     value: hour,
     label: `${hour}:00`,
   }));
+
+  const sportTypeOptions: SelectProps["options"] = Object.values(
+    SportTypeEnum
+  ).map((item) => {
+    return { label: item, value: item };
+  });
 
   const [openTime, setOpenTime] = useState(0);
 
@@ -16,9 +23,9 @@ const AddAreaForm = () => {
       openTime: `${values.open}:00`,
       closeTime: `${values.close}:00`,
       price: values.price.toString(),
-    }
+    };
     console.log(data);
-  }
+  };
 
   return (
     <div>
@@ -43,16 +50,29 @@ const AddAreaForm = () => {
             },
           ]}
         >
-          <Input style={{width: "200px"}} placeholder="name" />
+          <Input placeholder="name" />
         </Form.Item>
         <Form.Item
-          name="time"
-          style={{ marginBottom: "12px" }}
+          label="Sport Type"
+          name="sporttype"
+          style={{ marginBottom: "16px" }}
+          rules={[{ required: true, message: "Please select a sport type" }]}
         >
+          <Select
+            style={{ width: "100%" }}
+            placeholder="Please select"
+            options={sportTypeOptions}
+          />
+        </Form.Item>
+        <Form.Item style={{ marginBottom: "12px" }}>
           <Form.Item
             label="Open Time"
             name="open"
-            style={{ display: "inline-block", marginRight: "30px",marginBottom: 0 }}
+            style={{
+              display: "inline-block",
+              marginRight: "30px",
+              marginBottom: 0,
+            }}
             rules={[
               {
                 required: true,
@@ -61,15 +81,16 @@ const AddAreaForm = () => {
             ]}
           >
             <Select
-              defaultValue="8:00"
+              style={{ width: "100px" }}
               options={timeOptions}
+              placeholder="0:00"
               onChange={(value) => setOpenTime(parseInt(value))}
             />
           </Form.Item>
           <Form.Item
             label="Close Time"
             name="close"
-            style={{ display: "inline-block",marginBottom: 0 }}
+            style={{ display: "inline-block", marginBottom: 0 }}
             rules={[
               {
                 required: true,
@@ -78,9 +99,10 @@ const AddAreaForm = () => {
             ]}
           >
             <Select
-              defaultValue="16:00"
+              style={{ width: "100px" }}
+              placeholder="0:00"
               options={timeOptions.filter((time) => time.value > openTime)}
-              />
+            />
           </Form.Item>
         </Form.Item>
         <Form.Item
@@ -97,14 +119,14 @@ const AddAreaForm = () => {
           <InputNumber placeholder="price" />
         </Form.Item>
         <Form.Item
-            name="addareabutton"
-            className="add-area-item-button"
-            style={{ marginBottom: 0 }}
-          >
-            <Button className="add-area-button" htmlType="submit">
-              Add area
-            </Button>
-          </Form.Item>
+          name="addareabutton"
+          className="add-area-item-button"
+          style={{ marginBottom: 0 }}
+        >
+          <Button className="add-area-button" htmlType="submit">
+            Add area
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );
