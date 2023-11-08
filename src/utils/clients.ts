@@ -135,6 +135,7 @@ export const apiClient = {
   postForgotPassword,
   searchSportArea,
   createSportArea,
+  getSportAreaByID,
   getAllUser,
   banUser,
   unbanUser,
