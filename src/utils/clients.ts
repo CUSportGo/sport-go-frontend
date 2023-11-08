@@ -3,13 +3,11 @@ import { ResetPasswordRequestDto, ResetPasswordResponseDto } from "../types/auth
 import {
   CreateBookingRequest,
   CreateBookingResponse,
-  CreateSportareaRequest,
-  CreateSportareaResponse,
   GetAvailableBookingRequest,
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { SearchSportAreaRequestDto } from "../types/sportarea.dto";
+import { CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
 
 const client = axios.create({
