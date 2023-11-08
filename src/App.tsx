@@ -9,6 +9,7 @@ import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import Navbar from "./components/Navbar/Navbar";
+import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
@@ -40,8 +41,8 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-
         <Route path="/resetsuccess" element={<ResetPasswordSuccessfully />} />
+        <Route path="/create-sportarea" element={<CreateSportAreaPage/>} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
       </Routes>
