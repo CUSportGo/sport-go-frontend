@@ -8,7 +8,7 @@ export interface SportAreaResponseDto {
   location: string;
   description: string;
   price: string;
-  sportList?: SportList[];
+  sportList: SportList[];
 }
 
 export interface SearchSportAreaRequestDto {
@@ -37,6 +37,7 @@ export interface SportList {
 }
 
 export interface SportDetail {
+  id: string;
   name: string;
   openTime: string;
   closeTime: string;
