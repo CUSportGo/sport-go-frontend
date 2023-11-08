@@ -101,4 +101,5 @@ export const apiClient = {
   getAvailableBooking,
   createBooking,
   addSportArea,
+  getSportAreaByID,
 };
