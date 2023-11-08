@@ -5,7 +5,7 @@ import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
 import { SportAreaResponseDto } from "../../types/sportarea.dto";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/clients";
-import AreaContainer from "../../components/AddAreaForm/AddAreaForm";
+import AreaContainer from "../../components/AreaContainer/AreaContainer";
 
 const SportAreaHomePage = () => {
   const id = "654a5d108616e9e53d6a6be4";

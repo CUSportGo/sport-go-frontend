@@ -19,6 +19,18 @@ export interface SearchSportAreaRequestDto {
   type?: string[];
 }
 
+export interface AddSportAreaRequest {
+  sportType: string;
+  name: string;
+  openTime: string;
+  closeTime: string;
+  price: string;
+}
+
+export interface AddSportAreaResponse {
+  data: SportArea | undefined;
+}
+
 export interface SportArea {
   id: string;
   name: string;

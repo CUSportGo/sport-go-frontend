@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AddAreaForm.css";
+import "./AreaContainer.css";
 import {
   Button,
   Form,
@@ -11,7 +11,9 @@ import {
   Collapse,
 } from "antd";
 import { SportTypeEnum } from "../../utils/enums/sportType.enums";
-import { SportList } from "../../types/sportarea.dto";
+import { AddSportAreaRequest, SportList } from "../../types/sportarea.dto";
+import { apiClient } from "../../utils/clients";
+import { useNavigate } from "react-router-dom";
 
 interface AreaContainerProp {
   sportAreaId: string;
@@ -19,15 +21,15 @@ interface AreaContainerProp {
 }
 
 interface AreaItemProp {
-  sportAreaId: string;
   sportItem: SportList;
 }
 
 interface AddAreaFormProp {
+  sportAreaId: string;
   setIsAdding: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const AddAreaForm: React.FC<AddAreaFormProp> = ({setIsAdding}) => {
+const AddAreaForm: React.FC<AddAreaFormProp> = ({sportAreaId,setIsAdding}) => {
   const timeOptions = Array.from({ length: 24 }, (_, hour) => ({
     value: hour,
     label: `${hour}:00`,
@@ -41,14 +43,23 @@ const AddAreaForm: React.FC<AddAreaFormProp> = ({setIsAdding}) => {
 
   const [openTime, setOpenTime] = useState(0);
 
-  const onFinish = (values: any) => {
-    const data = {
+  const navigate = useNavigate();
+
+  const onFinish = async (values: any) => {
+    const data: AddSportAreaRequest = {
       name: values.areaname,
       openTime: `${values.open}:00`,
       closeTime: `${values.close}:00`,
       price: values.price.toString(),
+      sportType: values.sporttype,
     };
-    console.log(data);
+    // console.log(data);
+    await apiClient.addSportArea(sportAreaId,data).then((res) => {
+      // console.log(res);
+      window.location.reload();
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
@@ -159,7 +170,7 @@ const AddAreaForm: React.FC<AddAreaFormProp> = ({setIsAdding}) => {
   );
 };
 
-const AreaItem: React.FC<AreaItemProp> = ({ sportAreaId, sportItem }) => {
+const AreaItem: React.FC<AreaItemProp> = ({ sportItem }) => {
   return (
     <Collapse
       collapsible="header"
@@ -201,14 +212,14 @@ const AreaContainer: React.FC<AreaContainerProp> = ({
           Add sport area
         </Button>
       ) : (
-        <AddAreaForm setIsAdding={setIsAdding}/>
+        <AddAreaForm sportAreaId={sportAreaId} setIsAdding={setIsAdding}/>
       )}
       <br/>
       <Space direction="vertical" className="area-sportarea-section">
         {sportList &&
           sportList.length > 0 &&
           sportList.map((sport: SportList) => (
-            <AreaItem sportAreaId={sportAreaId} sportItem={sport} />
+            <AreaItem sportItem={sport} />
           ))}
       </Space>
     </div>
