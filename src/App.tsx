@@ -11,6 +11,7 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
+import BookingHistoryPage from "./pages/BookingHistory/BookingHistoryPage";
 
 function App() {
   return (
@@ -22,9 +23,10 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
-        <Route path="/create-sportarea" element={<CreateSportAreaPage/>} />
+        <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
+        <Route path="/history" element={<BookingHistoryPage />} />
       </Routes>
     </div>
   );

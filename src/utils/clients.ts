@@ -7,11 +7,15 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
+import {
+  CreateSportareaRequest,
+  CreateSportareaResponse,
+  SearchSportAreaRequestDto,
+} from "../types/sportarea.dto";
 
 const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 const postLogin = async (data: object) => {
@@ -47,11 +51,11 @@ const getAllUser = async () => {
 const banUser = async (userId: string) => {
   const response = await client.patch("admin/ban/" + userId);
   return response;
-}
+};
 const unbanUser = async (userId: string) => {
   const response = await client.patch("admin/unban/" + userId);
   return response;
-}
+};
 
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
@@ -94,4 +98,5 @@ export const apiClient = {
   unbanUser,
   getAvailableBooking,
   createBooking,
+  getSportAreaByID,
 };
