@@ -123,41 +123,49 @@ const UpdateSportAreaPage = () => {
   );
 
   const onFinish = async (values: UpdateSportAreaForm) => {
-    console.log(values);
     const location = await getLocation(
       values.location.lat,
       values.location.lng
     );
 
-    const formData = new FormData();
-    formData.append("name", values.name);
-    formData.append("description", values.description);
-    formData.append("price", values.price.toString());
-    formData.append(
-      "carPark",
-      values.facilities?.includes("carpark") ? "true" : "false"
-    );
-    formData.append(
-      "shower",
-      values.facilities?.includes("shower") ? "true" : "false"
-    );
-    formData.append("latitude", values.location.lat.toString());
-    formData.append("longitude", values.location.lng.toString());
-    formData.append("location", location);
-    values.sporttype.forEach((sporttype: string) => {
-      formData.append("sportType", sporttype);
-    });
-    if (fileList.length > 0) {
-      fileList.forEach((file: UploadFile) => {
-        const blobObj = new Blob([file as RcFile], { type: file.type });
-        const fileObj = new File([blobObj], file.name, { type: file.type });
-        formData.append("files", fileObj);
-      });
-    }
-    console.log(formData);
-    
+    // const formData = new FormData();
+    // formData.append("name", values.name);
+    // formData.append("description", values.description);
+    // formData.append("price", values.price.toString());
+    // formData.append(
+    //   "carPark",
+    //   values.facilities?.includes("carpark") ? "true" : "false"
+    // );
+    // formData.append(
+    //   "shower",
+    //   values.facilities?.includes("shower") ? "true" : "false"
+    // );
+    // formData.append("latitude", values.location.lat.toString());
+    // formData.append("longitude", values.location.lng.toString());
+    // formData.append("location", location);
+    // values.sporttype.forEach((sporttype: string) => {
+    //   formData.append("sportType", sporttype);
+    // });
+    // if (fileList.length > 0) {
+    //   fileList.forEach((file: UploadFile) => {
+    //     const blobObj = new Blob([file as RcFile], { type: file.type });
+    //     const fileObj = new File([blobObj], file.name, { type: file.type });
+    //     formData.append("files", fileObj);
+    //   });
+    // }    
+    const data = {
+      name: values.name,
+      description: values.description,
+      price: values.price,
+      carPark: values.facilities?.includes("carpark") ? true : false,
+      shower: values.facilities?.includes("shower") ? true : false,
+      latitude: values.location.lat,
+      longitude: values.location.lng,
+      location: location,
+      sportType: values.sporttype,
+    }    
     await apiClient
-      .updateSportArea(id,formData)
+      .updateSportArea(id,data)
       .then((res) => {
         console.log(res);
         

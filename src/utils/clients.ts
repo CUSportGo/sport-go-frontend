@@ -7,7 +7,7 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { AddSportAreaRequest, AddSportAreaResponse,CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
+import { AddSportAreaRequest, AddSportAreaResponse,CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto, UpdateSportAreaRequest } from "../types/sportarea.dto";
 
 
 const client = axios.create({
@@ -86,7 +86,7 @@ const createSportArea = async (data: FormData) => {
   return response;
 };
 
-const updateSportArea = async (id: string, data: FormData) => {
+const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   const response = await client.patch("/sportarea/"+id, data);
   return response;
 }

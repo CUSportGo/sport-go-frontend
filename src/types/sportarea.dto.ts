@@ -33,6 +33,18 @@ export interface AddSportAreaResponse {
   data: SportArea | undefined;
 }
 
+export interface UpdateSportAreaRequest {
+  name: string;
+  shower: boolean;
+  carPark: boolean;
+  sportType: string[];
+  location: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  price: number;
+}
+
 export interface SportArea {
   id: string;
   name: string;
