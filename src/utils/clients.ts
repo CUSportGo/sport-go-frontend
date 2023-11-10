@@ -9,10 +9,56 @@ import {
 import { storage } from "./storage";
 import { CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto } from "../types/sportarea.dto";
 
-const client = axios.create({
+
+export const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
   withCredentials: true
 });
+
+const refreshToken = async () => {
+  try {
+    const resp = await client.post("auth/refreshToken").then((res) => {
+    });
+    return resp
+  } catch (e) {
+    console.log("Error", e);
+  }
+};
+
+let isRefreshing = false;
+let refreshQueue = [];
+
+client.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    if (error.response && error.response.status === 403) {
+      if (!isRefreshing) {
+        isRefreshing = true;
+
+        try {
+          await refreshToken();
+          const originalRequest = error.config;
+          return axios(originalRequest);
+        } catch (refreshError) {
+          return Promise.reject(refreshError);
+        } finally {
+          isRefreshing = false;
+        }
+      } else {
+        return new Promise((resolve, reject) => {
+          refreshQueue.push({ resolve, reject });
+        }).then((newAccessToken) => {
+          error.config.headers.Authorization = `Bearer ${newAccessToken}`;
+          return axios(error.config);
+        });
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 const postLogin = async (data: object) => {
   const response = await client.post("/auth/login", data);
@@ -89,6 +135,7 @@ export const apiClient = {
   postForgotPassword,
   searchSportArea,
   createSportArea,
+  getSportAreaByID,
   getAllUser,
   banUser,
   unbanUser,
