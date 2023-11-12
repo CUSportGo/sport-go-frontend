@@ -60,7 +60,7 @@ const UpdateSportAreaPage = () => {
 
   const [selectedLocation, setSelectedLocation] =
     useState<google.maps.LatLngLiteral | null>(null);
-  
+
   const handleLocationChange = (
     newLocation: google.maps.LatLngLiteral | null
   ) => {
@@ -90,6 +90,18 @@ const UpdateSportAreaPage = () => {
     return "";
   };
 
+  const facilitiesList = (carPark: boolean, shower: boolean) => {
+    if (carPark && shower) {
+      return ["carpark", "shower"];
+    } else if (carPark) {
+      return ["carpark"];
+    } else if (shower) {
+      return ["shower"];
+    } else {
+      return [];
+    }
+  };
+
   const onFinish = async (values: UpdateSportAreaForm) => {
     const location = await getLocation(
       values.location.lat,
@@ -105,9 +117,9 @@ const UpdateSportAreaPage = () => {
       longitude: values.location.lng,
       location: location,
       sportType: values.sporttype,
-    }    
+    };
     await apiClient
-      .updateSportArea(mockProfile.sportAreaId,data)
+      .updateSportArea(mockProfile.sportAreaId, data)
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -208,14 +220,10 @@ const UpdateSportAreaPage = () => {
           />
         </Form.Item>
         <Form.Item
-          initialValue={
-            sportAreaInfo?.carPark || sportAreaInfo?.shower
-              ? [
-                  sportAreaInfo?.carPark ? "carpark" : "",
-                  sportAreaInfo?.shower ? "shower" : "",
-                ]
-              : []
-          }
+          initialValue={facilitiesList(
+            sportAreaInfo?.carPark,
+            sportAreaInfo?.shower
+          )}
           label="Facilities"
           name="facilities"
           style={{ marginBottom: "16px" }}
@@ -253,7 +261,12 @@ const UpdateSportAreaPage = () => {
           <Button className="update-sportarea-button" htmlType="submit">
             Confirm
           </Button>
-          <Button className="cancel-update-button" onClick={()=>{navigate("/")}}>
+          <Button
+            className="cancel-update-button"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
             Cancel
           </Button>
         </Form.Item>
