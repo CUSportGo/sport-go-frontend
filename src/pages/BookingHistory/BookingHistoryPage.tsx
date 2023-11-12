@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./BookingHistoryPage.css";
 
 function BookingHistoryPage() {
@@ -15,6 +15,7 @@ function BookingHistoryPage() {
   for (let i = 0; i < 6; i++) {
     datas.push(data);
   }
+
   return (
     <div className="bookingHistoryPage-container">
       <h1 className="historyPage-head"> Booking History</h1>
