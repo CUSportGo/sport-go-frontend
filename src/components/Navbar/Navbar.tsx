@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Navbar.css";
 import { NavLink } from "react-router-dom";
 import Logo from "../../pictures/sport_go_logo.svg";
@@ -7,12 +7,27 @@ import { apiClient } from "../../utils/clients";
 
 const Navbar = () => {
   const [accountOption, setAccountOption] = useState(false);
+  const [userPic, setUserPic] = useState(account);
   const handleClickAccount = () => {
     setAccountOption(!accountOption);
   };
   const handleLogout = () => {
     apiClient.postLogout();
   };
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      await apiClient
+        .getUserProfile()
+        .then((res) => {
+          setUserPic(res.data.data.profileUrl);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchUserProfile();
+  }, []);
   return (
     <>
       <nav className="nav">
@@ -26,7 +41,7 @@ const Navbar = () => {
           <NavLink to="/history">History</NavLink>
 
           <li className="account-li" onClick={handleClickAccount}>
-            <img src={account} alt="account"></img>
+            <img src={userPic} alt="account"></img>
           </li>
         </ul>
       </nav>
