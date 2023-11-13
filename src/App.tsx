@@ -14,6 +14,8 @@ import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useAuth } from "./context/AuthProvider";
 import { UserType } from "./utils/enums/usertype.enums";
 import RequireAuth, { HomeRoute } from "./components/RequireAuth";
+import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
+import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 
 function App() {
   const { user } = useAuth();
@@ -44,6 +46,9 @@ function App() {
           <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
         </Route>
       </Routes>
+      <Route path="/sportarea/:id" element={<SportAreaPage />} />
+      <Route path="/sport-home" element={<SportAreaHomePage />} />
+      <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
     </div>
   );
 }
