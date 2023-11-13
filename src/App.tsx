@@ -13,7 +13,7 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useAuth } from "./context/AuthProvider";
 import { UserType } from "./utils/enums/usertype.enums";
-import RequireAuth from "./components/RequireAuth";
+import RequireAuth, { HomeRoute } from "./components/RequireAuth";
 
 function App() {
   const { user } = useAuth();
@@ -29,18 +29,13 @@ function App() {
         <Route path="/unauthorized" element={<div>Unauthorized</div>} />
         {/* protected */}
         <Route
-          element={<RequireAuth roles={[UserType.USER, UserType.SPORTAREA]} />}
+          element={
+            <RequireAuth
+              roles={[UserType.USER, UserType.SPORTAREA, UserType.ADMIN]}
+            />
+          }
         >
-          <Route
-            path="/"
-            element={
-              user?.role === UserType.USER ? (
-                <HomePage />
-              ) : (
-                <div>Sport Area Home</div>
-              )
-            }
-          />
+          <Route path="/" element={HomeRoute(user?.role ?? "")} />
         </Route>
         <Route element={<RequireAuth roles={[UserType.USER]} />}>
           <Route path="/sportarea/:id" element={<SportAreaPage />} />
@@ -48,7 +43,6 @@ function App() {
         <Route element={<RequireAuth roles={[UserType.SPORTAREA]} />}>
           <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
         </Route>
-        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </div>
   );
