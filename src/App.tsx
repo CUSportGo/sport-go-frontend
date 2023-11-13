@@ -44,11 +44,10 @@ function App() {
         </Route>
         <Route element={<RequireAuth roles={[UserType.SPORTAREA]} />}>
           <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
+          <Route path="/sport-home" element={<SportAreaHomePage />} />
+          <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
         </Route>
       </Routes>
-      <Route path="/sportarea/:id" element={<SportAreaPage />} />
-      <Route path="/sport-home" element={<SportAreaHomePage />} />
-      <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
     </div>
   );
 }

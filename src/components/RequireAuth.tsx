@@ -3,6 +3,7 @@ import { useAuth } from "../context/AuthProvider";
 import Cookies from "js-cookie";
 import HomePage from "../pages/HomePage/HomePage";
 import AdminPage from "../pages/AdminPage/AdminPage";
+import SportAreaHomePage from "../pages/SportAreaHomePage/SportAreaHomePage";
 
 interface RequireAuthProps {
   roles: string[];
@@ -28,17 +29,17 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ roles }) => {
   );
 };
 
-const HomeRoute = (role:string) => {
-    if (role === "USER") {
-      return <HomePage />
-    } else if (role === "SPORTAREA") {
-      return <div>Sport Area Home</div>
-    } else if (role === "ADMIN") {
-      return <AdminPage />;
-    } else {
-      <div>Unauthorized</div>
-    }
-}
+const HomeRoute = (role: string) => {
+  if (role === "USER") {
+    return <HomePage />;
+  } else if (role === "SPORTAREA") {
+    return <SportAreaHomePage />;
+  } else if (role === "ADMIN") {
+    return <AdminPage />;
+  } else {
+    <div>Unauthorized</div>;
+  }
+};
 
 export { HomeRoute };
 
