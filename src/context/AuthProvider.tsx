@@ -1,14 +1,19 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useEffect } from "react";
+import { apiClient } from "../utils/clients";
 
 interface User {
   id: string;
-  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  profileUrl: string;
+  role: string;
+  sportId?: string;
 }
 
 interface AuthContextProps {
   user: User | null;
-  login: (user: User) => void;
-  logout: () => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
 // Create the AuthContext
@@ -22,28 +27,36 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = React.useState<User | null>(null);
 
-  const login = (newUser: User) => {
-    setUser(newUser);
-  };
-
-  const logout = () => {
-    setUser(null);
-  };
-
   const contextValue: AuthContextProps = {
     user,
-    login,
-    logout,
+    setUser,
   };
 
-  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+  useEffect(() => {
+    const fetchUser = async () => {
+      apiClient.getUserProfile().then((res) => {
+        // console.log(res.data);
+        if (res.data) {
+          setUser(res.data);
+        }
+      }).catch((err) => {
+        console.log(err);
+      }
+      );
+    }
+    fetchUser();
+  }, []);
+
+  return (
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
 };
 
 // Create a custom hook to easily access the context in your components
 const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

@@ -7,12 +7,14 @@ import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import { apiClient } from "../../utils/clients";
 import Logo from "../../pictures/sport_go_logo.svg";
+import { useAuth } from "../../context/AuthProvider";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isError, setError] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(true);
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,6 +29,18 @@ const LoginPage = () => {
     await apiClient
       .postLogin({ email, password })
       .then((res) => {
+        const fetchUser = async () => {
+          apiClient.getUserProfile().then((res) => {
+            console.log(res.data);
+            if (res.data) {
+              setUser(res.data);
+            }
+          }).catch((err) => {
+            console.log(err);
+          }
+          );
+        }
+        fetchUser();
         alert("Login successful");
         navigate("/");
       })

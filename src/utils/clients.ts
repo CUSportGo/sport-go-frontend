@@ -126,6 +126,11 @@ const createSportArea = async (data: FormData) => {
   return response;
 };
 
+const getUserProfile = async () => {
+  const response = await client.get("/user/userProfile");
+  return response;
+};
+
 export const apiClient = {
   client,
   postLogin,
@@ -141,4 +146,5 @@ export const apiClient = {
   unbanUser,
   getAvailableBooking,
   createBooking,
+  getUserProfile,
 };
