@@ -7,8 +7,7 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { AddSportAreaRequest, AddSportAreaResponse,CreateSportareaRequest, CreateSportareaResponse, SearchSportAreaRequestDto, UpdateSportAreaRequest } from "../types/sportarea.dto";
-
+import { AddSportAreaRequest, AddSportAreaResponse, SearchSportAreaRequestDto, UpdateSportAreaRequest } from "../types/sportarea.dto";
 
 
 export const client = axios.create({

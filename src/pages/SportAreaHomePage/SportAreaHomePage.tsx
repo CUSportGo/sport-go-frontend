@@ -6,10 +6,20 @@ import { SportAreaResponseDto } from "../../types/sportarea.dto";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/clients";
 import AreaContainer from "../../components/AreaContainer/AreaContainer";
+import { UserProfile } from "../../types/user.dto";
 
 const SportAreaHomePage = () => {
-  const id = "654a5d108616e9e53d6a6be4";
-  const isSportAreaCreated = true;
+  const mockProfile: UserProfile = {
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    profileUrl: "",
+    role: "",
+    sportAreaId: "6550f6ae593e37f99e8a5b1f",
+  };
+  // const id = "654a5d108616e9e53d6a6be4";
+  // const isSportAreaCreated = true;
   const navigate = useNavigate();
   const mock: SportAreaResponseDto = {
     id: "",
@@ -23,15 +33,16 @@ const SportAreaHomePage = () => {
     image: [],
     sportList: [],
     latitude: 0,
-    longitude: 0
+    longitude: 0,
   };
 
-  const [sportAreaInfo, setSportAreaInfo] = useState<SportAreaResponseDto>(mock);
+  const [sportAreaInfo, setSportAreaInfo] =
+    useState<SportAreaResponseDto>(mock);
 
   useEffect(() => {
     const fetchSportArea = async () => {
       await apiClient
-        .getSportAreaByID(id)
+        .getSportAreaByID(mockProfile.sportAreaId)
         .then((res) => {
           console.log(res);
           setSportAreaInfo(res.data.data);
@@ -40,22 +51,36 @@ const SportAreaHomePage = () => {
           console.log(err);
         });
     };
-    fetchSportArea();
+    if (mockProfile.sportAreaId) {
+      fetchSportArea();
+    }
   }, []);
 
-  return isSportAreaCreated ? (
+  return mockProfile.sportAreaId || mockProfile.sportAreaId != "" ? (
     <div className="sport-home-container">
+      <div className="update-sport-button-div">
+        <Button
+          className="update-sport-button"
+          onClick={() => {
+            navigate("/update-sportarea");
+          }}
+        >
+          Edit
+        </Button>
+      </div>
+
       <SportAreaInfo
         name={sportAreaInfo.name}
         locaiton={sportAreaInfo.location}
-        description={
-          sportAreaInfo.description
-        }
+        description={sportAreaInfo.description}
         carpark={sportAreaInfo.carPark}
         shower={sportAreaInfo.shower}
         image={sportAreaInfo.image}
       />
-      <AreaContainer sportAreaId={id} sportList={sportAreaInfo.sportList} />
+      <AreaContainer
+        sportAreaId={mockProfile.sportAreaId ? mockProfile.sportAreaId : ""}
+        sportList={sportAreaInfo.sportList}
+      />
     </div>
   ) : (
     <div className="no-sport-home-container">
