@@ -1,0 +1,40 @@
+.update-sportarea-container {
+  padding: 50px 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+.update-sportarea-header {
+  text-align: center;
+  font-size: 24px;
+}
+
+.update-sportarea-container
+  :where(.css-dev-only-do-not-override-18iikkb).ant-form-vertical
+  .ant-form-item-label
+  > label {
+  font-size: 16px;
+}
+
+.update-sportarea-item-button {
+  display: flex;
+  justify-content: center;
+}
+
+.update-sportarea-button {
+  background-color: #5729ce;
+  width: 200px;
+  height: 40px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.cancel-update-button{
+  background-color: #D9D9D9;
+  width: 200px;
+  height: 40px;
+  color: black;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  margin-left: 30px;
+}

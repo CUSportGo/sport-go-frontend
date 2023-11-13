@@ -1,14 +1,16 @@
-import { useParams } from "react-router-dom";
-import "./SportAreaPage.css";
+import { Button } from "antd";
+import "./SportAreaHomePage.css";
+import { useNavigate } from "react-router-dom";
 import SportAreaInfo from "../../components/SportAreaInfo/SportAreaInfo";
+import { SportAreaResponseDto } from "../../types/sportarea.dto";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/clients";
-import { SportAreaResponseDto } from "../../types/sportarea.dto";
-import BookingContainer from "../../components/BookingContainer/BookingContainer";
+import AreaContainer from "../../components/AreaContainer/AreaContainer";
 
-const SportAreaPage = () => {
-  const { id } = useParams();
-
+const SportAreaHomePage = () => {
+  const id = "654a5d108616e9e53d6a6be4";
+  const isSportAreaCreated = true;
+  const navigate = useNavigate();
   const mock: SportAreaResponseDto = {
     id: "",
     name: "",
@@ -41,19 +43,33 @@ const SportAreaPage = () => {
     fetchSportArea();
   }, []);
 
-  return (
-    <div className="sportareaPage-container">
+  return isSportAreaCreated ? (
+    <div className="sport-home-container">
       <SportAreaInfo
         name={sportAreaInfo.name}
         locaiton={sportAreaInfo.location}
-        description={sportAreaInfo.description}
+        description={
+          sportAreaInfo.description
+        }
         carpark={sportAreaInfo.carPark}
         shower={sportAreaInfo.shower}
         image={sportAreaInfo.image}
       />
-      <BookingContainer sportAreaId={id || ""} sportList={sportAreaInfo.sportList} />
+      <AreaContainer sportAreaId={id} sportList={sportAreaInfo.sportList} />
+    </div>
+  ) : (
+    <div className="no-sport-home-container">
+      <div className="no-sport-text">You haven't created sport area yet</div>
+      <Button
+        className="create-sport-button"
+        onClick={() => {
+          navigate("/create-sportarea");
+        }}
+      >
+        Create Sport Area
+      </Button>
     </div>
   );
 };
 
-export default SportAreaPage;
+export default SportAreaHomePage;

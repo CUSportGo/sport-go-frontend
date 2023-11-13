@@ -11,6 +11,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
+import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
+import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/create-sportarea" element={<CreateSportAreaPage/>} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
+        <Route path="/sport-home" element={<SportAreaHomePage/>}/>
+        <Route path="/update-sportarea" element={<UpdateSportAreaPage/>} />
       </Routes>
     </div>
   );
