@@ -15,5 +15,5 @@ export interface UserProfile {
     email: string;
     profileUrl: string;
     role: string;
-    sportAreaId?: string;
+    sportAreaId: string;
 }

@@ -8,18 +8,23 @@ const containerStyle = {
 };
 
 interface MapComponentProps {
+  centerPoint?: { lat: number; lng: number };
   selectedLocation: google.maps.LatLngLiteral | null;
   handleLocationChange: (newLocation: google.maps.LatLngLiteral | null) => void;
 }
 
-const MapComponent : React.FC<MapComponentProps> = ({ selectedLocation, handleLocationChange }) => {
+const MapComponent: React.FC<MapComponentProps> = ({
+  centerPoint,
+  selectedLocation,
+  handleLocationChange,
+}) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY as string,
   });
 
   const [map, setMap] = React.useState<google.maps.Map | null>(null);
-  const [center, setCenter] = useState({ lat: 13.736717, lng: 100.523186 });
+  const [center, setCenter] = useState(centerPoint);
 
   const handleMapClick = (e: google.maps.MapMouseEvent) => {
     if (e.latLng) {
@@ -40,7 +45,7 @@ const MapComponent : React.FC<MapComponentProps> = ({ selectedLocation, handleLo
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition(
           async function (position) {
-            setCenter({
+            setCenter(centerPoint? centerPoint :{
               lat: position.coords.latitude,
               lng: position.coords.longitude,
             });
