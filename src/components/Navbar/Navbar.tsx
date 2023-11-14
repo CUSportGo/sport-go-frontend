@@ -20,7 +20,8 @@ const Navbar = () => {
       await apiClient
         .getUserProfile()
         .then((res) => {
-          setUserPic(res.data.data.profileUrl);
+          console.log(res.data);
+          setUserPic(res.data.profileUrl);
         })
         .catch((err) => {
           console.log(err);
