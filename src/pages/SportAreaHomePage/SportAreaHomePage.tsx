@@ -49,17 +49,6 @@ const SportAreaHomePage = () => {
 
   return user?.sportAreaId ? (
     <div className="sport-home-container">
-      <div className="update-sport-button-div">
-        <Button
-          className="update-sport-button"
-          onClick={() => {
-            navigate("/update-sportarea");
-          }}
-        >
-          Edit
-        </Button>
-      </div>
-
       <SportAreaInfo
         name={sportAreaInfo.name}
         locaiton={sportAreaInfo.location}

@@ -11,7 +11,9 @@ interface RequireAuthProps {
 
 const RequireAuth: React.FC<RequireAuthProps> = ({ roles }) => {
   const { user } = useAuth();
-  const isCookieValid = Cookies.get("accessToken") !== undefined;
+  const isCookieValid =
+    Cookies.get("accessToken") !== undefined &&
+    Cookies.get("accessToken") !== "";
   const location = useLocation();
 
   if (!isCookieValid) {

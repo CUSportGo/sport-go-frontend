@@ -27,7 +27,9 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = React.useState<User | null>(null);
-  const isCookieValid = Cookies.get("accessToken") !== undefined;
+  const isCookieValid =
+    Cookies.get("accessToken") !== undefined &&
+    Cookies.get("accessToken") !== "";
 
   const contextValue: AuthContextProps = {
     user,

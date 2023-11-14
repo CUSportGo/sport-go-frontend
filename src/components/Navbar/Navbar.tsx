@@ -4,8 +4,11 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../pictures/sport_go_logo.svg";
 import account from "../../pictures/account.png";
 import { apiClient } from "../../utils/clients";
+import { useAuth } from "../../context/AuthProvider";
+import { UserType } from "../../utils/enums/usertype.enums";
 
 const Navbar = () => {
+  const { user } = useAuth();
   const [accountOption, setAccountOption] = useState(false);
   const [userPic, setUserPic] = useState(account);
   const handleClickAccount = () => {
@@ -39,7 +42,12 @@ const Navbar = () => {
         </ul>
         <ul className="menu-list-right">
           <NavLink to="/">Home</NavLink>
-          <NavLink to="/history">History</NavLink>
+          {user && user.role === UserType.USER && (
+            <NavLink to="/history">History</NavLink>
+          )}
+          {user && user.role === UserType.SPORTAREA && (
+            <NavLink to="/update-sportarea">Edit</NavLink>
+          )}
 
           <li className="account-li" onClick={handleClickAccount}>
             <img src={userPic} alt="account"></img>
