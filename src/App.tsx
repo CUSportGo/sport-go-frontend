@@ -16,12 +16,14 @@ import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useAuth } from "./context/AuthProvider";
 import { UserType } from "./utils/enums/usertype.enums";
 import RequireAuth, { HomeRoute } from "./components/RequireAuth";
+import BookingHistoryPage from "./pages/BookingHistoryPage/BookingHistoryPage";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
 import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 import RequireNoAuth from "./components/RequireNoAuth";
 import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
+import ViewPendingBookingPage from "./pages/ViewPendingBookingPage/ViewPendingBookingPage";
 
 function App() {
   const { user } = useAuth();
@@ -73,6 +75,7 @@ function App() {
           <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
           <Route path="/sport-home" element={<SportAreaHomePage />} />
           <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
+          <Route path="/pending" element={<ViewPendingBookingPage />} />
         </Route>
       </Routes>
     </div>
