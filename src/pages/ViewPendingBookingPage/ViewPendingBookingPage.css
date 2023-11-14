@@ -12,6 +12,10 @@
   height: 100%;
 }
 
+.viewPending-container .list::-webkit-scrollbar {
+  width: 0.5rem; /* adjust as needed */
+}
+
 .viewPending-container .block {
   width: 1190px;
   height: 167px;

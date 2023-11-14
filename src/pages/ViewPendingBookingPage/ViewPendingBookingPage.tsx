@@ -44,7 +44,7 @@ function ViewPendingBookingPage() {
   // useEffect(() => {
   //   const fetchPending = async () => {
   //     await apiClient
-  //       .getSportAreaByID(id)
+  //       .getPending(id)
   //       .then((res) => {
   //         console.log(res);
   //         setBooking(res.data);
@@ -72,7 +72,9 @@ function ViewPendingBookingPage() {
                 <button
                   className="accept"
                   onClick={() => {
-                    apiClient.confirmBooking(data.areaID);
+                    apiClient.confirmBooking(data.areaID).catch((err) => {
+                      console.log(err);
+                    });
                   }}
                 >
                   Accept
@@ -80,7 +82,9 @@ function ViewPendingBookingPage() {
                 <button
                   className="decline"
                   onClick={() => {
-                    apiClient.cancelBooking(data.areaID);
+                    apiClient.cancelBooking(data.areaID).catch((err) => {
+                      console.log(err);
+                    });
                   }}
                 >
                   Decline
