@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./BookingHistoryPage.css";
 import { apiClient } from "../../utils/clients";
+import cancelPic from "../../pictures/cancel.png";
 
 function BookingHistoryPage() {
   const [pending, setPending] = useState([]);
@@ -40,6 +41,9 @@ function BookingHistoryPage() {
                 <div> {data.areaName}</div>
                 <div className="small">
                   Date : <span>{data.date}</span>
+                  <span onClick={apiClient.cancelBooking(data.areaid)}>
+                    <img src={cancelPic}></img>
+                  </span>
                 </div>
                 <div className="small">
                   From : <span>{data.from}</span> To : <span>{data.to}</span>
