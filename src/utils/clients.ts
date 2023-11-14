@@ -154,13 +154,7 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   return response;
 };
 const getPending = async (sportAreaId: string) => {
-  const response = await client.request({
-    method: "GET",
-    url: "/booking/pending",
-    data: {
-      SportAreaId: sportAreaId,
-    },
-  });
+  const response = await client.get("/booking/pending/" + sportAreaId)
   return response;
 };
 

@@ -25,3 +25,19 @@ export interface CreateBookingRequest {
 export interface CreateBookingResponse {
   isSuccess: boolean;
 }
+
+export interface Booking {
+  id: string;
+  sportAreaID: string;
+  sportType: string;
+  areaID: string;
+  userID: string;
+  startAt: string;
+  endAt: string;
+  status: number;
+  sportAreaData: {
+    id: string;
+    name: string;
+    description: string;
+  };
+}

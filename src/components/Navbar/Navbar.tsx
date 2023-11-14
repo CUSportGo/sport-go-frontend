@@ -18,7 +18,7 @@ const Navbar = () => {
   };
   const handleLogout = () => {
     apiClient.postLogout().then((res) => {
-      navigate("/login")
+      navigate("/login");
     });
   };
 
@@ -51,6 +51,9 @@ const Navbar = () => {
           )}
           {user && user.role === UserType.SPORTAREA && user.sportAreaId && (
             <NavLink to="/update-sportarea">Edit</NavLink>
+          )}
+          {user && user.role === UserType.SPORTAREA && (
+            <NavLink to="/pending">Booking</NavLink>
           )}
 
           <li className="account-li" onClick={handleClickAccount}>
