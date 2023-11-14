@@ -6,6 +6,8 @@ export interface SportAreaResponseDto {
   carPark: boolean;
   sportType: string[];
   location: string;
+  latitude: number;
+  longitude: number;
   description: string;
   price: string;
   sportList: SportList[];
@@ -17,6 +19,30 @@ export interface SearchSportAreaRequestDto {
   latitude: number;
   longitude: number;
   type?: string[];
+}
+
+export interface AddSportAreaRequest {
+  sportType: string;
+  name: string;
+  openTime: string;
+  closeTime: string;
+  price: string;
+}
+
+export interface AddSportAreaResponse {
+  data: SportArea | undefined;
+}
+
+export interface UpdateSportAreaRequest {
+  name: string;
+  shower: boolean;
+  carPark: boolean;
+  sportType: string[];
+  location: string;
+  latitude: number;
+  longitude: number;
+  description: string;
+  price: number;
 }
 
 export interface SportArea {

@@ -1,0 +1,40 @@
+.no-sport-home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+  font-size: 16px;
+}
+
+.sport-home-container {
+  padding: 50px 220px;
+  font-family: "Poppins", sans-serif;
+}
+
+.no-sport-text {
+  margin-bottom: 20px;
+}
+
+.create-sport-button {
+  background-color: #5729ce;
+  width: 200px;
+  height: 40px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.update-sport-button {
+  background-color: #5729ce;
+  width: 100px;
+  height: 40px;
+  color: white;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+}
+
+.update-sport-button-div {
+  display: flex;
+  justify-content: flex-end;
+}

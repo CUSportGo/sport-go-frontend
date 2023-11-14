@@ -15,6 +15,8 @@ import AdminPage from "./pages/AdminPage/AdminPage";
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
+import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 
 function App() {
   const [showNavbar, setShowNavbar] = useState(true);
@@ -42,9 +44,11 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
         <Route path="/resetsuccess" element={<ResetPasswordSuccessfully />} />
-        <Route path="/create-sportarea" element={<CreateSportAreaPage/>} />
+        <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
+        <Route path="/sport-home" element={<SportAreaHomePage />} />
+        <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
       </Routes>
     </div>
   );
