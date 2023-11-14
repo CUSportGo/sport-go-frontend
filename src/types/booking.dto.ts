@@ -39,7 +39,9 @@ export interface Booking {
     id: string;
     name: string;
     description: string;
+    image: String[];
   };
+  areaName: "string";
 }
 
 export interface BookingHistory {

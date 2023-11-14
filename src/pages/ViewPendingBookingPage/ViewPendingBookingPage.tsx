@@ -21,7 +21,7 @@ function ViewPendingBookingPage() {
           console.log(err);
         });
     };
-    if (user) {      
+    if (user) {
       fetchPending();
     }
   }, []);
@@ -31,8 +31,8 @@ function ViewPendingBookingPage() {
       <div className="list">
         {booking?.map((data, index) => (
           <div className="block">
-            <div className="areaid">{data.areaID}</div>
-            <div className="userid">{data.userID}</div>
+            <div className="areaid">{data.areaName}</div>
+            <div className="userid">{data.userID}.slice(0,6)</div>
             <div className="info">
               <div className="row">
                 From: <span>{data.startAt.slice(12, 17)}</span> To:{" "}
@@ -42,7 +42,7 @@ function ViewPendingBookingPage() {
                 <button
                   className="accept"
                   onClick={() => {
-                    apiClient.confirmBooking(data.areaID).catch((err) => {
+                    apiClient.confirmBooking(data.id).catch((err) => {
                       console.log(err);
                     });
                   }}
@@ -52,7 +52,7 @@ function ViewPendingBookingPage() {
                 <button
                   className="decline"
                   onClick={() => {
-                    apiClient.cancelBooking(data.areaID).catch((err) => {
+                    apiClient.cancelBooking(data.id).catch((err) => {
                       console.log(err);
                     });
                   }}
