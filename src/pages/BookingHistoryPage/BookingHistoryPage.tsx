@@ -95,8 +95,11 @@ function BookingHistoryPage() {
                 <div className="small">
                   Date : <span>{data.startAt.slice(0, 10)}</span>
                   <span
+                    className="cancelSpan"
                     onClick={() => {
-                      apiClient.cancelBooking(data.id);
+                      apiClient.cancelBooking(data.id).catch((err) => {
+                        console.log(err);
+                      });
                     }}
                   >
                     <img src={cancelPic} className="cancelPic"></img>

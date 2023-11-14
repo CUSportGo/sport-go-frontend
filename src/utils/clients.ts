@@ -153,19 +153,29 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   const response = await client.patch("/sportarea/" + id, data);
   return response;
 };
-
-const getBookingHistory = async () => {
-  const response = await client.get("/booking/viewBookingHistory/");
+const getPending = async (sportAreaId: string) => {
+  const response = await client.request({
+    method: "GET",
+    url: "/booking/pending",
+    data: {
+      SportAreaId: sportAreaId,
+    },
+  });
   return response;
 };
 
 const confirmBooking = async (id: string) => {
-  const response = await client.post("/booking/confirm/" + id);
+  const response = await client.post("/booking/confirm" + id);
   return response;
 };
 
 const cancelBooking = async (id: string) => {
-  const response = await client.post("/booking/cancel/" + id);
+  const response = await client.post("/booking/cancel" + id);
+  return response;
+};
+
+const getBookingHistory = async () => {
+  const response = await client.get("/booking/viewBookingHistory/");
   return response;
 };
 
@@ -188,7 +198,8 @@ export const apiClient = {
   getUserProfile,
   addSportArea,
   updateSportArea,
-  getBookingHistory,
-  cancelBooking,
+  getPending,
   confirmBooking,
+  cancelBooking,
+  getBookingHistory,
 };

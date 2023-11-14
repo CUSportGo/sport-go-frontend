@@ -31,6 +31,9 @@
   gap: 36px;
   overflow-x: scroll;
 }
+.historyPage-allList .statusList::-webkit-scrollbar {
+  width: 0.5rem; /* adjust as needed */
+}
 
 .historyPage-allList .pending {
   border-radius: 5px;
@@ -75,6 +78,10 @@
   background-color: #4f4f4f;
   box-sizing: border-box;
   border-radius: 5px;
+}
+
+.historyPage-allList .cancelSpan:hover {
+  background-color: pink;
 }
 .historyPage-allList .detail {
   display: flex;
