@@ -7,19 +7,23 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import { AddSportAreaRequest, AddSportAreaResponse, SearchSportAreaRequestDto, UpdateSportAreaRequest } from "../types/sportarea.dto";
-
+import { CreateSportareaRequest, CreateSportareaResponse } from "../types/sportarea.dto";
+import {
+  AddSportAreaRequest,
+  AddSportAreaResponse,
+  SearchSportAreaRequestDto,
+  UpdateSportAreaRequest,
+} from "../types/sportarea.dto";
 
 export const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
-  withCredentials: true
+  withCredentials: true,
 });
 
 const refreshToken = async () => {
   try {
-    const resp = await client.post("auth/refreshToken").then((res) => {
-    });
-    return resp
+    const resp = await client.post("auth/refreshToken").then((res) => {});
+    return resp;
   } catch (e) {
     console.log("Error", e);
   }
@@ -65,6 +69,11 @@ const postLogin = async (data: object) => {
   return response;
 };
 
+const postLogout = async () => {
+  const response = await client.post("/auth/logout");
+  return response;
+};
+
 const googleOAuth = async () => {
   const response = await client.get("/auth/google");
   return response;
@@ -93,11 +102,11 @@ const getAllUser = async () => {
 const banUser = async (userId: string) => {
   const response = await client.patch("admin/ban/" + userId);
   return response;
-}
+};
 const unbanUser = async (userId: string) => {
   const response = await client.patch("admin/unban/" + userId);
   return response;
-}
+};
 
 const getSportAreaByID = async (id: any) => {
   const response = await client.get("/sportArea/" + id);
@@ -119,12 +128,15 @@ const createBooking = async (request: CreateBookingRequest): Promise<CreateBooki
 const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   const response = await client.get("/sportArea", { params: params });
   return response;
-}
+};
 
-const addSportArea = async (id :string,data: AddSportAreaRequest) : Promise<AddSportAreaResponse> => {
-  const response = await client.patch("/sportArea/"+id+"/area", data);
+const addSportArea = async (
+  id: string,
+  data: AddSportAreaRequest
+): Promise<AddSportAreaResponse> => {
+  const response = await client.patch("/sportArea/" + id + "/area", data);
   return response;
-}
+};
 
 const createSportArea = async (data: FormData) => {
   const response = await client.post("/sportarea", data);
@@ -137,9 +149,9 @@ const getUserProfile = async () => {
 };
 
 const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
-  const response = await client.patch("/sportarea/"+id, data);
+  const response = await client.patch("/sportarea/" + id, data);
   return response;
-}
+};
 
 export const apiClient = {
   client,
@@ -154,6 +166,7 @@ export const apiClient = {
   getAllUser,
   banUser,
   unbanUser,
+  postLogout,
   getAvailableBooking,
   createBooking,
   getUserProfile,

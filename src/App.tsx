@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
@@ -8,12 +8,16 @@ import ResetPasswordPage from "./pages/ResetPasswordPage/ResetPasswordPage";
 import "./App.css";
 import ResetPasswordSuccessfully from "./pages/ResetPasswordPage/ResetPasswordSuccessfully";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
+import Navbar from "./components/Navbar/Navbar";
 import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage";
 import AdminPage from "./pages/AdminPage/AdminPage";
+
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
 import { useAuth } from "./context/AuthProvider";
 import { UserType } from "./utils/enums/usertype.enums";
 import RequireAuth, { HomeRoute } from "./components/RequireAuth";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
 import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 import RequireNoAuth from "./components/RequireNoAuth";
@@ -21,8 +25,24 @@ import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
 
 function App() {
   const { user } = useAuth();
+  const [showNavbar, setShowNavbar] = useState(true);
+  const location = useLocation();
+  useEffect(() => {
+    if (
+      location.pathname === "/login" ||
+      location.pathname === "/register" ||
+      location.pathname === "/forgotpassword"
+    ) {
+      setShowNavbar(false);
+    } else {
+      setShowNavbar(true);
+    }
+  }, [location]);
+
   return (
     <div className="app">
+      {showNavbar && <Navbar></Navbar>}
+
       <Routes>
         <Route path="/unauthorized" element={<UnauthorizedPage/>} />
 
