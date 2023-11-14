@@ -60,7 +60,7 @@ const RegisterPage = () => {
   ) => {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Regular expression for xxx-xxx-xxxx format
 
-    if (!phoneRegex.test(value) && value !== "" && value !== undefined) {
+    if (value !== undefined && value !== "" && !phoneRegex.test(value)) {
       callback("Number should be in the format xxx-xxx-xxxx");
     } else {
       callback(); // Validation passed
