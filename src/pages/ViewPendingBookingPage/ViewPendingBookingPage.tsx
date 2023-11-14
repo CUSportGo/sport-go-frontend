@@ -32,7 +32,7 @@ function ViewPendingBookingPage() {
         {booking?.map((data, index) => (
           <div className="block">
             <div className="areaid">{data.areaName}</div>
-            <div className="userid">{data.userID}.slice(0,6)</div>
+            <div className="userid">{data.userID.slice(0, 6)}</div>
             <div className="info">
               <div className="row">
                 From: <span>{data.startAt.slice(12, 17)}</span> To:{" "}
