@@ -124,6 +124,7 @@ const CreateSportAreaPage = () => {
       .createSportArea(formData)
       .then((res) => {
         navigate("/");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);

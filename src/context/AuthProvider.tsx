@@ -1,5 +1,6 @@
 import React, { createContext, useContext, ReactNode, useEffect } from "react";
 import { apiClient } from "../utils/clients";
+import Cookies from "js-cookie";
 
 interface User {
   id: string;
@@ -26,6 +27,7 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = React.useState<User | null>(null);
+  const isCookieValid = Cookies.get("accessToken") !== undefined;
 
   const contextValue: AuthContextProps = {
     user,
@@ -34,17 +36,21 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      apiClient.getUserProfile().then((res) => {
-        // console.log(res.data);
-        if (res.data) {
-          setUser(res.data);
-        }
-      }).catch((err) => {
-        console.log(err);
-      }
-      );
+      apiClient
+        .getUserProfile()
+        .then((res) => {
+          // console.log(res.data);
+          if (res.data) {
+            setUser(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    if (isCookieValid) {
+      fetchUser();
     }
-    fetchUser();
   }, []);
 
   return (
