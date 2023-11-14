@@ -121,7 +121,7 @@ const CreateSportAreaPage = () => {
     formData.append("longitude", values.location.lng.toString());
     formData.append("location", location);
     values.sporttype.forEach((sporttype: string) => {
-      formData.append("sportType", sporttype);
+      formData.append("sportType[]", sporttype);
     });
     if (imageList.length > 0) {
       imageList.map((image) => {
@@ -133,6 +133,7 @@ const CreateSportAreaPage = () => {
       .createSportArea(formData)
       .then((res) => {
         navigate("/");
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -224,6 +225,7 @@ const CreateSportAreaPage = () => {
           label="Add Image"
           name="addImage"
           style={{ marginBottom: "16px" }}
+          initialValue={fileList}
           rules={[
             {
               validator: () => {
@@ -234,6 +236,10 @@ const CreateSportAreaPage = () => {
                 }
               },
             },
+            {
+              required: true,
+              message: "Please add at least one image",
+            }
           ]}
         >
           <div>

@@ -20,16 +20,7 @@ import { apiClient } from "../../utils/clients";
 import { useNavigate } from "react-router-dom";
 import { SportAreaResponseDto } from "../../types/sportarea.dto";
 import { UserProfile } from "../../types/user.dto";
-
-const mockProfile: UserProfile = {
-  id: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  profileUrl: "",
-  role: "",
-  sportAreaId: "6550f6ae593e37f99e8a5b1f",
-};
+import { useAuth } from "../../context/AuthProvider";
 
 interface UpdateSportAreaForm {
   name: string;
@@ -41,6 +32,8 @@ interface UpdateSportAreaForm {
 }
 
 const UpdateSportAreaPage = () => {
+  const {user} = useAuth();
+
   const options: SelectProps["options"] = [
     { value: "carpark", label: "Car park" },
     { value: "shower", label: "Shower" },
@@ -103,6 +96,9 @@ const UpdateSportAreaPage = () => {
   };
 
   const onFinish = async (values: UpdateSportAreaForm) => {
+    if (user?.sportAreaId === undefined) {
+      return;
+    }
     const location = await getLocation(
       values.location.lat,
       values.location.lng
@@ -118,8 +114,9 @@ const UpdateSportAreaPage = () => {
       location: location,
       sportType: values.sporttype,
     };
+
     await apiClient
-      .updateSportArea(mockProfile.sportAreaId, data)
+      .updateSportArea(user?.sportAreaId, data)
       .then((res) => {
         console.log(res);
         navigate("/");
@@ -132,7 +129,7 @@ const UpdateSportAreaPage = () => {
   useEffect(() => {
     const fetchSportArea = async () => {
       await apiClient
-        .getSportAreaByID(mockProfile.sportAreaId)
+        .getSportAreaByID(user?.sportAreaId)
         .then((res) => {
           setSportAreaInfo(res.data.data);
           setSelectedLocation({

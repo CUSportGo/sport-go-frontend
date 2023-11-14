@@ -27,7 +27,7 @@ const SportAreaItem: React.FC<SportItemProps> = ({
       className={classnames("sportAreaItem-container", { clicked: isClicked })}
     >
       <img src={SportAreaImage} className="sportAreaItem-img"></img>
-      <div className="distance-text">{distance} km</div>
+      <div className="distance-text">{distance.toFixed(2)} km</div>
       <div className="sportAreaItem-text">
         <h1 className="sportAreaItem-name"> {SportAreaName}</h1>
         <div className="sportAreaItem-tags">

@@ -154,23 +154,17 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   return response;
 };
 const getPending = async (sportAreaId: string) => {
-  const response = await client.request({
-    method: "GET",
-    url: "/booking/pending",
-    data: {
-      SportAreaId: sportAreaId,
-    },
-  });
+  const response = await client.get("/booking/pending/" + sportAreaId)
   return response;
 };
 
 const confirmBooking = async (id: string) => {
-  const response = await client.post("/booking/confirm" + id);
+  const response = await client.post("/booking/confirm/" + id);
   return response;
 };
 
 const cancelBooking = async (id: string) => {
-  const response = await client.post("/booking/cancel" + id);
+  const response = await client.post("/booking/cancel/" + id);
   return response;
 };
 

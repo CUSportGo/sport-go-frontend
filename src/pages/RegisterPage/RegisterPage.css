@@ -65,6 +65,13 @@
   font-family: "Poppins", sans-serif;
 }
 
+.RegisterPage-errorMsg{
+  text-align: center;
+  color: red;
+  font-size: 10px;
+  font-family: "Poppins", sans-serif;
+}
+
 .upload-image
   :where(
     .css-dev-only-do-not-override-18iikkb

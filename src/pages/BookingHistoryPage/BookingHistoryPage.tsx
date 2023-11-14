@@ -2,68 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./BookingHistoryPage.css";
 import { apiClient } from "../../utils/clients";
 import cancelPic from "../../pictures/cancel.png";
+import { BookingHistory } from "../../types/booking.dto";
 
 function BookingHistoryPage() {
-  const mockHistory = {
-    pending: [
-      {
-        id: "id",
-        sportAreaID: "said",
-        sportType: "sportType",
-        areaID: "aid",
-        userID: "uid",
-        startAt: "10/28/2023, 10.00.00 AM",
-        endAt: "10/28/2023, 11.00.00 AM",
-        status: 0,
-        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
-        areaName: "areaName",
-      },
-    ],
-
-    accept: [
-      {
-        id: "id",
-        sportAreaID: "said",
-        sportType: "sportType",
-        areaID: "aid",
-        userID: "uid",
-        startAt: "10/28/2023, 10.00.00 AM",
-        endAt: "10/28/2023, 11.00.00 AM",
-        status: 0,
-        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
-        areaName: "areaName",
-      },
-    ],
-    decline: [
-      {
-        id: "id",
-        sportAreaID: "said",
-        sportType: "sportType",
-        areaID: "aid",
-        userID: "uid",
-        startAt: "10/28/2023, 10.00.00 AM",
-        endAt: "10/28/2023, 11.00.00 AM",
-        status: 0,
-        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
-        areaName: "areaName",
-      },
-    ],
-    cancel: [
-      {
-        id: "id",
-        sportAreaID: "said",
-        sportType: "sportType",
-        areaID: "aid",
-        userID: "uid",
-        startAt: "10/28/2023, 10.00.00 AM",
-        endAt: "10/28/2023, 11.00.00 AM",
-        status: 0,
-        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
-        areaName: "areaName",
-      },
-    ],
-  };
-  const [history, setHistory] = useState(mockHistory);
+  const [history, setHistory] = useState<BookingHistory>();
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -85,9 +27,9 @@ function BookingHistoryPage() {
       <div className="historyPage-allList">
         <div className="statusHead"> Pending </div>
         <div className="statusList">
-          {history.pending.map((data, index) => (
+          {history?.pending?.map((data, index) => (
             <div className="pending">
-              <img className="pic" src={data.sportAreaData.images[0]}></img>
+              <img className="pic" src={data.sportAreaData.image[0]}></img>
               <div className="detail">
                 <div> {data.sportAreaData.name}</div>
                 <div className="type"> {data.sportType}</div>
@@ -97,9 +39,14 @@ function BookingHistoryPage() {
                   <span
                     className="cancelSpan"
                     onClick={() => {
-                      apiClient.cancelBooking(data.id).catch((err) => {
-                        console.log(err);
-                      });
+                      apiClient
+                        .cancelBooking(data.id)
+                        .then(() => {
+                          window.location.reload();
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
                     }}
                   >
                     <img src={cancelPic} className="cancelPic"></img>
@@ -115,9 +62,9 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Accept </div>
         <div className="statusList">
-          {history.accept.map((data, index) => (
+          {history?.accept?.map((data, index) => (
             <div className="accept">
-              <img className="pic" src={data.sportAreaData.images[0]}></img>
+              <img className="pic" src={data.sportAreaData.image[0]}></img>
               <div className="detail">
                 <div> {data.sportAreaData.name}</div>
                 <div className="type"> {data.sportType}</div>
@@ -135,9 +82,9 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Decline </div>
         <div className="statusList">
-          {history.decline.map((data, index) => (
+          {history?.decline?.map((data, index) => (
             <div className="decline">
-              <img className="pic" src={data.sportAreaData.images[0]}></img>
+              <img className="pic" src={data.sportAreaData.image[0]}></img>
               <div className="detail">
                 <div> {data.sportAreaData.name}</div>
                 <div className="type"> {data.sportType}</div>
@@ -155,9 +102,9 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Cancel </div>
         <div className="statusList">
-          {history.cancel.map((data, index) => (
+          {history?.cancel?.map((data, index) => (
             <div className="cancel">
-              <img className="pic" src={data.sportAreaData.images[0]}></img>
+              <img className="pic" src={data.sportAreaData.image[0]}></img>
               <div className="detail">
                 <div> {data.sportAreaData.name}</div>
                 <div className="type"> {data.sportType}</div>
