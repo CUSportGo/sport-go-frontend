@@ -4,20 +4,73 @@ import { apiClient } from "../../utils/clients";
 import cancelPic from "../../pictures/cancel.png";
 
 function BookingHistoryPage() {
-  const [pending, setPending] = useState([]);
-  const [accept, setAccept] = useState([]);
-  const [decline, setDecline] = useState([]);
-  const [cancel, setCancel] = useState([]);
+  const mockHistory = {
+    pending: [
+      {
+        id: "id",
+        sportAreaID: "said",
+        sportType: "sportType",
+        areaID: "aid",
+        userID: "uid",
+        startAt: "10/28/2023, 10.00.00 AM",
+        endAt: "10/28/2023, 11.00.00 AM",
+        status: 0,
+        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
+        areaName: "areaName",
+      },
+    ],
+
+    accept: [
+      {
+        id: "id",
+        sportAreaID: "said",
+        sportType: "sportType",
+        areaID: "aid",
+        userID: "uid",
+        startAt: "10/28/2023, 10.00.00 AM",
+        endAt: "10/28/2023, 11.00.00 AM",
+        status: 0,
+        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
+        areaName: "areaName",
+      },
+    ],
+    decline: [
+      {
+        id: "id",
+        sportAreaID: "said",
+        sportType: "sportType",
+        areaID: "aid",
+        userID: "uid",
+        startAt: "10/28/2023, 10.00.00 AM",
+        endAt: "10/28/2023, 11.00.00 AM",
+        status: 0,
+        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
+        areaName: "areaName",
+      },
+    ],
+    cancel: [
+      {
+        id: "id",
+        sportAreaID: "said",
+        sportType: "sportType",
+        areaID: "aid",
+        userID: "uid",
+        startAt: "10/28/2023, 10.00.00 AM",
+        endAt: "10/28/2023, 11.00.00 AM",
+        status: 0,
+        sportAreaData: { id: "id", name: "name", desciption: "description", images: ["1", "2"] },
+        areaName: "areaName",
+      },
+    ],
+  };
+  const [history, setHistory] = useState(mockHistory);
 
   useEffect(() => {
     const fetchHistory = async () => {
       await apiClient
         .getBookingHistory()
         .then((res) => {
-          setPending(res.data.data.pending);
-          setAccept(res.data.data.accept);
-          setDecline(res.data.data.decline);
-          setCancel(res.data.data.cancel);
+          setHistory(res.data.data);
         })
         .catch((err) => {
           console.log(err);
@@ -32,18 +85,42 @@ function BookingHistoryPage() {
       <div className="historyPage-allList">
         <div className="statusHead"> Pending </div>
         <div className="statusList">
-          {pending.map((data, index) => (
+          {history.pending.map((data, index) => (
             <div className="pending">
-              <div className="pic"></div>
+              <img className="pic" src={data.sportAreaData.images[0]}></img>
               <div className="detail">
-                <div> {data.name}</div>
-                <div className="type"> {data.type}</div>
+                <div> {data.sportAreaData.name}</div>
+                <div className="type"> {data.sportType}</div>
                 <div> {data.areaName}</div>
                 <div className="small">
-                  Date : <span>{data.startAt(0, 10)}</span>
-                  <span onClick={apiClient.cancelBooking(data.areaid)}>
-                    <img src={cancelPic}></img>
+                  Date : <span>{data.startAt.slice(0, 10)}</span>
+                  <span
+                    onClick={() => {
+                      apiClient.cancelBooking(data.id);
+                    }}
+                  >
+                    <img src={cancelPic} className="cancelPic"></img>
                   </span>
+                </div>
+                <div className="small">
+                  From : <span>{data.startAt.slice(12, 17)}</span> To :
+                  <span>{data.endAt.slice(12, 17)}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="statusHead"> Accept </div>
+        <div className="statusList">
+          {history.accept.map((data, index) => (
+            <div className="accept">
+              <img className="pic" src={data.sportAreaData.images[0]}></img>
+              <div className="detail">
+                <div> {data.sportAreaData.name}</div>
+                <div className="type"> {data.sportType}</div>
+                <div> {data.areaName}</div>
+                <div className="small">
+                  Date : <span>{data.startAt.slice(0, 10)}</span>
                 </div>
                 <div className="small">
                   From : <span>{data.startAt.slice(12, 17)}</span> To :{" "}
@@ -53,39 +130,21 @@ function BookingHistoryPage() {
             </div>
           ))}
         </div>
-        <div className="statusHead"> Accept </div>
-        <div className="statusList">
-          {accept.map((data, index) => (
-            <div className="accept">
-              <div className="pic"></div>
-              <div className="detail">
-                <div> {data.name}</div>
-                <div className="type"> {data.type}</div>
-                <div> {data.areaName}</div>
-                <div className="small">
-                  Date : <span>{data.date}</span>
-                </div>
-                <div className="small">
-                  From : <span>{data.from}</span> To : <span>{data.to}</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
         <div className="statusHead"> Decline </div>
         <div className="statusList">
-          {decline.map((data, index) => (
+          {history.decline.map((data, index) => (
             <div className="decline">
-              <div className="pic"></div>
+              <img className="pic" src={data.sportAreaData.images[0]}></img>
               <div className="detail">
-                <div> {data.name}</div>
-                <div className="type"> {data.type}</div>
+                <div> {data.sportAreaData.name}</div>
+                <div className="type"> {data.sportType}</div>
                 <div> {data.areaName}</div>
                 <div className="small">
-                  Date : <span>{data.date}</span>
+                  Date : <span>{data.startAt.slice(0, 10)}</span>
                 </div>
                 <div className="small">
-                  From : <span>{data.from}</span> To : <span>{data.to}</span>
+                  From : <span>{data.startAt.slice(12, 17)}</span> To :{" "}
+                  <span>{data.endAt.slice(12, 17)}</span>
                 </div>
               </div>
             </div>
@@ -93,18 +152,19 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Cancel </div>
         <div className="statusList">
-          {cancel.map((data, index) => (
+          {history.cancel.map((data, index) => (
             <div className="cancel">
-              <div className="pic"></div>
+              <img className="pic" src={data.sportAreaData.images[0]}></img>
               <div className="detail">
-                <div> {data.name}</div>
-                <div className="type"> {data.type}</div>
+                <div> {data.sportAreaData.name}</div>
+                <div className="type"> {data.sportType}</div>
                 <div> {data.areaName}</div>
                 <div className="small">
-                  Date : <span>{data.date}</span>
+                  Date : <span>{data.startAt.slice(0, 10)}</span>
                 </div>
                 <div className="small">
-                  From : <span>{data.from}</span> To : <span>{data.to}</span>
+                  From : <span>{data.startAt.slice(12, 17)}</span> To :{" "}
+                  <span>{data.endAt.slice(12, 17)}</span>
                 </div>
               </div>
             </div>

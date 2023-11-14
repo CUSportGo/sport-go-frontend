@@ -92,6 +92,10 @@
   gap: 10px;
 }
 
+.historyPage-allList .cancelPic {
+  height: 20px;
+}
+
 .historyPage-allList .detail .type {
   border-radius: 20px;
   background: #dfdbf5;
