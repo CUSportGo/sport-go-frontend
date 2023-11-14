@@ -70,6 +70,7 @@ function App() {
         </Route>
         <Route element={<RequireAuth roles={[UserType.USER]} />}>
           <Route path="/sportarea/:id" element={<SportAreaPage />} />
+          <Route path="/history" element={<BookingHistoryPage />} />
         </Route>
         <Route element={<RequireAuth roles={[UserType.SPORTAREA]} />}>
           <Route path="/create-sportarea" element={<CreateSportAreaPage />} />

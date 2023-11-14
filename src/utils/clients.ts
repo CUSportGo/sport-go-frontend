@@ -159,12 +159,12 @@ const getPending = async (sportAreaId: string) => {
 };
 
 const confirmBooking = async (id: string) => {
-  const response = await client.post("/booking/confirm" + id);
+  const response = await client.post("/booking/confirm/" + id);
   return response;
 };
 
 const cancelBooking = async (id: string) => {
-  const response = await client.post("/booking/cancel" + id);
+  const response = await client.post("/booking/cancel/" + id);
   return response;
 };
 
