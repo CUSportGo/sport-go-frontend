@@ -48,8 +48,8 @@ const AddAreaForm: React.FC<AddAreaFormProp> = ({sportAreaId,setIsAdding}) => {
   const onFinish = async (values: any) => {
     const data: AddSportAreaRequest = {
       name: values.areaname,
-      openTime: `${values.open}:00:00`,
-      closeTime: `${values.close}:00:00`,
+      openTime: values.open >= 9 ?`${values.open}:00:00`: `0${values.open}:00:00`,
+      closeTime: values.close >= 9 ?`${values.close}:00:00`: `0${values.close}:00:00`,
       price: values.price.toString(),
       sportType: values.sporttype,
     };
