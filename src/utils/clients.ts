@@ -7,6 +7,7 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
+
 import { CreateSportareaRequest, CreateSportareaResponse } from "../types/sportarea.dto";
 import {
   AddSportAreaRequest,
@@ -153,6 +154,21 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   return response;
 };
 
+const getBookingHistory = async () => {
+  const response = await client.get("/booking/viewBookingHistory/");
+  return response;
+};
+
+const confirmBooking = async (id: string) => {
+  const response = await client.post("/booking/confirm/" + id);
+  return response;
+};
+
+const cancelBooking = async (id: string) => {
+  const response = await client.post("/booking/cancel/" + id);
+  return response;
+};
+
 export const apiClient = {
   client,
   postLogin,
@@ -172,4 +188,7 @@ export const apiClient = {
   getUserProfile,
   addSportArea,
   updateSportArea,
+  getBookingHistory,
+  cancelBooking,
+  confirmBooking,
 };
