@@ -1,20 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./BookingHistoryPage.css";
+import { apiClient } from "../../utils/clients";
 
 function BookingHistoryPage() {
-  const data = {
-    name: "Sport Complex",
-    type: "Badminton",
-    areaName: "Area1",
-    date: "05 Nov 2023",
-    from: "24.00",
-    to: "24.00",
-  };
+  const [pending, setPending] = useState([]);
+  const [accept, setAccept] = useState([]);
+  const [decline, setDecline] = useState([]);
+  const [cancel, setCancel] = useState([]);
 
-  const datas = [];
-  for (let i = 0; i < 6; i++) {
-    datas.push(data);
-  }
+  useEffect(() => {
+    const fetchHistory = async () => {
+      await apiClient
+        .getBookingHistory()
+        .then((res) => {
+          setPending(res.data.data.pending);
+          setAccept(res.data.data.accept);
+          setDecline(res.data.data.decline);
+          setCancel(res.data.data.cancel);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchHistory();
+  }, []);
 
   return (
     <div className="bookingHistoryPage-container">
@@ -22,7 +31,7 @@ function BookingHistoryPage() {
       <div className="historyPage-allList">
         <div className="statusHead"> Pending </div>
         <div className="statusList">
-          {datas.map((data, index) => (
+          {pending.map((data, index) => (
             <div className="pending">
               <div className="pic"></div>
               <div className="detail">
@@ -41,7 +50,7 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Accept </div>
         <div className="statusList">
-          {datas.map((data, index) => (
+          {accept.map((data, index) => (
             <div className="accept">
               <div className="pic"></div>
               <div className="detail">
@@ -60,7 +69,7 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Decline </div>
         <div className="statusList">
-          {datas.map((data, index) => (
+          {decline.map((data, index) => (
             <div className="decline">
               <div className="pic"></div>
               <div className="detail">
@@ -79,7 +88,7 @@ function BookingHistoryPage() {
         </div>
         <div className="statusHead"> Cancel </div>
         <div className="statusList">
-          {datas.map((data, index) => (
+          {cancel.map((data, index) => (
             <div className="cancel">
               <div className="pic"></div>
               <div className="detail">

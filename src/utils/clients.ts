@@ -154,6 +154,11 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   return response;
 };
 
+const getBookingHistory = async () => {
+  const response = await client.patch("/booking/viewBookingHistory/");
+  return response;
+};
+
 export const apiClient = {
   client,
   postLogin,
@@ -173,4 +178,5 @@ export const apiClient = {
   getUserProfile,
   addSportArea,
   updateSportArea,
+  getBookingHistory,
 };

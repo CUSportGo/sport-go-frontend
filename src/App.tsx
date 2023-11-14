@@ -13,7 +13,7 @@ import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage
 import AdminPage from "./pages/AdminPage/AdminPage";
 
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
-import BookingHistoryPage from "./pages/BookingHistory/BookingHistoryPage";
+import BookingHistoryPage from "./pages/BookingHistoryPage/BookingHistoryPage";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
