@@ -1,7 +1,12 @@
 import { useState } from "react";
 import "./RegisterPage.css";
 import { Button, Form, Input, Select, message } from "antd";
-import Upload, { RcFile, UploadChangeParam, UploadFile, UploadProps } from "antd/es/upload";
+import Upload, {
+  RcFile,
+  UploadChangeParam,
+  UploadFile,
+  UploadProps,
+} from "antd/es/upload";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Store } from "antd/es/form/interface";
@@ -14,13 +19,18 @@ const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState<string>("");
+  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const navigate = useNavigate();
   const { Option } = Select;
 
-  const handleUploadFileChange: UploadProps["onChange"] = (info: UploadChangeParam<UploadFile>) => {
+  const handleUploadFileChange: UploadProps["onChange"] = (
+    info: UploadChangeParam<UploadFile>
+  ) => {
     const blobObj = new Blob([info.file as RcFile], { type: info.file.type });
-    const fileObj = new File([blobObj], info.file.name, { type: info.file.type });
+    const fileObj = new File([blobObj], info.file.name, {
+      type: info.file.type,
+    });
     setImage(fileObj);
     setImageUrl(URL.createObjectURL(fileObj));
   };
@@ -43,10 +53,14 @@ const RegisterPage = () => {
     return isJpgOrPng && isLt2M;
   };
 
-  const validatePhoneFormat = (_: any, value: string, callback: (message?: string) => void) => {
+  const validatePhoneFormat = (
+    _: any,
+    value: string,
+    callback: (message?: string) => void
+  ) => {
     const phoneRegex = /^\d{3}-\d{3}-\d{4}$/; // Regular expression for xxx-xxx-xxxx format
 
-    if (!phoneRegex.test(value) && value !== "" && value !== undefined) {
+    if (value !== undefined && value !== "" && !phoneRegex.test(value)) {
       callback("Number should be in the format xxx-xxx-xxxx");
     } else {
       callback(); // Validation passed
@@ -71,6 +85,9 @@ const RegisterPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response.status === 409) {
+          setErrorMsg("Email already exists");
+        }
       });
   };
 
@@ -220,7 +237,9 @@ const RegisterPage = () => {
                   if (!value || getFieldValue("password") === value) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error("The password that you entered do not match"));
+                  return Promise.reject(
+                    new Error("The password that you entered do not match")
+                  );
                 },
               }),
             ]}
@@ -238,6 +257,9 @@ const RegisterPage = () => {
               <Option value={UserType.SPORTAREA}>Sport Area</Option>
             </Select>
           </Form.Item>
+          {errorMsg != "" && (
+            <p className="RegisterPage-errorMsg">{errorMsg}</p>
+          )}
           <Form.Item
             name="registerbutton"
             className="register-item-button"

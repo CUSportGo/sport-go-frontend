@@ -22,7 +22,6 @@ const ForgotPasswordPage = () => {
     await apiClient
       .postForgotPassword({ email })
       .then((res) => {
-        alert("Email was sent!");
         navigate("/login");
       })
       .catch((err) => {
