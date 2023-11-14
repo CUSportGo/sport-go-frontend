@@ -216,6 +216,7 @@ const CreateSportAreaPage = () => {
           label="Add Image"
           name="addImage"
           style={{ marginBottom: "16px" }}
+          initialValue={fileList}
           rules={[
             {
               validator: () => {
@@ -226,6 +227,10 @@ const CreateSportAreaPage = () => {
                 }
               },
             },
+            {
+              required: true,
+              message: "Please add at least one image",
+            }
           ]}
         >
           <div>

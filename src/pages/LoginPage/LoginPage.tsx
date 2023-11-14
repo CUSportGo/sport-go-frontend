@@ -41,7 +41,6 @@ const LoginPage = () => {
           );
         }
         fetchUser();
-        alert("Login successful");
         navigate("/");
       })
       .catch((err) => {

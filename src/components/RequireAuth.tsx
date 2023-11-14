@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import HomePage from "../pages/HomePage/HomePage";
 import AdminPage from "../pages/AdminPage/AdminPage";
 import SportAreaHomePage from "../pages/SportAreaHomePage/SportAreaHomePage";
+import UnauthorizedPage from "../pages/UnauthorizedPage/UnauthorizedPage";
 
 interface RequireAuthProps {
   roles: string[];
@@ -40,7 +41,7 @@ const HomeRoute = (role: string) => {
   } else if (role === "ADMIN") {
     return <AdminPage />;
   } else {
-    <div>Unauthorized</div>;
+    <UnauthorizedPage/>;
   }
 };
 

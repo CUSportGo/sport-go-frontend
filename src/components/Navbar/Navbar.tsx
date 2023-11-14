@@ -6,16 +6,20 @@ import account from "../../pictures/account.png";
 import { apiClient } from "../../utils/clients";
 import { useAuth } from "../../context/AuthProvider";
 import { UserType } from "../../utils/enums/usertype.enums";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useAuth();
   const [accountOption, setAccountOption] = useState(false);
   const [userPic, setUserPic] = useState(account);
+  const navigate = useNavigate();
   const handleClickAccount = () => {
     setAccountOption(!accountOption);
   };
   const handleLogout = () => {
-    apiClient.postLogout();
+    apiClient.postLogout().then((res) => {
+      navigate("/login")
+    });
   };
 
   useEffect(() => {
@@ -45,7 +49,7 @@ const Navbar = () => {
           {user && user.role === UserType.USER && (
             <NavLink to="/history">History</NavLink>
           )}
-          {user && user.role === UserType.SPORTAREA && (
+          {user && user.role === UserType.SPORTAREA && user.sportAreaId && (
             <NavLink to="/update-sportarea">Edit</NavLink>
           )}
 
