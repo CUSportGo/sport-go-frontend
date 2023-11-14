@@ -16,20 +16,26 @@ import { UserType } from "./utils/enums/usertype.enums";
 import RequireAuth, { HomeRoute } from "./components/RequireAuth";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
 import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
+import RequireNoAuth from "./components/RequireNoAuth";
 
 function App() {
   const { user } = useAuth();
   return (
     <div className="app">
       <Routes>
-        {/* public */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
-        <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
-        <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
         <Route path="/unauthorized" element={<div>Unauthorized</div>} />
-        {/* protected */}
+
+        <Route element={<RequireNoAuth />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPasswordPage />}
+          />
+          <Route path="/resetsuc" element={<ResetPasswordSuccessfully />} />
+        </Route>
+
         <Route
           element={
             <RequireAuth
