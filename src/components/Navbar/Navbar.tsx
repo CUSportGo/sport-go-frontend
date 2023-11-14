@@ -48,9 +48,6 @@ const Navbar = () => {
       </nav>
       {accountOption && (
         <div className="accountOptionList">
-          <NavLink to="/profile" className="profileOption">
-            Your Profile
-          </NavLink>
           <NavLink to="/login" className="logoutOption" onClick={handleLogout}>
             Logout
           </NavLink>
