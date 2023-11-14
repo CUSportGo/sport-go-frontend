@@ -152,6 +152,26 @@ const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
   const response = await client.patch("/sportarea/" + id, data);
   return response;
 };
+const getPending = async (sportAreaId: string) => {
+  const response = await client.request({
+    method: "GET",
+    url: "/booking/pending",
+    data: {
+      SportAreaId: sportAreaId,
+    },
+  });
+  return response;
+};
+
+const confirmBooking = async (id: string) => {
+  const response = await client.post("/booking/confirm" + id);
+  return response;
+};
+
+const cancelBooking = async (id: string) => {
+  const response = await client.post("/booking/cancel" + id);
+  return response;
+};
 
 export const apiClient = {
   client,
@@ -172,4 +192,7 @@ export const apiClient = {
   getUserProfile,
   addSportArea,
   updateSportArea,
+  getPending,
+  confirmBooking,
+  cancelBooking,
 };

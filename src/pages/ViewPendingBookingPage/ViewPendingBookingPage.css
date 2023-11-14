@@ -1,0 +1,122 @@
+.viewPending-container {
+  padding: 50px 220px;
+  font-family: "Poppins", sans-serif;
+}
+.viewPending-container .list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
+}
+
+.viewPending-container .block {
+  width: 1190px;
+  height: 167px;
+  border-radius: 5px;
+  border: 2px solid #dcc629;
+  background: #fffbdb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  min-height: 167px;
+}
+
+.viewPending-container .areaid {
+  color: #000;
+  font-family: Poppins;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.viewPending-container .userid {
+  border-radius: 20px;
+  background: #dfdbf5;
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  width: 173px;
+  height: 76px;
+  padding: 2px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.viewPending-container .info {
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  gap: 30px;
+}
+
+.viewPending-container .row {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+}
+.viewPending-container .action {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding-left: 30px;
+}
+
+.viewPending-container .accept {
+  border-radius: 5px;
+  background: #5729ce;
+  width: 200px;
+  height: 40px;
+  color: var(--text-color, #fff);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.viewPending-container .decline {
+  border-radius: 5px;
+  background: #d9d9d9;
+  width: 200px;
+  height: 40px;
+  color: #000;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.viewPending-container span {
+  border-radius: 5px;
+  border: 1px solid #dec6c6;
+  background: var(--text-color, #fff);
+  width: 166.893px;
+  height: 45.563px;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  box-sizing: border-box;
+}
