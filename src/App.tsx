@@ -17,13 +17,14 @@ import RequireAuth, { HomeRoute } from "./components/RequireAuth";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
 import UpdateSportAreaPage from "./pages/UpdateSportAreaPage/UpdateSportAreaPage";
 import RequireNoAuth from "./components/RequireNoAuth";
+import UnauthorizedPage from "./pages/UnauthorizedPage/UnauthorizedPage";
 
 function App() {
   const { user } = useAuth();
   return (
     <div className="app">
       <Routes>
-        <Route path="/unauthorized" element={<div>Unauthorized</div>} />
+        <Route path="/unauthorized" element={<UnauthorizedPage/>} />
 
         <Route element={<RequireNoAuth />}>
           <Route path="/login" element={<LoginPage />} />

@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 import Cookies from "js-cookie";
 import HomePage from "../pages/HomePage/HomePage";
@@ -12,6 +12,7 @@ interface RequireAuthProps {
 const RequireAuth: React.FC<RequireAuthProps> = ({ roles }) => {
   const { user } = useAuth();
   const isCookieValid = Cookies.get("accessToken") !== undefined;
+  const location = useLocation();
 
   if (!isCookieValid) {
     return <Navigate to="/login" />;
@@ -22,9 +23,9 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ roles }) => {
     (roles.includes(user?.role ?? "") ? (
       <Outlet />
     ) : user ? (
-      <Navigate to="/unauthorized" />
+      <Navigate to="/unauthorized" state={{ from: location }} replace />
     ) : (
-      <Navigate to="/login" />
+      <Navigate to="/login" state={{ from: location }} replace />
     ))
   );
 };
