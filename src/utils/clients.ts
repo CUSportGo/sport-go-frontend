@@ -7,6 +7,7 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
+
 import { CreateSportareaRequest, CreateSportareaResponse } from "../types/sportarea.dto";
 import {
   AddSportAreaRequest,
@@ -173,6 +174,11 @@ const cancelBooking = async (id: string) => {
   return response;
 };
 
+const getBookingHistory = async () => {
+  const response = await client.get("/booking/viewBookingHistory/");
+  return response;
+};
+
 export const apiClient = {
   client,
   postLogin,
@@ -195,4 +201,5 @@ export const apiClient = {
   getPending,
   confirmBooking,
   cancelBooking,
+  getBookingHistory,
 };

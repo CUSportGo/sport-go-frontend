@@ -13,6 +13,7 @@ import CreateSportAreaPage from "./pages/CreateSportAreaPage/CreateSportAreaPage
 import AdminPage from "./pages/AdminPage/AdminPage";
 
 import SportAreaPage from "./pages/SportAreaPage/SportAreaPage";
+import BookingHistoryPage from "./pages/BookingHistoryPage/BookingHistoryPage";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import SportAreaHomePage from "./pages/SportAreaHomePage/SportAreaHomePage";
@@ -48,6 +49,7 @@ function App() {
         <Route path="/create-sportarea" element={<CreateSportAreaPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sportarea/:id" element={<SportAreaPage />} />
+        <Route path="/history" element={<BookingHistoryPage />} />
         <Route path="/sport-home" element={<SportAreaHomePage />} />
         <Route path="/update-sportarea" element={<UpdateSportAreaPage />} />
         <Route path="/pending" element={<ViewPendingBookingPage />} />
