@@ -40,13 +40,14 @@ function BookingHistoryPage() {
                 <div className="type"> {data.type}</div>
                 <div> {data.areaName}</div>
                 <div className="small">
-                  Date : <span>{data.date}</span>
+                  Date : <span>{data.startAt(0, 10)}</span>
                   <span onClick={apiClient.cancelBooking(data.areaid)}>
                     <img src={cancelPic}></img>
                   </span>
                 </div>
                 <div className="small">
-                  From : <span>{data.from}</span> To : <span>{data.to}</span>
+                  From : <span>{data.startAt.slice(12, 17)}</span> To :{" "}
+                  <span>{data.endAt.slice(12, 17)}</span>
                 </div>
               </div>
             </div>
