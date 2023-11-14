@@ -16,8 +16,12 @@ const AdminPage = () => {
     setLoading(true);
     apiClient.getAllUser().then((res) => {
       const users: User[] = res.data;
-      const activeUsers = users.filter((user) => user.status === "ACTIVE");
-      const bannedUsers = users.filter((user) => user.status === "BANNED");
+      const activeUsers = users.filter(
+        (user) => user.status === "ACTIVE" || user.role != "ADMIN"
+      );
+      const bannedUsers = users.filter(
+        (user) => user.status === "BANNED" || user.role != "ADMIN"
+      );
       setActiveUser(activeUsers);
       setBannedUser(bannedUsers);
       setDisplayUser(activeUsers);
