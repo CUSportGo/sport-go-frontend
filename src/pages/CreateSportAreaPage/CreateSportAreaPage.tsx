@@ -111,7 +111,7 @@ const CreateSportAreaPage = () => {
     formData.append("longitude", values.location.lng.toString());
     formData.append("location", location);
     values.sporttype.forEach((sporttype: string) => {
-      formData.append("sportType", sporttype);
+      formData.append("sportType[]", sporttype);
     });
     if (fileList.length > 0) {
       fileList.forEach((file: UploadFile) => {
@@ -120,6 +120,7 @@ const CreateSportAreaPage = () => {
         formData.append("files", fileObj);
       });
     }
+   
     await apiClient
       .createSportArea(formData)
       .then((res) => {
