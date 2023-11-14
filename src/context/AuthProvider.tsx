@@ -8,7 +8,7 @@ interface User {
   email: string;
   profileUrl: string;
   role: string;
-  sportId?: string;
+  sportAreaId?: string;
 }
 
 interface AuthContextProps {

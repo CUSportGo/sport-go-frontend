@@ -6,20 +6,11 @@ import { SportAreaResponseDto } from "../../types/sportarea.dto";
 import { useEffect, useState } from "react";
 import { apiClient } from "../../utils/clients";
 import AreaContainer from "../../components/AreaContainer/AreaContainer";
-import { UserProfile } from "../../types/user.dto";
+import { useAuth } from "../../context/AuthProvider";
 
 const SportAreaHomePage = () => {
-  const mockProfile: UserProfile = {
-    id: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    profileUrl: "",
-    role: "",
-    sportAreaId: "6550f6ae593e37f99e8a5b1f",
-  };
-  // const id = "654a5d108616e9e53d6a6be4";
-  // const isSportAreaCreated = true;
+  const { user } = useAuth();
+
   const navigate = useNavigate();
   const mock: SportAreaResponseDto = {
     id: "",
@@ -42,7 +33,7 @@ const SportAreaHomePage = () => {
   useEffect(() => {
     const fetchSportArea = async () => {
       await apiClient
-        .getSportAreaByID(mockProfile.sportAreaId)
+        .getSportAreaByID(user?.sportAreaId)
         .then((res) => {
           console.log(res);
           setSportAreaInfo(res.data.data);
@@ -51,12 +42,12 @@ const SportAreaHomePage = () => {
           console.log(err);
         });
     };
-    if (mockProfile.sportAreaId) {
+    if (user?.sportAreaId) {
       fetchSportArea();
     }
   }, []);
 
-  return mockProfile.sportAreaId || mockProfile.sportAreaId != "" ? (
+  return user?.sportAreaId ? (
     <div className="sport-home-container">
       <div className="update-sport-button-div">
         <Button
@@ -78,7 +69,7 @@ const SportAreaHomePage = () => {
         image={sportAreaInfo.image}
       />
       <AreaContainer
-        sportAreaId={mockProfile.sportAreaId ? mockProfile.sportAreaId : ""}
+        sportAreaId={user.sportAreaId}
         sportList={sportAreaInfo.sportList}
       />
     </div>
