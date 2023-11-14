@@ -6,10 +6,7 @@ import { Checkbox, Divider, Select } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { useNavigate } from "react-router-dom";
 import { apiClient } from "../../utils/clients";
-import {
-  SearchSportAreaRequestDto,
-  SportArea,
-} from "../../types/sportarea.dto";
+import { SearchSportAreaRequestDto, SportArea } from "../../types/sportarea.dto";
 import { SportTypeEnum } from "../../utils/enums/sportType.enums";
 
 const HomePage = () => {
@@ -40,7 +37,7 @@ const HomePage = () => {
     setDistance(value);
   };
 
-  const onSearch = async (value: string) => {    
+  const onSearch = async (value: string) => {
     const data: SearchSportAreaRequestDto = {
       keyword: value,
       latitude: latitude,
@@ -51,9 +48,9 @@ const HomePage = () => {
     }
     if (distance > -1) {
       data.maxDistance = distance;
-    }    
+    }
     console.log(data);
-    
+
     await apiClient
       .searchSportArea(data)
       .then((res) => {
@@ -74,13 +71,13 @@ const HomePage = () => {
           async function (position) {
             setLatitude(position.coords.latitude);
             setLongitude(position.coords.longitude);
-            
+
             const data: SearchSportAreaRequestDto = {
               latitude: position.coords.latitude,
               longitude: position.coords.longitude,
             };
             console.log(data);
-            
+
             await apiClient
               .searchSportArea(data)
               .then((res) => {
@@ -124,15 +121,14 @@ const HomePage = () => {
         </div>
       </div>
       <div className="right-column">
-        <div className="result-text">
-          Total results : {searchResult ? searchResult.length : 0}
-        </div>
+        <div className="result-text">Total results : {searchResult ? searchResult.length : 0}</div>
         <div className="result-section">
           {searchResult && searchResult.length > 0 ? (
             searchResult.map((item, index) => (
               <SportAreaItem
                 key={index}
                 SportAreaName={item.name}
+                SportAreaImage={item.image.length > 0 ? item.image[0] : ""}
                 SportAreaTag={item.sportType}
                 distance={item.distance}
                 onClick={() => {

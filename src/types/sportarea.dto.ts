@@ -48,7 +48,7 @@ export interface UpdateSportAreaRequest {
 export interface SportArea {
   id: string;
   name: string;
-  imageURL: string;
+  image: string[];
   sportType: string[];
   location: string;
   description: string;
@@ -69,7 +69,6 @@ export interface SportDetail {
   closeTime: string;
   price: string;
 }
-
 
 export interface CreateSportareaRequest {
   name: string;

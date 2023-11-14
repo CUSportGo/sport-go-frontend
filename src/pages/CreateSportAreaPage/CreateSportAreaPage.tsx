@@ -1,7 +1,7 @@
 import { Button, Form, Input, InputNumber, Modal, Select, SelectProps } from "antd";
 import "./CreateSportAreaPage.css";
 import { Store } from "antd/es/form/interface";
-import Upload, { RcFile, UploadFile, UploadProps } from "antd/es/upload";
+import Upload, { RcFile, UploadChangeParam, UploadFile, UploadProps } from "antd/es/upload";
 import { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
@@ -46,6 +46,7 @@ const CreateSportAreaPage = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [imageList, setImageList] = useState<File[]>([]);
   const [isImageError, setIsImageError] = useState(false);
 
   const [selectedLocation, setSelectedLocation] = useState<google.maps.LatLngLiteral | null>(null);
@@ -86,8 +87,18 @@ const CreateSportAreaPage = () => {
     setPreviewTitle(file.name || file.url!.substring(file.url!.lastIndexOf("/") + 1));
   };
 
-  const handleUploadChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+  const handleUploadChange: UploadProps["onChange"] = (info: UploadChangeParam<UploadFile>) => {
+    setFileList(info.fileList);
+
+    let newImageList: File[] = [];
+    info.fileList.map((file) => {
+      const blobObj = new Blob([file.originFileObj as RcFile], { type: file.originFileObj?.type });
+      const fileObj = new File([blobObj], file.originFileObj?.name || "", {
+        type: file.originFileObj?.type,
+      });
+      newImageList.push(fileObj);
+    });
+    setImageList(newImageList);
   };
 
   const uploadButton = (
@@ -98,7 +109,6 @@ const CreateSportAreaPage = () => {
   );
 
   const onFinish = async (values: CreateSportAreaForm) => {
-    console.log(values);
     const location = await getLocation(values.location.lat, values.location.lng);
 
     const formData = new FormData();
@@ -113,14 +123,12 @@ const CreateSportAreaPage = () => {
     values.sporttype.forEach((sporttype: string) => {
       formData.append("sportType[]", sporttype);
     });
-    if (fileList.length > 0) {
-      fileList.forEach((file: UploadFile) => {
-        const blobObj = new Blob([file as RcFile], { type: file.type });
-        const fileObj = new File([blobObj], file.name, { type: file.type });
-        formData.append("files", fileObj);
+    if (imageList.length > 0) {
+      imageList.map((image) => {
+        formData.append("files", image);
       });
     }
-   
+
     await apiClient
       .createSportArea(formData)
       .then((res) => {
