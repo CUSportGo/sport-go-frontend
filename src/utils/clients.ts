@@ -7,12 +7,14 @@ import {
   GetAvailableBookingResponse,
 } from "../types/booking.dto";
 import { storage } from "./storage";
-import {
-  CreateSportareaRequest,
-  CreateSportareaResponse,
-  SearchSportAreaRequestDto,
-} from "../types/sportarea.dto";
 
+import { CreateSportareaRequest, CreateSportareaResponse } from "../types/sportarea.dto";
+import {
+  AddSportAreaRequest,
+  AddSportAreaResponse,
+  SearchSportAreaRequestDto,
+  UpdateSportAreaRequest,
+} from "../types/sportarea.dto";
 
 export const client = axios.create({
   baseURL: process.env.REACT_APP_BASEURL,
@@ -21,9 +23,8 @@ export const client = axios.create({
 
 const refreshToken = async () => {
   try {
-    const resp = await client.post("auth/refreshToken").then((res) => {
-    });
-    return resp
+    const resp = await client.post("auth/refreshToken").then((res) => {});
+    return resp;
   } catch (e) {
     console.log("Error", e);
   }
@@ -66,6 +67,11 @@ client.interceptors.response.use(
 
 const postLogin = async (data: object) => {
   const response = await client.post("/auth/login", data);
+  return response;
+};
+
+const postLogout = async () => {
+  const response = await client.post("/auth/logout");
   return response;
 };
 
@@ -125,8 +131,26 @@ const searchSportArea = async (params: SearchSportAreaRequestDto) => {
   return response;
 };
 
+const addSportArea = async (
+  id: string,
+  data: AddSportAreaRequest
+): Promise<AddSportAreaResponse> => {
+  const response = await client.patch("/sportArea/" + id + "/area", data);
+  return response;
+};
+
 const createSportArea = async (data: FormData) => {
   const response = await client.post("/sportarea", data);
+  return response;
+};
+
+const getUserProfile = async () => {
+  const response = await client.get("/user/userProfile");
+  return response;
+};
+
+const updateSportArea = async (id: string, data: UpdateSportAreaRequest) => {
+  const response = await client.patch("/sportarea/" + id, data);
   return response;
 };
 
@@ -143,7 +167,10 @@ export const apiClient = {
   getAllUser,
   banUser,
   unbanUser,
+  postLogout,
   getAvailableBooking,
   createBooking,
-  getSportAreaByID,
+  getUserProfile,
+  addSportArea,
+  updateSportArea,
 };

@@ -9,6 +9,7 @@
 
 .sportarea-description {
   font-size: 14px;
+  white-space:pre-wrap;
 }
 
 .facilities {
